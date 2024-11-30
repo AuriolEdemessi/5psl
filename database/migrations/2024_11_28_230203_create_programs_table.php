@@ -13,8 +13,14 @@ return new class extends Migration
     {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('description');
+            $table->enum('grade_required', ['student', 'trader', 'mentor']);
+            $table->boolean('is_premium')->default(false);
+            $table->foreignId('created_by')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
+        
     }
 
     /**

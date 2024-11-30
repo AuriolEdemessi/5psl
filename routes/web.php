@@ -1,6 +1,40 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\{
+    CourseController,
+    SectionController,
+    ChapterController,
+    MediaController,
+    QuizController,
+    QuestionController,
+    AnswerController
+};
+
+// Group routes for admin
+Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+    // Course Management
+    Route::resource('courses', CourseController::class);
+
+    // Section Management
+    Route::resource('sections', SectionController::class);
+
+    // Chapter Management
+    Route::resource('chapters', ChapterController::class);
+
+    // Media Management
+    Route::resource('medias', MediaController::class);
+
+    // Quiz Management
+    Route::resource('quizzes', QuizController::class);
+
+    // Question Management
+    Route::resource('questions', QuestionController::class);
+
+    // Answer Management
+    Route::resource('answers', AnswerController::class);
+});
+
 
 /*
 |--------------------------------------------------------------------------
@@ -18,5 +52,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::get('/courses/{course}', [CourseController::class, 'show'])->name('courses.show');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

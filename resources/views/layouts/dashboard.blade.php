@@ -2,13 +2,13 @@
 <html lang="en">
 
 
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:43:56 GMT -->
+<!-- Mirrored from radiustheme.com/demo/html/neeon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:46:49 GMT -->
 <head>
    <!-- Meta Data -->
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title> 5PSL | Home </title>
+   <title> 5psl | Dashboard </title>
 
    <!-- Favicon -->
    <link rel="shortcut icon" type="image/x-icon" href="media/favicon.png">
@@ -39,8 +39,8 @@
       <!-- Start main-content -->
       <div id="main_content" class="footer-fixed">
 
-         <!-- Header -->
-         <header class="rt-header sticky-on">
+         <!-- Header style-7 -->
+         <header class="rt-header rt-header-style-7 sticky-on">
 
             <!-- sticky-placeholder -->
             <div id="sticky-placeholder"></div>
@@ -98,36 +98,6 @@
                                  </span>
                               </span>
                            </div>
-                           <div class="social-wrap d-none d-xl-block">
-                              <ul class="rt-top-social">
-                                 <li class="follow">Follow Us:</li>
-                                 <li>
-                                    <a href="https://www.facebook.com/" target="_blank">
-                                       <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                 </li>
-                                 <li>
-                                    <a href="https://twitter.com/" target="_blank">
-                                       <i class="fab fa-twitter"></i>
-                                    </a>
-                                 </li>
-                                 <li>
-                                    <a href="https://www.linkedin.com/" target="_blank">
-                                       <i class="fab fa-linkedin-in"></i>
-                                    </a>
-                                 </li>
-                                 <li><a href="https://www.pinterest.com/" target="_blank">
-                                       <i class="fab fa-pinterest-p"></i>
-                                    </a>
-                                 </li>
-                                 <li>
-                                    <a href="https://www.whatsapp.com/" target="_blank">
-                                       <i class="fab fa-skype"></i>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-
                         </div>
                      </div>
                      <!-- end col -->
@@ -140,23 +110,26 @@
             <!-- end topbar -->
 
             <!-- Header Main -->
-            <div class="header-main header-main-style-1 navbar-wrap" id="navbar-wrap">
+            <div class="header-main header-main-style-7 navbar-wrap" id="navbar-wrap">
                <div class="container">
-                  <div class="row align-items-center">
+                  <div class="header-main-inner d-flex align-items-center justify-content-between">
 
-                  <div class="col-xl-3 col-lg-3">
-                        <!-- start logo here -->
-                        <div class="site-branding">
-                           <a class="dark-logo" href="index-2.html"><img width="162" height="52"
-                                 src="media/logo/logoweb.svg" alt="neeon"></a>
-                           <a class="light-logo" href="index-2.html"><img width="162" height="52"
-                                 src="media/logo/logoweb.svg" alt="neeon"></a>
+                     <div class="logo-wrapper">
+                        <div class="humburger-area">
+                           <div class="item humburger offcanvas-menu-btn menu-status-open">
+                              <span></span>
+                           </div>
                         </div>
-                        <!-- end logo here -->
-                     </div>
+                        <div class="logo-area">
+                           <a href="index-2.html">
+                              <img width="162" height="52" src="media/logo/logoweb.svg" alt="neeon">
+                           </a>
+                        </div>
 
-                     <div class="col-xl-6 col-lg-7">
-                        <!-- start main menu -->
+                     </div>
+                     <!-- end logo-wrapper -->
+
+                     <div class="menu-wrapper">
                         <div class="main-menu">
                            <nav class="main-menu__nav">
                               <ul>
@@ -203,33 +176,28 @@
                                     </ul>
                                  </li>
 
-                               
+                                 @if(auth()->check() && auth()->user()->role === 'admin')
+                                 <a href="{{ route('admin.courses.index') }}">Admin Dashboard</a>
+                             @endif
                              
                               </ul>
                            </nav>
                         </div>
-                        <!-- end main menu -->
                      </div>
-                     
+                     <!-- end menu-wrapper -->
 
-                     <div class="col-xl-3 col-lg-2">
-                        <!-- start header actions -->
-                        <ul class="header-action-items justify-content-end">
-                        
-                           <li class="item cart-icon">
-                              <a href="/login" class="">
-                                 <i class="fas fa-user"></i>
-                                 <span class="item-count">0</span>
-                              </a>
-                           </li>
-                           <li class="item humburger offcanvas-menu-btn menu-status-open">
-                              <span></span>
-                           </li>
-                        </ul>
-                        <!-- end header actions -->
+                     <div class="search-wrapper search-wrapper-style-1">
+                        <form action="#" class="form search-form-box">
+                           <div class="form-group">
+                              <input type="text" name="sarch" id="search" placeholder="Search . . . "
+                                 class="form-control rt-search-control">
+                              <button type="submit" class="search-submit">
+                                 <i class="fas fa-search"></i>
+                              </button>
+                           </div>
+                        </form>
                      </div>
-
-
+                     <!-- end search-wrapper -->
                   </div>
                   <!-- end row -->
                </div>
@@ -238,7 +206,7 @@
             <!-- End Header Main -->
 
          </header>
-         <!-- end header -->
+         <!-- end header style-7 -->
 
          <!-- start rt-mobile-header -->
          <div class="rt-mobile-header mobile-sticky-on">
@@ -332,6 +300,9 @@
                   </div>
                </div>
             </div>
+
+
+
          </div>
          <!-- end rt-mobile-header -->
 
@@ -340,207 +311,79 @@
          <!-- End Main -->
 
          <!-- Start Footer -->
-         <footer class="footer">
+         <footer class="footer footer-style-4 layout-2">
 
-            <div class="footer-top footer-style-1">
-               <div class="container">
-                  <div class="row gutter-30">
+            <div class="container">
+               <div
+                  class="footer-widget-style-2 d-flex align-items-center justify-content-center text-center flex-column">
 
-                     <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="800ms">
-                        <div class="footer-widget">
-                           <div class="logo footer-logo">
-                              <a class="dark-logo" href="index-2.html">
-                                 <img width="162" height="52" src="media/logo/logo-light.svg" alt="neeon">
-                              </a>
-                           </div>
-                           <p class="text">
-                              When an unknown printer took a galley
-                              and scrambled it to make specimen
-                              book not only five centurie.
-                           </p>
-                           <ul class="footer-social gutter-15">
-                              <li class="social-item">
-                                 <a href="https://www.facebook.com/" class="social-link fb" target="_blank">
-                                    <i class="fab fa-facebook-f"></i>
-                                 </a>
-                              </li>
-                              <li class="social-item">
-                                 <a href="https://twitter.com/" class="social-link tw" target="_blank">
-                                    <i class="fab fa-twitter"></i>
-                                 </a>
-                              </li>
-                              <li class="social-item">
-                                 <a href="https://vimeo.com/" class="social-link vm" target="_blank">
-                                    <i class="fab fa-vimeo-v"></i>
-                                 </a>
-                              </li>
-                              <li class="social-item">
-                                 <a href="https://www.pinterest.com/" class="social-link pn" target="_blank">
-                                    <i class="fab fa-pinterest-p"></i>
-                                 </a>
-                              </li>
-                              <li class="social-item">
-                                 <a href="https://www.whatsapp.com/" class="social-link wh" target="_blank">
-                                    <i class="fab fa-whatsapp"></i>
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                     <!-- end col -->
-
-                     <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="800ms">
-                        <div class="footer-widget">
-                           <h3 class="footer-widget-title">Recent Posts</h3>
-
-                           <!--  start footer-post-list -->
-                           <div class="footer-post-list">
-                              <div class="item mb--30">
-                                 <div class="rt-post post-sm white-style">
-                                    <div class="post-img">
-                                       <a href="single-post1.html">
-                                          <img src="media/gallery/post-sm_1.jpg" alt="post" width="100" height="100">
-                                       </a>
-                                    </div>
-                                    <div class="ms-3 post-content">
-                                       <h4 class="post-title">
-                                          <a href="single-post1.html">
-                                             Top Beste ampute are
-                                             Speak Market.
-                                          </a>
-                                       </h4>
-                                       <span class="rt-meta">
-                                          <i class="far fa-calendar-alt icon"></i>
-                                          DECEMBER 9, 2022
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-
-                              <div class="item">
-                                 <div class="rt-post post-sm white-style">
-                                    <div class="post-img">
-                                       <a href="single-post1.html">
-                                          <img src="media/gallery/post-sm_2.jpg" alt="post" width="100" height="100">
-                                       </a>
-                                    </div>
-                                    <div class="ms-3 post-content">
-                                       <h4 class="post-title">
-                                          <a href="single-post1.html">
-                                             Top Beste ampute are
-                                             Speak Market.
-                                          </a>
-                                       </h4>
-                                       <span class="rt-meta">
-                                          <i class="far fa-calendar-alt icon"></i>
-                                          DECEMBER 9, 2022
-                                       </span>
-                                    </div>
-                                 </div>
-                              </div>
-
-                           </div>
-                           <!--  end footer-post-list -->
-
-                        </div>
-                     </div>
-                     <!-- end col -->
-
-                     <div class="col-xl-3 col-md-6 wow fadeInUp d-flex justify-content-xl-center justify-content-start"
-                        data-wow-delay="400ms" data-wow-duration="800ms">
-                        <div class="footer-widget">
-                           <h3 class="footer-widget-title">Categories</h3>
-                           <ul class="widget-list cat-list">
-                              <li class="widget-list-item">
-                                 <a href="politics.html" class="widget-list-link">
-                                    Politics
-                                 </a>
-                              </li>
-                              <li class="widget-list-item">
-                                 <a href="politics.html" class="widget-list-link">
-                                    Business
-                                 </a>
-                              </li>
-                              <li class="widget-list-item">
-                                 <a href="technology.html" class="widget-list-link">
-                                    Technology
-                                 </a>
-                              </li>
-                              <li class="widget-list-item">
-                                 <a href="life-style.html" class="widget-list-link">
-                                    Health
-                                 </a>
-                              </li>
-                              <li class="widget-list-item">
-                                 <a href="life-style.html" class="widget-list-link">
-                                    Sports
-                                 </a>
-                              </li>
-                              <li class="widget-list-item">
-                                 <a href="gaming.html" class="widget-list-link">
-                                    Entertainment
-                                 </a>
-                              </li>
-                           </ul>
-                        </div>
-                     </div>
-                     <!-- end col -->
-
-                     <div class="col-xl-3 col-md-6 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
-                        <div class="footer-widget">
-                           <h4 class="footer-widget-title">Instagram</h4>
-                           <div class="insta-gallery">
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_1.jpg" width="100" height="90" alt="gallery1">
-                                 </a>
-                              </div>
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_2.jpg" width="100" height="90" alt="gallery2">
-                                 </a>
-                              </div>
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_3.jpg" width="100" height="90" alt="gallery3">
-                                 </a>
-                              </div>
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_4.jpg" width="100" height="90" alt="gallery4">
-                                 </a>
-                              </div>
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_5.jpg" width="100" height="90" alt="gallery5">
-                                 </a>
-                              </div>
-                              <div class="galleryitem">
-                                 <a href="https://www.instagram.com/">
-                                    <img src="media/gallery/ins-gallery_6.jpg" width="100" height="90" alt="gallery6">
-                                 </a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end col -->
-
+                  <div class="logo wow fadeInDown" data-wow-delay="200ms" data-wow-duration="800ms">
+                     <a href="index-2.html">
+                        <img src="media/logo/logo-classic.png" alt="logo-classic" width="170" height="50">
+                     </a>
                   </div>
-               </div>
-            </div>
-            <!-- End footer top -->
 
-            <div class="footer-bottom">
-               <div class="container">
-                  <div class="footer-bottom-area d-flex align-items-center justify-content-center">
-                     <p class="copyright-text mb-0 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="800ms">
-                        <span class="currentYear"></span> © neeon all right reserved by
-                        <a href="https://www.radiustheme.com/" rel="nofollow">RadiusTheme</a>
-                     </p>
+                  <ul class="footer-menu-style-2 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="800ms">
+                     <li>
+                        <a href="index-2.html">Home</a>
+                     </li>
+                     <li>
+                        <a href="about.html">About</a>
+                     </li>
+                     <li>
+                        <a href="technology.html">Categories</a>
+                     </li>
+                     <li>
+                        <a href="about.html">Privacy</a>
+                     </li>
+                     <li>
+                        <a href="about.html">Terms</a>
+                     </li>
+                     <li>
+                        <a href="contact.html">Contact</a>
+                     </li>
+                  </ul>
+
+                  <div class="social-wrapper-line-style">
+                     <span class="wrapper-line wow zoomIn" data-wow-delay="400ms" data-wow-duration="800ms"></span>
+                     <ul class="footer-social mb-0 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
+                        <li class="social-item">
+                           <a href="https://www.facebook.com/" class="social-link fb" target="_blank">
+                              <i class="fab fa-facebook-f"></i>
+                           </a>
+                        </li>
+                        <li class="social-item">
+                           <a href="https://twitter.com/" class="social-link tw" target="_blank">
+                              <i class="fab fa-twitter"></i>
+                           </a>
+                        </li>
+                        <li class="social-item">
+                           <a href="https://vimeo.com/" class="social-link vm" target="_blank">
+                              <i class="fab fa-vimeo-v"></i>
+                           </a>
+                        </li>
+                        <li class="social-item">
+                           <a href="https://www.pinterest.com/" class="social-link pn" target="_blank">
+                              <i class="fab fa-pinterest-p"></i>
+                           </a>
+                        </li>
+                        <li class="social-item">
+                           <a href="https://www.whatsapp.com/" class="social-link wh" target="_blank">
+                              <i class="fab fa-whatsapp"></i>
+                           </a>
+                        </li>
+                     </ul>
+                     <span class="wrapper-line wow zoomIn" data-wow-delay="700ms" data-wow-duration="800ms"></span>
                   </div>
+
+                  <p class="copyright-text mb-0 wow fadeInUp" data-wow-delay="800ms" data-wow-duration="800ms">
+                     <span class="currentYear"></span> © neeon all right reserved by
+                     <a href="https://www.radiustheme.com/" rel="nofollow">RadiusTheme</a>
+                  </p>
+
                </div>
+               <!-- end footer-widget-style-2 -->
             </div>
-            <!-- End footer bottom -->
 
          </footer>
          <!-- End  Footer -->
@@ -549,7 +392,7 @@
       <!-- End main-content -->
 
       <!-- Start  offcanvas menu -->
-      <div class="offcanvas-menu-wrap" id="offcanvas-wrap" data-position="left">
+      <div class="offcanvas-menu-wrap" id="offcanvas-wrap" data-position="right">
 
          <div class="offcanvas-content">
             <div class="offcanvas-header">
@@ -775,52 +618,6 @@
    </div>
    <!-- End wrapper -->
 
-   <!-- Modal Start 
-   <div class="modal fade" id="rtModal" tabindex="-1" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered">
-         <div class="rt-modal-wrapper">
-            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-               <i class="fas fa-times" aria-hidden="true"></i>
-            </button>
-            <div class="modal-content">
-               <div class="modal-body">
-                  <div class="container">
-                     <div class="row justify-content-end">
-                        <div class="col-6">
-                           <div class="content-box">
-                              <h2 class="title">
-                                 Subscribe to the Updates!
-                              </h2>
-                              <form>
-                                 <div class="rt-form-group">
-                                    <i class="far fa-envelope"></i>
-                                    <input type="email" name="email" class="form-control"
-                                       placeholder="Enter Your E-mail Address">
-                                 </div>
-                                 <div class="rt-form-group">
-                                    <div class="form-check">
-                                       <input class="form-check-input" type="checkbox" value=""
-                                          id="comment-form-check1">
-                                       <label class="form-check-label" for="comment-form-check1">
-                                          I agree to the Privacy Policy.
-                                       </label>
-                                    </div>
-                                 </div>
-                                 <button type="submit" class="rt-btn-primary w-100 mt--10">
-                                    Subscribe Now
-                                 </button>
-                              </form>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <!-- Modal End -->
-
 
    <!-- Dependency Scripts -->
    <script src="dependencies/jquery/jquery.min.js"></script>
@@ -842,5 +639,5 @@
 </body>
 
 
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:44:28 GMT -->
+<!-- Mirrored from radiustheme.com/demo/html/neeon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:47:39 GMT -->
 </html>
