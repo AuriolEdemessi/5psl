@@ -75,69 +75,7 @@
          <!-- end col -->
 
          <div class="col-xl-5 col-lg-6 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
-            <form method="POST" action="{{ route('register') }}" class="contact-form-style-1 rt-contact-form">
-            @csrf
-            <h4 class="form-title">Rejoins notre club !</h4>
-               <div class="form-group">
-                  <input type="name" class="form-control rt-form-control" placeholder="Your Name *" name="name"
-                     id="name" data-error="Name field is required" required>
-                  <div class="help-block with-errors"></div>
-               </div>
-               <div class="form-group">
-                  <input type="email" class="form-control rt-form-control" placeholder="E-mail *"
-                     name="email" id="email" data-error="Email field is required" required>
-                  <div class="help-block with-errors"></div>
-               </div>
-               <div class="form-group">
-                  <input type="password" class="form-control rt-form-control" placeholder="Password *" name="password"
-                     id="password" data-error="password is required" required>
-                  <div class="help-block with-errors"></div>
-               </div>
-               <div class="form-group">
-                  <input type="password" class="form-control rt-form-control" placeholder="Confirm Password *" name="password_confirmation"
-                     id="password-confirm" data-error="password is required" required>
-                  <div class="help-block with-errors"></div>
-               </div>
-
-               
-               <button type="submit" class="submit-btn">S'inscrire</button>
-               <div class="form-response"></div>
-            </form>
-         </div>
-         <!-- end col -->
-      </div>
-      <!-- end row -->
-   </div>
-   <!-- end container -->
-</div>
-<!-- end contact-section-layout-1 -->
-
-<!-- start  Map Section -->
-<div class="map-section-style-1">
-   <div class="container">
-      <div class="row">
-         <div class="col-12">
-            <div class="map-wrapper map-style-1">
-               <iframe class="map"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8385385572983!2d144.95358331584498!3d-37.81725074201705!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad65d4dd5a05d97%3A0x3e64f855a564844d!2s121%20King%20St%2C%20Melbourne%20VIC%203000%2C%20Australia!5e0!3m2!1sen!2sbd!4v1623138767707!5m2!1sen!2sbd"
-                  style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-<!-- End  Map Section -->
-
-</main>
-<!-- End Main -->
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
-
-                <div class="card-body">
+         <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
@@ -200,8 +138,21 @@
                         </div>
                     </form>
                 </div>
-            </div>
-        </div>
-    </div>
+         </div>
+         <!-- end col -->
+      </div>
+      <!-- end row -->
+   </div>
+   <!-- end container -->
 </div>
+<!-- end contact-section-layout-1 -->
+
+<!-- start  Map Section -->
+
+<!-- End  Map Section -->
+
+</main>
+<!-- End Main -->
+
+
 @endsection

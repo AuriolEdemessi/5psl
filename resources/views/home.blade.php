@@ -179,62 +179,7 @@
             </section>
 
             <!-- start banner-section-style-3 -->
-            <section class="sports-section banner-section-style-3">
-
-            <br><br>
-            <div class="banner author-banner" data-bg-image="media/banner/banner_4.jpg">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-12">
-                        <div class="author-big-box-style-1">
-                           <div class="author-img">
-                              <img src="media/gallery/author-img_1.jpg" alt="author-img_1" width="170" height="170">
-                           </div>
-                           <div class="author-content">
-                              <h2 class="title">Mr. Robert James</h2>
-                              <span class="designation">Senior Author</span>
-                              <p>
-                                 At 29 years old, my favorite compliment is being told that I look like my mom.
-                                 Seeing myself in her image, like this daughter up top, makes me so proud
-                                 of how far I’ve come, and so thankful for where I come from.
-                              </p>
-                           </div>
-                           <div class="author-social-area">
-                              <ul class="author-social-1 footer-social">
-                                 <li class="social-item">
-                                    <a href="https://www.facebook.com/" class="social-link fb" target="_blank">
-                                       <i class="fab fa-facebook-f"></i>
-                                    </a>
-                                 </li>
-                                 <li class="social-item">
-                                    <a href="https://twitter.com/" class="social-link tw" target="_blank">
-                                       <i class="fab fa-twitter"></i>
-                                    </a>
-                                 </li>
-                                 <li class="social-item">
-                                    <a href="https://youtube.com/" class="social-link yu" target="_blank">
-                                       <i class="fab fa-youtube"></i>
-                                    </a>
-                                 </li>
-
-                                 <li class="social-item">
-                                    <a href="https://www.whatsapp.com/" class="social-link wh" target="_blank">
-                                       <i class="fab fa-whatsapp"></i>
-                                    </a>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-               <!-- end banner-slider-style-3 -->
-
-               <!-- start banner-thumnail-area-2 -->
-               
-               <!-- end banner-thumnail-area-2 -->
-            </section>
+            
             <!-- end banner-section-style-3 -->
 
             <!-- start sports-section-style-2 -->

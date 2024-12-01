@@ -280,7 +280,7 @@
                            <div class="wrap mb--60">
                               <div class="featured-tab-title d-flex align-items-center justify-content-between">
                                  <h2 class="rt-section-heading">
-                                    <span class="rt-section-text">Most Popular </span>
+                                    <span class="rt-section-text">Nos Cours</span>
                                     <span class="rt-section-dot"></span>
                                     <span class="rt-section-line"></span>
                                  </h2>
@@ -288,19 +288,19 @@
                                  <ul class="nav rt-tab-menu" id="myTab" role="tablist">
                                     <li class="menu-item" role="presentation">
                                        <a class="menu-link active" id="menu-1-tab" data-bs-toggle="tab" href="#menu-1"
-                                          role="tab" aria-controls="menu-1" aria-selected="true"> World </a>
+                                          role="tab" aria-controls="menu-1" aria-selected="true"> FOREX</a>
                                     </li>
                                     <li class="menu-item" role="presentation">
                                        <a class="menu-link" id="menu-2-tab" data-bs-toggle="tab" href="#menu-2"
-                                          role="tab" aria-controls="menu-2" aria-selected="false"> Travel </a>
+                                          role="tab" aria-controls="menu-2" aria-selected="false"> CRYPTOS</a>
                                     </li>
                                     <li class="menu-item" role="presentation">
                                        <a class="menu-link" id="menu-3-tab" data-bs-toggle="tab" href="#menu-3"
-                                          role="tab" aria-controls="menu-3" aria-selected="false"> Food </a>
+                                          role="tab" aria-controls="menu-3" aria-selected="false"> INDICES</a>
                                     </li>
                                     <li class="menu-item" role="presentation">
                                        <a class="menu-link" id="menu-4-tab" data-bs-toggle="tab" href="#menu-4"
-                                          role="tab" aria-controls="menu-4" aria-selected="false"> Technology</a>
+                                          role="tab" aria-controls="menu-4" aria-selected="false"> INVESTMENT</a>
                                     </li>
                                  </ul><!-- end nav tab -->
                               </div>
@@ -317,7 +317,7 @@
                                                 <div class="rt-post-overlay rt-post-overlay-lg ex-layout">
                                                    <div class="post-img">
                                                       <a href="single-post1.html" class="img-link">
-                                                         <img src="media/gallery/post-xl_2.jpg" alt="post-xl-2"
+                                                         <img src="media/gallery/post.jpg" alt="post-xl-2"
                                                             width="900" height="600">
                                                       </a>
                                                    </div>
@@ -360,7 +360,7 @@
                                                 <div class="rt-post post-md style-3">
                                                    <div class="post-img">
                                                       <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_6.jpg" alt="post" width="551"
+                                                         <img src="media/gallery/fond.jpg" alt="post" width="551"
                                                             height="431">
                                                       </a>
                                                    </div>
@@ -391,7 +391,7 @@
                                                 <div class="rt-post post-md style-3">
                                                    <div class="post-img">
                                                       <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_5.jpg" alt="post" width="551"
+                                                         <img src="media/gallery/crypto.jpg" alt="post" width="551"
                                                             height="431">
                                                       </a>
                                                    </div>
@@ -416,7 +416,7 @@
                                                 <div class="rt-post post-md style-3">
                                                    <div class="post-img">
                                                       <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_8.jpg" alt="post" width="551"
+                                                         <img src="media/gallery/at.jpg" alt="post" width="551"
                                                             height="431">
                                                       </a>
                                                    </div>
@@ -441,7 +441,7 @@
                                                 <div class="rt-post post-md style-3">
                                                    <div class="post-img">
                                                       <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_7.jpg" alt="post" width="551"
+                                                         <img src="media/gallery/risques.jpg" alt="post" width="551"
                                                             height="431">
                                                       </a>
                                                    </div>
@@ -469,490 +469,18 @@
                                     <!-- end inner tab row -->
                                  </div><!-- end ./tab item -->
 
-                                 <div class="tab-pane tab-item animated fadeInUp" id="menu-2" role="tabpanel"
-                                    aria-labelledby="menu-2-tab">
-                                    <div class="row gutter-24">
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
+                                 <!-- end ./tab item -->
 
-                                             <div class="col-12">
-                                                <div class="rt-post-overlay rt-post-overlay-lg ex-layout">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html" class="img-link">
-                                                         <img src="media/gallery/post-xl_2.jpg" alt="post-xl-2"
-                                                            width="900" height="600">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="world">World</a>
-                                                      <h3 class="post-title bold-underline">
-                                                         <a href="single-post1.html">
-                                                            African Nations Are Strugling
-                                                            Save Their Wildlife
-                                                         </a>
-                                                      </h3>
+                                 <!-- end ./tab item -->
 
-                                                      <div class="post-meta">
-                                                         <ul>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  by <a href="author.html" class="name">Willum Skeem</a>
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-calendar-alt icon"></i>
-                                                                  DECEMBER 9, 2022
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-comments icon"></i>
-                                                                  <a href="#"> 3,250</a>
-                                                               </span>
-                                                            </li>
-                                                         </ul>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col big item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_6.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="technology.html" class="technology">Technology</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_5.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="music">Music</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_8.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="animal">Animal</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_7.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="travel">Travel</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!-- end inner tab row -->
-                                 </div><!-- end ./tab item -->
-
-                                 <div class="tab-pane tab-item animated fadeInUp" id="menu-3" role="tabpanel"
-                                    aria-labelledby="menu-3-tab">
-                                    <div class="row gutter-24">
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
-                                             <div class="col-12">
-                                                <div class="rt-post-overlay rt-post-overlay-lg ex-layout">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html" class="img-link">
-                                                         <img src="media/gallery/post-xl_2.jpg" alt="post-xl-2"
-                                                            width="900" height="600">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="world">World</a>
-                                                      <h3 class="post-title bold-underline">
-                                                         <a href="single-post1.html">
-                                                            African Nations Are Strugling
-                                                            Save Their Wildlife
-                                                         </a>
-                                                      </h3>
-
-                                                      <div class="post-meta">
-                                                         <ul>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  by <a href="author.html" class="name">Willum Skeem</a>
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-calendar-alt icon"></i>
-                                                                  DECEMBER 9, 2022
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-comments icon"></i>
-                                                                  <a href="#"> 3,250</a>
-                                                               </span>
-                                                            </li>
-                                                         </ul>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col big item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_6.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="technology.html" class="technology">Technology</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_5.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="music">Music</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_8.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="animal">Animal</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_7.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="travel">Travel</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!-- end inner tab row -->
-                                 </div><!-- end ./tab item -->
-
-                                 <div class="tab-pane tab-item animated fadeInUp" id="menu-4" role="tabpanel"
-                                    aria-labelledby="menu-4-tab">
-                                    <div class="row gutter-24">
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
-                                             <div class="col-12">
-                                                <div class="rt-post-overlay rt-post-overlay-lg ex-layout">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html" class="img-link">
-                                                         <img src="media/gallery/post-xl_2.jpg" alt="post-xl-2"
-                                                            width="900" height="600">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="world">World</a>
-                                                      <h3 class="post-title bold-underline">
-                                                         <a href="single-post1.html">
-                                                            African Nations Are Strugling
-                                                            Save Their Wildlife
-                                                         </a>
-                                                      </h3>
-
-                                                      <div class="post-meta">
-                                                         <ul>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  by <a href="author.html" class="name">Willum Skeem</a>
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-calendar-alt icon"></i>
-                                                                  DECEMBER 9, 2022
-                                                               </span>
-                                                            </li>
-                                                            <li>
-                                                               <span class="rt-meta">
-                                                                  <i class="far fa-comments icon"></i>
-                                                                  <a href="#"> 3,250</a>
-                                                               </span>
-                                                            </li>
-                                                         </ul>
-                                                      </div>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col big item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_6.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="technology.html" class="technology">Technology</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                       <div class="col-lg-6">
-                                          <div class="row gutter-24">
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_5.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="music">Music</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_8.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="animal">Animal</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                             <div class="col-12">
-                                                <div class="rt-post post-md style-3">
-                                                   <div class="post-img">
-                                                      <a href="single-post1.html">
-                                                         <img src="media/gallery/post-md_7.jpg" alt="post" width="551"
-                                                            height="431">
-                                                      </a>
-                                                   </div>
-                                                   <div class="post-content">
-                                                      <a href="life-style.html" class="travel">Travel</a>
-                                                      <h4 class="post-title">
-                                                         <a href="single-post1.html">
-                                                            After Mon They Landacy
-                                                            CloseSpace Really?
-                                                         </a>
-                                                      </h4>
-                                                      <span class="rt-meta">
-                                                         <i class="far fa-calendar-alt icon"></i>
-                                                         DECEMBER 9, 2022
-                                                      </span>
-                                                   </div>
-                                                </div>
-                                             </div>
-                                             <!-- end col md item -->
-
-                                          </div>
-                                       </div>
-                                    </div>
-                                    <!-- end inner tab row -->
-                                 </div><!-- end ./tab item -->
+                                 <!-- end ./tab item -->
 
                               </div> <!-- end /.tab-content -->
                            </div>
 
                            <div class="wrap whats-new-wrap">
                               <h2 class="rt-section-heading">
-                                 <span class="rt-section-text">What’s New </span>
+                                 <span class="rt-section-text">Actualités</span>
                                  <span class="rt-section-dot"></span>
                                  <span class="rt-section-line"></span>
                               </h2>
@@ -1115,18 +643,18 @@
                                  <div class="post-content">
                                     <div class="logo">
                                        <a href="index-2.html">
-                                          <img src="media/logo/logo-light.svg" alt="logo" width="162" height="52">
+                                          <img src="media/logo/club.svg" alt="logo" width="100" height="20">
                                        </a>
                                     </div>
                                     <h3 class="title">
                                        <a href="#">
-                                          The Most Powerful
-                                          <span>News & Magazine WP Theme</span>
+                                         Deviens un trader rentable !
+                                          
                                        </a>
                                     </h3>
                                     <div class="btn-wrap">
                                        <a href="#" class="btn-white-sm">
-                                          shop now
+                                         Passe le test
                                        </a>
                                     </div>
                                  </div>
@@ -1177,7 +705,7 @@
 
                            <div class="sidebar-wrap ">
                               <h2 class="rt-section-heading style-2 mb--30">
-                                 <span class="rt-section-text">Most Views Post </span>
+                                 <span class="rt-section-text">Derniers posts</span>
                                  <span class="rt-section-dot"></span>
                                  <span class="rt-section-line"></span>
                               </h2>
@@ -1186,17 +714,17 @@
                                     <div class="swiper-wrapper">
                                        <div class="swiper-slide item">
                                           <a href="single-post1.html">
-                                             <img src="media/gallery/post-lg_5.jpg" alt="post" width="696" height="491">
+                                             <img src="media/gallery/post1.jpg" alt="post" width="696" height="491">
                                           </a>
                                        </div>
                                        <div class="swiper-slide item">
                                           <a href="single-post1.html">
-                                             <img src="media/gallery/post-lg_4.jpg" alt="post" width="696" height="491">
+                                             <img src="media/gallery/post2.jpg" alt="post" width="696" height="491">
                                           </a>
                                        </div>
                                        <div class="swiper-slide item">
                                           <a href="single-post1.html">
-                                             <img src="media/gallery/post-lg_4.jpg" alt="post" width="696" height="491">
+                                             <img src="media/gallery/post3.jpg" alt="post" width="696" height="491">
                                           </a>
                                        </div>
                                     </div>
@@ -1250,181 +778,7 @@
             <!-- end what's new section -->
 
             <!-- start rt trending slider style-2 -->
-            <section class="swiper-container rt-tending-slider-style-2 rt-post-slider-style-6">
-               <div class="swiper-wrapper">
-
-                  <div class="swiper-slide">
-                     <div class="rt-post-overlay post-trending">
-                        <div class="post-img">
-                           <a href="single-post1.html" class="img-link">
-                              <img src="media/gallery/post-xl_10.jpg" alt="post-xl-10" width="900" height="600">
-                           </a>
-                        </div>
-                        <div class="post-content">
-                           <a href="life-style.html" class="travel">Travel</a>
-                           <h3 class="post-title">
-                              <a href="single-post1.html">
-                                 African Nations Are Struggling
-                                 To Save Their Wildlife
-                              </a>
-                           </h3>
-
-                           <div class="post-meta">
-                              <ul>
-                                 <li>
-                                    <span class="rt-meta">
-                                       by <a href="author.html" class="name">Willum Skeem</a>
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-calendar-alt icon"></i>
-                                       DECEMBER 9, 2022
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-comments icon"></i>
-                                       <a href="#"> 3,250</a>
-                                    </span>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- end swiper slide -->
-
-                  <!-- end swiper-slide -->
-                  <div class="swiper-slide">
-                     <div class="rt-post-overlay post-trending">
-                        <div class="post-img">
-                           <a href="single-post1.html" class="img-link">
-                              <img src="media/gallery/post-xl_9.jpg" alt="post-xl-10" width="900" height="600">
-                           </a>
-                        </div>
-                        <div class="post-content">
-                           <a href="life-style.html" class="world">World</a>
-                           <h3 class="post-title">
-                              <a href="single-post1.html">
-                                 African Nations Are Struggling
-                                 To Save Their Wildlife
-                              </a>
-                           </h3>
-
-                           <div class="post-meta">
-                              <ul>
-                                 <li>
-                                    <span class="rt-meta">
-                                       by <a href="author.html" class="name">Willum Skeem</a>
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-calendar-alt icon"></i>
-                                       DECEMBER 9, 2022
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-comments icon"></i>
-                                       <a href="#"> 3,250</a>
-                                    </span>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-                  <!-- end swiper-slide -->
-                  <div class="swiper-slide">
-                     <div class="rt-post-overlay post-trending">
-                        <div class="post-img">
-                           <a href="single-post1.html" class="img-link">
-                              <img src="media/gallery/post-xl_10.jpg" alt="post-xl-9" width="900" height="600">
-                           </a>
-                        </div>
-                        <div class="post-content">
-                           <a href="technology.html" class="technology">Technology</a>
-                           <h3 class="post-title">
-                              <a href="single-post1.html">
-                                 African Nations Are Struggling
-                                 To Save Their Wildlife
-                              </a>
-                           </h3>
-
-                           <div class="post-meta">
-                              <ul>
-                                 <li>
-                                    <span class="rt-meta">
-                                       by <a href="author.html" class="name">Willum Skeem</a>
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-calendar-alt icon"></i>
-                                       DECEMBER 9, 2022
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-comments icon"></i>
-                                       <a href="#"> 3,250</a>
-                                    </span>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-
-                  <!-- end swiper-slide -->
-                  <div class="swiper-slide">
-                     <div class="rt-post-overlay post-trending">
-                        <div class="post-img">
-                           <a href="single-post1.html" class="img-link">
-                              <img src="media/gallery/post-xl_9.jpg" alt="post-xl-10" width="900" height="600">
-                           </a>
-                        </div>
-                        <div class="post-content">
-                           <a href="life-style.html" class="food">Food</a>
-                           <h3 class="post-title">
-                              <a href="single-post1.html">
-                                 African Nations Are Struggling
-                                 To Save Their Wildlife
-                              </a>
-                           </h3>
-
-                           <div class="post-meta">
-                              <ul>
-                                 <li>
-                                    <span class="rt-meta">
-                                       by <a href="author.html" class="name">Willum Skeem</a>
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-calendar-alt icon"></i>
-                                       DECEMBER 9, 2022
-                                    </span>
-                                 </li>
-                                 <li>
-                                    <span class="rt-meta">
-                                       <i class="far fa-comments icon"></i>
-                                       <a href="#"> 3,250</a>
-                                    </span>
-                                 </li>
-                              </ul>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-                  <!-- end swiper-slide -->
-
-               </div>
-               <!-- end swiper wrapper -->
-            </section>
+            
             <!-- start rt trending slider style-2 -->
 
 
