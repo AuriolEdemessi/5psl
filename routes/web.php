@@ -8,11 +8,15 @@ use App\Http\Controllers\Admin\{
     MediaController,
     QuizController,
     QuestionController,
+    AdminController,
     AnswerController
 };
 
 // Group routes for admin
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
+    // Admin Dashboard
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+
     // Course Management
     Route::resource('courses', CourseController::class);
 

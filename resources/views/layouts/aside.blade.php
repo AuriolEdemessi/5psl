@@ -4,10 +4,10 @@
         <!-- Logo -->
 
         <a class="navbar-brand" href="index.html" aria-label="Front">
-          <img class="navbar-brand-logo" src="assets/svg/logos/logo.svg" alt="Logo" data-hs-theme-appearance="default">
-          <img class="navbar-brand-logo" src="assets/svg/logos-light/logo.svg" alt="Logo" data-hs-theme-appearance="dark">
-          <img class="navbar-brand-logo-mini" src="assets/svg/logos/logo-short.svg" alt="Logo" data-hs-theme-appearance="default">
-          <img class="navbar-brand-logo-mini" src="assets/svg/logos-light/logo-short.svg" alt="Logo" data-hs-theme-appearance="dark">
+          <img class="navbar-brand-logo" src="media/logo/logoweb.svg" alt="Logo" data-hs-theme-appearance="default">
+          <img class="navbar-brand-logo" src="media/logo/logoweb.svg" alt="Logo" data-hs-theme-appearance="dark">
+          <img class="navbar-brand-logo-mini" src="media/logo/logovertical.svg" alt="Logo" data-hs-theme-appearance="default">
+          <img class="navbar-brand-logo-mini" src="media/logo/logovertical.svg" alt="Logo" data-hs-theme-appearance="dark">
         </a>
 
         <!-- End Logo -->

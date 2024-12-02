@@ -177,7 +177,7 @@
                                  </li>
 
                                  @if(auth()->check() && auth()->user()->role === 'admin')
-                                 <a href="{{ route('admin.courses.index') }}">Admin Dashboard</a>
+                                 <a href="/admin">Admin Dashboard</a>
                              @endif
                              
                               </ul>
