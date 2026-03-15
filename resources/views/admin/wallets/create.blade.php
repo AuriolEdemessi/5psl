@@ -1,55 +1,71 @@
-@extends('layouts.dashboard')
-@section('title', 'Ajouter un Portefeuille')
+@extends('layouts.profil')
 
 @section('content')
 
-<div class="mb-4">
-    <a href="{{ route('admin.wallets.index') }}" class="text-decoration-none" style="color: var(--color-muted); font-size: 13px; font-weight: 600;">
-        <i class="fas fa-arrow-left me-1"></i> Retour aux portefeuilles
-    </a>
-</div>
+<div class="content container-fluid">
+  <div class="page-header">
+    <div class="row align-items-center">
+      <div class="col-sm mb-2 mb-sm-0">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb breadcrumb-no-gutter">
+            <li class="breadcrumb-item"><a href="{{ route('admin.wallets.index') }}">Portefeuilles</a></li>
+            <li class="breadcrumb-item active">Ajouter</li>
+          </ol>
+        </nav>
+        <h1 class="page-header-title">Ajouter un portefeuille central</h1>
+      </div>
+    </div>
+  </div>
 
-<div class="card-5psl" style="max-width: 600px;">
-    <h4 style="font-size: 16px; font-weight: 800; margin-bottom: 24px;"><i class="fas fa-wallet text-blue me-2"></i>Ajouter un portefeuille central</h4>
+  @if($errors->any())
+    <div class="alert alert-soft-danger mb-4">
+      <ul class="mb-0">@foreach($errors->all() as $e)<li>{{ $e }}</li>@endforeach</ul>
+    </div>
+  @endif
 
-    <form action="{{ route('admin.wallets.store') }}" method="POST">
-        @csrf
-        
-        <div class="mb-3">
-            <label class="form-label fw-bold" style="font-size: 13px;">Nom du portefeuille <span class="text-danger">*</span></label>
-            <input type="text" name="name" class="form-control" placeholder="ex: Main USDT Pool" value="{{ old('name') }}" required style="font-size: 14px;">
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold" style="font-size: 13px;">Réseau</label>
-                <input type="text" name="network" class="form-control" placeholder="ex: TRC20, ERC20, SOL" value="{{ old('network') }}" style="font-size: 14px;">
+  <div class="row">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-header"><h4 class="card-header-title"><i class="bi-wallet2 me-2"></i>Informations du portefeuille</h4></div>
+        <div class="card-body">
+          <form action="{{ route('admin.wallets.store') }}" method="POST">
+            @csrf
+            <div class="mb-3">
+              <label class="form-label">Nom du portefeuille <span class="text-danger">*</span></label>
+              <input type="text" name="name" class="form-control" placeholder="ex: Main USDT Pool" value="{{ old('name') }}" required>
             </div>
-            
-            <div class="col-md-6 mb-3">
-                <label class="form-label fw-bold" style="font-size: 13px;">Adresse Publique</label>
-                <input type="text" name="address" class="form-control" placeholder="ex: TQx..." value="{{ old('address') }}" style="font-size: 14px;">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Réseau</label>
+                <input type="text" name="network" class="form-control" placeholder="ex: TRC20, ERC20, SOL" value="{{ old('network') }}">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Adresse Publique</label>
+                <input type="text" name="address" class="form-control" placeholder="ex: TQx..." value="{{ old('address') }}">
+              </div>
             </div>
+            <div class="mb-3">
+              <label class="form-label text-danger"><i class="bi-exclamation-triangle me-1"></i>Phrase de récupération (Seed Phrase)</label>
+              <textarea name="recovery_phrase" class="form-control" rows="3" placeholder="12 ou 24 mots..." style="font-family: monospace;">{{ old('recovery_phrase') }}</textarea>
+              <span class="form-text">Conservez cette phrase en sécurité. Elle permet de récupérer les fonds.</span>
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-danger"><i class="bi-key me-1"></i>Clé Privée</label>
+              <input type="text" name="private_key" class="form-control" placeholder="Optionnel si seed phrase fournie" value="{{ old('private_key') }}" style="font-family: monospace;">
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Notes</label>
+              <textarea name="notes" class="form-control" rows="2">{{ old('notes') }}</textarea>
+            </div>
+            <div class="d-flex justify-content-end gap-3">
+              <a href="{{ route('admin.wallets.index') }}" class="btn btn-white">Annuler</a>
+              <button type="submit" class="btn btn-primary"><i class="bi-check-lg me-1"></i> Enregistrer</button>
+            </div>
+          </form>
         </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-bold" style="font-size: 13px; color: #ef4444;"><i class="fas fa-exclamation-triangle me-1"></i> Phrase de récupération (Seed Phrase)</label>
-            <textarea name="recovery_phrase" class="form-control" rows="3" placeholder="Saisissez les 12 ou 24 mots ici..." style="font-size: 14px; font-family: monospace;">{{ old('recovery_phrase') }}</textarea>
-            <div class="form-text" style="font-size: 11px;">Conservez cette phrase en sécurité. Elle permet de récupérer les fonds en cas de perte d'accès.</div>
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label fw-bold" style="font-size: 13px; color: #ef4444;"><i class="fas fa-key me-1"></i> Clé Privée</label>
-            <input type="text" name="private_key" class="form-control" placeholder="Clé privée (optionnel si phrase de récupération fournie)" value="{{ old('private_key') }}" style="font-size: 14px; font-family: monospace;">
-        </div>
-
-        <div class="mb-4">
-            <label class="form-label fw-bold" style="font-size: 13px;">Notes supplémentaires</label>
-            <textarea name="notes" class="form-control" rows="2" style="font-size: 14px;">{{ old('notes') }}</textarea>
-        </div>
-
-        <button type="submit" class="btn-possible w-100"><i class="fas fa-save me-2"></i> Enregistrer le portefeuille</button>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
 
 @endsection

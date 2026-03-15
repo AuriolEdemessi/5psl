@@ -146,10 +146,21 @@
                 {{-- Montant --}}
                 <div style="margin-bottom: 20px;">
                     <label class="form-label-custom">Montant (USD)</label>
-                    <input type="number" name="montant" id="montantInput" class="input-5psl @error('montant') is-invalid @enderror" value="{{ old('montant') }}" step="0.01" min="1" required placeholder="Ex: 500">
+                    <input type="number" name="montant" id="montantInput" class="input-5psl @error('montant') is-invalid @enderror" value="{{ old('montant') }}" step="0.01" min="1" required placeholder="Ex: 100">
                     @error('montant')
                         <div style="color: var(--color-danger); font-size: 12px; margin-top: 6px; font-weight: 600;">{{ $message }}</div>
                     @enderror
+                    @php
+                        $hasDeposit = \App\Models\Transaction::where('user_id', auth()->id())
+                            ->where('type', 'depot')
+                            ->whereIn('statut', ['approuve', 'valide'])
+                            ->exists();
+                    @endphp
+                    @if(!$hasDeposit)
+                        <div style="margin-top: 8px; font-size: 12px; color: #d97706; font-weight: 600;">
+                            <i class="fas fa-info-circle me-1"></i> Premier dépôt : minimum 100 $ requis pour obtenir votre badge STARTER.
+                        </div>
+                    @endif
                     <div id="feePreview" style="display: none; margin-top: 8px; font-size: 12px; color: var(--color-muted);">
                         Frais {{ $entryFeeRate }}% : <strong id="feeAmount" style="color: var(--color-warning);">0.00 $</strong>
                         — Net crédité : <strong id="netAmount" style="color: var(--color-success);">0.00 $</strong>

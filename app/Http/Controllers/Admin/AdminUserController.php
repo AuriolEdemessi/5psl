@@ -53,7 +53,7 @@ class AdminUserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
             'role' => ['required', 'in:member,admin,superadmin'],
             'tier' => ['nullable', 'in:STARTER,PRO,ELITE'],
-            'kyc_status' => ['required', 'in:pending,verified,rejected'],
+            'kyc_status' => ['required', 'in:not_started,pending,verified,rejected'],
         ]);
 
         $user->update([

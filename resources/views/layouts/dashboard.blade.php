@@ -221,6 +221,19 @@
         .skeleton-title { height: 28px; margin-bottom: 12px; width: 60%; }
         .skeleton-circle { border-radius: 50%; }
 
+        /* ── Toast Notifications ── */
+        .toast-5psl {
+            background: #fff; border-radius: 10px; padding: 16px 18px; margin-bottom: 10px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.12); border-left: 4px solid #ccc;
+            animation: toastSlideIn 0.4s ease-out; transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .toast-5psl.toast-hiding { opacity: 0; transform: translateX(40px); }
+        .toast-5psl-success { border-left-color: #059669; }
+        .toast-5psl-error { border-left-color: #dc2626; }
+        .toast-5psl-warning { border-left-color: #d97706; }
+        .toast-5psl-info { border-left-color: #0066ff; }
+        @keyframes toastSlideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+
         /* ── Page Loader ── */
         .page-loader {
             position: fixed; inset: 0; background: white; z-index: 9999;
@@ -338,34 +351,8 @@
 
             @if(Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
                 <div class="nav-section">Administration</div>
-                <a href="{{ route('investment.admin.index') }}" class="nav-item {{ request()->routeIs('investment.admin.*') ? 'active' : '' }}">
-                    <i class="fas fa-cogs"></i> Gestion Club
-                </a>
-                <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
-                    <i class="fas fa-users"></i> Utilisateurs
-                </a>
-                <a href="{{ route('admin.wallets.index') }}" class="nav-item {{ request()->routeIs('admin.wallets.*') ? 'active' : '' }}">
-                    <i class="fas fa-wallet"></i> Portefeuilles Centraux
-                </a>
-                <a href="{{ route('admin.crypto.index') }}" class="nav-item {{ request()->routeIs('admin.crypto.*') ? 'active' : '' }}">
-                    <i class="fab fa-bitcoin"></i> Adresses Dépôts
-                </a>
-                <a href="{{ route('opportunities.create') }}" class="nav-item {{ request()->routeIs('opportunities.create') ? 'active' : '' }}">
-                    <i class="fas fa-plus-circle"></i> Créer Opportunité
-                </a>
-                <a href="{{ route('admin.kyc.index') }}" class="nav-item {{ request()->routeIs('admin.kyc.*') ? 'active' : '' }}">
-                    <i class="fas fa-id-card"></i> Vérifications KYC
-                    @php $pendingKyc = \App\Models\User::where('kyc_status', 'pending')->count(); @endphp
-                    @if($pendingKyc > 0)
-                        <span style="background: var(--color-warning); color: var(--possible-dark); font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto;">{{ $pendingKyc }}</span>
-                    @endif
-                </a>
-                <a href="{{ route('admin.support.index') }}" class="nav-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
-                    <i class="fas fa-headset"></i> Support Admin
-                    @php $openTickets = \App\Models\SupportTicket::where('status', '!=', 'closed')->count(); @endphp
-                    @if($openTickets > 0)
-                        <span style="background: var(--possible-blue); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto;">{{ $openTickets }}</span>
-                    @endif
+                <a href="{{ route('admin.dashboard') }}" class="nav-item" style="background: #059669; color: white; border-radius: 8px; margin: 0 12px; padding: 10px 14px; font-weight: 700;">
+                    <i class="fas fa-shield-alt"></i> Espace Admin
                 </a>
             @endif
 
@@ -388,9 +375,6 @@
             </a>
             <a href="{{ route('investment.transaction.form') }}" class="nav-item {{ request()->routeIs('investment.transaction.*') ? 'active' : '' }}">
                 <i class="fas fa-arrow-right-arrow-left"></i> Dépôts & Retraits
-            </a>
-            <a href="{{ route('investment.invest.form') }}" class="nav-item {{ request()->routeIs('investment.invest.*') ? 'active' : '' }}">
-                <i class="fas fa-coins"></i> Investir
             </a>
             <a href="{{ route('affiliate.index') }}" class="nav-item {{ request()->routeIs('affiliate.*') ? 'active' : '' }}">
                 <i class="fas fa-user-plus"></i> Affiliation
@@ -445,15 +429,84 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        @if(session('success'))
-            <div class="alert-5psl alert-5psl-success">
-                <i class="fas fa-check-circle"></i>{{ session('success') }}
+        <!-- Global Toast Notifications -->
+        @if(session('success') || session('error') || session('warning') || session('info'))
+        <div id="globalToastContainer" style="position:fixed;top:80px;right:20px;z-index:10000;max-width:420px;width:100%;">
+          @if(session('success'))
+          <div class="toast-5psl toast-5psl-success" role="alert">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#059669;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-check"></i>
+              </div>
+              <div style="flex:1;">
+                <strong style="display:block;margin-bottom:2px;font-size:14px;">Succès</strong>
+                <span style="font-size:13px;color:var(--color-muted);">{{ session('success') }}</span>
+              </div>
+              <button type="button" style="background:none;border:none;font-size:16px;color:var(--color-muted);cursor:pointer;padding:0;" onclick="this.closest('.toast-5psl').remove()">&times;</button>
             </div>
+          </div>
+          @endif
+          @if(session('error'))
+          <div class="toast-5psl toast-5psl-error" role="alert">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#dc2626;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-times"></i>
+              </div>
+              <div style="flex:1;">
+                <strong style="display:block;margin-bottom:2px;font-size:14px;">Erreur</strong>
+                <span style="font-size:13px;color:var(--color-muted);">{{ session('error') }}</span>
+              </div>
+              <button type="button" style="background:none;border:none;font-size:16px;color:var(--color-muted);cursor:pointer;padding:0;" onclick="this.closest('.toast-5psl').remove()">&times;</button>
+            </div>
+          </div>
+          @endif
+          @if(session('warning'))
+          <div class="toast-5psl toast-5psl-warning" role="alert">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#d97706;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <div style="flex:1;">
+                <strong style="display:block;margin-bottom:2px;font-size:14px;">Attention</strong>
+                <span style="font-size:13px;color:var(--color-muted);">{{ session('warning') }}</span>
+              </div>
+              <button type="button" style="background:none;border:none;font-size:16px;color:var(--color-muted);cursor:pointer;padding:0;" onclick="this.closest('.toast-5psl').remove()">&times;</button>
+            </div>
+          </div>
+          @endif
+          @if(session('info'))
+          <div class="toast-5psl toast-5psl-info" role="alert">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#0066ff;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-info"></i>
+              </div>
+              <div style="flex:1;">
+                <strong style="display:block;margin-bottom:2px;font-size:14px;">Information</strong>
+                <span style="font-size:13px;color:var(--color-muted);">{{ session('info') }}</span>
+              </div>
+              <button type="button" style="background:none;border:none;font-size:16px;color:var(--color-muted);cursor:pointer;padding:0;" onclick="this.closest('.toast-5psl').remove()">&times;</button>
+            </div>
+          </div>
+          @endif
+        </div>
         @endif
-        @if(session('error'))
-            <div class="alert-5psl alert-5psl-danger">
-                <i class="fas fa-exclamation-circle"></i>{{ session('error') }}
+        @if($errors->any())
+        <div id="globalToastContainer" style="position:fixed;top:80px;right:20px;z-index:10000;max-width:420px;width:100%;">
+          <div class="toast-5psl toast-5psl-error" role="alert">
+            <div style="display:flex;align-items:flex-start;gap:12px;">
+              <div style="width:32px;height:32px;border-radius:50%;background:#dc2626;color:white;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                <i class="fas fa-times"></i>
+              </div>
+              <div style="flex:1;">
+                <strong style="display:block;margin-bottom:2px;font-size:14px;">Erreur de validation</strong>
+                @foreach($errors->all() as $err)
+                  <span style="font-size:13px;color:var(--color-muted);display:block;">• {{ $err }}</span>
+                @endforeach
+              </div>
+              <button type="button" style="background:none;border:none;font-size:16px;color:var(--color-muted);cursor:pointer;padding:0;" onclick="this.closest('.toast-5psl').remove()">&times;</button>
             </div>
+          </div>
+        </div>
         @endif
 
         @yield('content')
@@ -480,6 +533,15 @@
                 setTimeout(function() { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
             });
         }
+    </script>
+    <script>
+        // Toast auto-dismiss
+        document.querySelectorAll('.toast-5psl').forEach(function(toast) {
+            setTimeout(function() {
+                toast.classList.add('toast-hiding');
+                setTimeout(function() { toast.remove(); }, 400);
+            }, 5000);
+        });
     </script>
     @yield('scripts')
 </body>

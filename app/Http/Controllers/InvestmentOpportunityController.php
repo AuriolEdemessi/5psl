@@ -34,6 +34,22 @@ class InvestmentOpportunityController extends Controller
     }
 
     /**
+     * Liste de toutes les opportunités d'investissement pour l'admin (avec layout admin)
+     */
+    public function adminIndex()
+    {
+        $opportunities = InvestmentOpportunity::withCount(['votes as approvals_count' => function ($q) {
+            $q->where('vote', 'approuver');
+        }, 'votes as rejections_count' => function ($q) {
+            $q->where('vote', 'rejeter');
+        }])
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('investment.admin.opportunities', compact('opportunities'));
+    }
+
+    /**
      * Formulaire de création (admin uniquement)
      */
     public function create()
@@ -64,8 +80,12 @@ class InvestmentOpportunityController extends Controller
         ]);
 
         // Envoyer une notification email à tous les membres
-        $users = User::where('id', '!=', Auth::id())->get();
-        Notification::send($users, new NewOpportunityNotification($opportunity));
+        try {
+            $users = User::where('id', '!=', Auth::id())->get();
+            Notification::send($users, new NewOpportunityNotification($opportunity));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Notification mail failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('opportunities.index')
             ->with('success', 'Opportunité publiée et notifications envoyées à tous les membres !');

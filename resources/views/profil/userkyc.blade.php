@@ -29,7 +29,7 @@
             <ul class="list-inline list-px-2">
               <li class="list-inline-item">
                 <i class="bi-building me-1"></i>
-                <span>Htmlstream</span>
+                <span>5PSL Club</span>
               </li>
 
               <li class="list-inline-item">

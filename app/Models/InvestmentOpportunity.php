@@ -54,4 +54,14 @@ class InvestmentOpportunity extends Model
         $vote = $this->votes()->where('user_id', $userId)->first();
         return $vote?->vote;
     }
+
+    public function asset()
+    {
+        return $this->hasOne(Asset::class, 'opportunity_id');
+    }
+
+    public function isConvertedToAsset(): bool
+    {
+        return $this->asset()->exists();
+    }
 }

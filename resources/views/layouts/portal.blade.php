@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:43:56 GMT -->
 <head>
    <!-- Meta Data -->
    <meta charset="UTF-8">
@@ -841,6 +839,4 @@
 
 </body>
 
-
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:44:28 GMT -->
 </html>

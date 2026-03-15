@@ -123,6 +123,13 @@ class AdminInvestmentController extends Controller
             $transaction->statut = 'valide';
             $transaction->save();
 
+            // Notification user
+            try {
+                $transaction->user->notify(new \App\Notifications\TransactionApprovedNotification($transaction));
+            } catch (\Throwable $mailErr) {
+                \Illuminate\Support\Facades\Log::warning('Notification mail failed: ' . $mailErr->getMessage());
+            }
+
             return back()->with('success', "La transaction de {$transaction->user->name} a été validée et le portefeuille a été mis à jour.");
         } catch (\Exception $e) {
             return back()->with('error', "Erreur lors du traitement : " . $e->getMessage());
@@ -136,6 +143,51 @@ class AdminInvestmentController extends Controller
         }
 
         $transaction->update(['statut' => 'rejete']);
+        
+        // Notify user (Optional: you can create a TransactionRejectedNotification later)
+        // $transaction->user->notify(new \App\Notifications\TransactionRejectedNotification($transaction));
+
         return back()->with('success', "La transaction de {$transaction->user->name} a été rejetée.");
+    }
+
+    public function manualDeposit(Request $request, User $user)
+    {
+        $request->validate([
+            'montant' => 'required|numeric|min:0.01',
+            'description' => 'nullable|string|max:1000'
+        ]);
+
+        $montant = (float) $request->montant;
+
+        // Apply entry fee logic the same way as standard deposits (or we could optionally waive it, but let's be consistent)
+        $fees = $this->investmentService->calculateEntryFee($montant);
+        
+        try {
+            $transaction = Transaction::create([
+                'user_id'        => $user->id,
+                'type'           => 'depot',
+                'montant'        => $montant,
+                'frais_entree'   => $fees['frais'],
+                'montant_net'    => $fees['montant_net'],
+                'commission_hwm' => 0,
+                'statut'         => 'valide', // Automatically approved
+                'description'    => $request->description ?? 'Dépôt manuel par l\'administrateur',
+            ]);
+
+            // Issue shares directly
+            $engine = app(\App\Services\FinanceEngineService::class);
+            $engine->issueShares($user, (string) $transaction->montant_net);
+
+            // Notify user
+            try {
+                $user->notify(new \App\Notifications\TransactionApprovedNotification($transaction));
+            } catch (\Throwable $mailErr) {
+                \Illuminate\Support\Facades\Log::warning('Notification mail failed: ' . $mailErr->getMessage());
+            }
+
+            return back()->with('success', "Le dépôt manuel de " . number_format($montant, 2) . "$ a été effectué avec succès et les parts ont été attribuées à {$user->name}.");
+        } catch (\Exception $e) {
+            return back()->with('error', "Erreur lors du dépôt manuel : " . $e->getMessage());
+        }
     }
 }

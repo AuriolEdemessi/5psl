@@ -33,18 +33,12 @@
             <ul class="list-inline list-px-2">
               <li class="list-inline-item">
                 <i class="bi-building me-1"></i>
-                <span>Htmlstream</span>
-              </li>
-
-              <li class="list-inline-item">
-                <i class="bi-geo-alt me-1"></i>
-                <a href="#">San Francisco,</a>
-                <a href="#">US</a>
+                <span>5PSL Club</span>
               </li>
 
               <li class="list-inline-item">
                 <i class="bi-calendar-week me-1"></i>
-                <span>Joined March 2017</span>
+                <span>Membre depuis {{ Auth::user()->created_at->translatedFormat('F Y') }}</span>
               </li>
             </ul>
             <!-- End List -->
@@ -225,7 +219,7 @@
     <div class="footer">
       <div class="row justify-content-between align-items-center">
         <div class="col">
-          <p class="fs-6 mb-0">&copy; Front. <span class="d-none d-sm-inline-block">2022 Htmlstream.</span></p>
+          <p class="fs-6 mb-0">&copy; 5PSL Club. <span class="d-none d-sm-inline-block">{{ date('Y') }}.</span></p>
         </div>
         <!-- End Col -->
 

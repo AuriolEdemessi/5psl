@@ -67,45 +67,6 @@ class DashboardController extends Controller
     }
 
     /**
-     * Formulaire d'investissement.
-     */
-    public function investForm()
-    {
-        $user    = Auth::user();
-        $assets  = Asset::where('is_active', true)->get();
-        $nav     = $this->investmentService->calculateNAV();
-        $balance = $this->investmentService->getUserBalance($user);
-        $tier    = $user->tier ?? 'STARTER';
-        $entryFeeRate = InvestmentService::ENTRY_FEE_RATE * 100;
-
-        return view('investment.invest', compact('assets', 'nav', 'balance', 'tier', 'entryFeeRate'));
-    }
-
-    /**
-     * Traitement de l'investissement.
-     */
-    public function invest(Request $request)
-    {
-        $request->validate([
-            'asset_id' => 'required|exists:assets,id',
-            'montant'  => 'required|numeric|min:0.01',
-        ]);
-
-        try {
-            $this->investmentService->invest(
-                Auth::user(),
-                $request->montant,
-                $request->asset_id
-            );
-
-            return redirect()->route('investment.dashboard')
-                ->with('success', 'Investissement effectué avec succès !');
-        } catch (\Exception $e) {
-            return back()->with('error', $e->getMessage());
-        }
-    }
-
-    /**
      * Formulaire de transaction (dépôt/retrait) avec infos crypto USDT/USDC.
      */
     public function transactionForm()
@@ -150,6 +111,20 @@ class DashboardController extends Controller
         $montant = (float) $request->montant;
         $type    = $request->type;
 
+        // Premier dépôt : minimum $100 pour obtenir le badge STARTER
+        if ($type === 'depot') {
+            $hasApprovedDeposit = Transaction::where('user_id', $user->id)
+                ->where('type', 'depot')
+                ->whereIn('statut', ['approuve', 'valide'])
+                ->exists();
+
+            if (!$hasApprovedDeposit && $montant < 100) {
+                return redirect()->back()
+                    ->withInput()
+                    ->withErrors(['montant' => 'Le premier dépôt doit être d\'au moins 100 $. Ce montant minimum permet d\'obtenir votre badge STARTER.']);
+            }
+        }
+
         // Frais d'entrée 2% sur les dépôts uniquement
         $fraisEntree = 0;
         $montantNet  = $montant;
@@ -169,7 +144,7 @@ class DashboardController extends Controller
             $description .= "\n[Adresse: {$request->crypto_address}]";
         }
 
-        Transaction::create([
+        $transaction = Transaction::create([
             'user_id'        => $user->id,
             'type'           => $type,
             'montant'        => $montant,
@@ -179,6 +154,14 @@ class DashboardController extends Controller
             'statut'         => 'en_attente',
             'description'    => trim($description),
         ]);
+
+        // Notify Admins
+        try {
+            $admins = \App\Models\User::whereIn('role', ['admin', 'superadmin'])->get();
+            \Illuminate\Support\Facades\Notification::send($admins, new \App\Notifications\TransactionPendingNotification($transaction));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Notification mail failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('investment.dashboard')
             ->with('success', 'Transaction soumise avec succès. En attente de validation par un administrateur.');

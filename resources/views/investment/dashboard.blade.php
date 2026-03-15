@@ -35,8 +35,8 @@
         <a href="{{ route('investment.transaction.form') }}" class="btn-possible btn-possible-outline btn-possible-sm">
             <i class="fas fa-arrow-right-arrow-left"></i> Dépôt / Retrait
         </a>
-        <a href="{{ route('investment.invest.form') }}" class="btn-possible btn-possible-primary btn-possible-sm">
-            <i class="fas fa-plus"></i> Investir
+        <a href="{{ route('opportunities.index') }}" class="btn-possible btn-possible-primary btn-possible-sm">
+            <i class="fas fa-lightbulb"></i> Opportunités
         </a>
     </div>
 </div>
@@ -209,8 +209,8 @@
                                         <div class="empty-state-icon"><i class="fas fa-chart-pie"></i></div>
                                         <h4>Aucun investissement</h4>
                                         <p>Commencez à investir pour construire votre portefeuille.</p>
-                                        <a href="{{ route('investment.invest.form') }}" class="btn-possible btn-possible-primary btn-possible-sm mt-3">
-                                            <i class="fas fa-plus"></i> Investir maintenant
+                                        <a href="{{ route('investment.transaction.form') }}" class="btn-possible btn-possible-primary btn-possible-sm mt-3">
+                                            <i class="fas fa-plus"></i> Faire un dépôt
                                         </a>
                                     </div>
                                 </td>

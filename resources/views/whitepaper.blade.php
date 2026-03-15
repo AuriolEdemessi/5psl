@@ -74,7 +74,7 @@
             <div class="wp-grid-item">
                 <div class="wp-gi-icon" style="background: #f1f5f9; color: #64748b;"><i class="fas fa-seedling"></i></div>
                 <h4>Starter</h4>
-                <p>$500 — $2 500</p>
+                <p>$100 — $2 500</p>
                 <div style="font-size: 20px; font-weight: 900; color: var(--possible-dark); margin-top: 4px;">$20<span style="font-size: 11px; font-weight: 600; color: #94a3b8;">/an</span></div>
             </div>
             <div class="wp-grid-item" style="border-color: var(--possible-blue);">

@@ -15,11 +15,6 @@
     @endif
 </div>
 
-@if(session('success'))
-<div style="background: rgba(0,255,0,0.1); border: 1px solid #059669; color: #059669; padding: 16px; border-radius: 8px; margin-bottom: 24px; font-weight: 600;">
-    <i class="fas fa-check-circle me-2"></i>{{ session('success') }}
-</div>
-@endif
 
 <div class="row g-4">
     @forelse($opportunities as $opportunity)

@@ -1,15 +1,16 @@
-<aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white  ">
+@php
+    $pendingKycCount = \App\Models\User::where('kyc_status', 'pending')->count();
+    $pendingTxCount = \App\Models\Transaction::where('statut', 'en_attente')->count();
+    $openTickets = \App\Models\SupportTicket::where('status', '!=', 'closed')->count();
+@endphp
+<aside class="js-navbar-vertical-aside navbar navbar-vertical-aside navbar-vertical navbar-vertical-fixed navbar-expand-xl navbar-bordered bg-white">
     <div class="navbar-vertical-container">
       <div class="navbar-vertical-footer-offset">
         <!-- Logo -->
-
-        <a class="navbar-brand" href="index.html" aria-label="Front">
-          <img class="navbar-brand-logo" src="media/logo/logoweb.svg" alt="Logo" data-hs-theme-appearance="default">
-          <img class="navbar-brand-logo" src="media/logo/logoweb.svg" alt="Logo" data-hs-theme-appearance="dark">
-          <img class="navbar-brand-logo-mini" src="media/logo/logovertical.svg" alt="Logo" data-hs-theme-appearance="default">
-          <img class="navbar-brand-logo-mini" src="media/logo/logovertical.svg" alt="Logo" data-hs-theme-appearance="dark">
+        <a class="navbar-brand" href="{{ route('admin.dashboard') }}" aria-label="5PSL Admin">
+          <span style="font-size: 22px; font-weight: 900; letter-spacing: -1px;"><span style="color: #377dff;">5</span>PSL</span>
+          <span class="badge bg-soft-primary text-primary ms-2" style="font-size: 10px;">ADMIN</span>
         </a>
-
         <!-- End Logo -->
 
         <!-- Navbar Vertical Toggle -->
@@ -17,149 +18,126 @@
           <i class="bi-arrow-bar-left navbar-toggler-short-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Collapse"></i>
           <i class="bi-arrow-bar-right navbar-toggler-full-align" data-bs-template='<div class="tooltip d-none d-md-block" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>' data-bs-toggle="tooltip" data-bs-placement="right" title="Expand"></i>
         </button>
-
         <!-- End Navbar Vertical Toggle -->
 
         <!-- Content -->
         <div class="navbar-vertical-content">
           <div id="navbarVerticalMenu" class="nav nav-pills nav-vertical card-navbar-nav">
-            <!-- Collapse -->
+
+            <!-- Dashboard -->
             <div class="nav-item">
-              <a class="nav-link dropdown-toggle active" href="#navbarVerticalMenuDashboards" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuDashboards" aria-expanded="true" aria-controls="navbarVerticalMenuDashboards">
+              <a class="nav-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}">
                 <i class="bi-house-door nav-icon"></i>
-                <span class="nav-link-title">Dashboards</span>
+                <span class="nav-link-title">Tableau de bord</span>
               </a>
-
-              <div id="navbarVerticalMenuDashboards" class="nav-collapse collapse show" data-bs-parent="#navbarVerticalMenu">
-                <a class="nav-link active" href="index.html">Accueil</a>
-                <a class="nav-link " href="dashboard-alternative.html">Portefeuille</a>
-              </div>
             </div>
-            <!-- End Collapse -->
 
-            <span class="dropdown-header mt-4">MENU</span>
+            <span class="dropdown-header mt-4">GESTION DU CLUB</span>
             <small class="bi-three-dots nav-subtitle-replacer"></small>
 
-            <!-- Collapse -->
-            <div class="navbar-nav nav-compact">
-
+            <!-- Gestion Club -->
+            <div class="nav-item">
+              <a class="nav-link {{ request()->routeIs('investment.admin.*') ? 'active' : '' }}" href="{{ route('investment.admin.index') }}">
+                <i class="bi-speedometer2 nav-icon"></i>
+                <span class="nav-link-title">Gestion Club</span>
+                @if($pendingTxCount > 0)
+                  <span class="badge bg-soft-danger text-danger rounded-pill ms-auto">{{ $pendingTxCount }}</span>
+                @endif
+              </a>
             </div>
-            <div id="navbarVerticalMenuPagesMenu">
-              <!-- Collapse -->
-              <div class="nav-item">
-                <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesUsersMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesUsersMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesUsersMenu">
-                  <i class="bi-people nav-icon"></i>
-                  <span class="nav-link-title">Utilisateurs</span>
-                </a>
 
-                <div id="navbarVerticalMenuPagesUsersMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                  <a class="nav-link " href="users.html">Overview</a>
-                  <a class="nav-link " href="users-leaderboard.html">Leaderboard</a>
-                  <a class="nav-link " href="users-add-user.html">Add User <span class="badge bg-info rounded-pill ms-1">Hot</span></a>
-                </div>
+            <!-- Utilisateurs -->
+            <div class="nav-item">
+              <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.users.*') ? 'active' : '' }}" href="#navAdminUsers" role="button" data-bs-toggle="collapse" data-bs-target="#navAdminUsers" aria-expanded="{{ request()->routeIs('admin.users.*') ? 'true' : 'false' }}">
+                <i class="bi-people nav-icon"></i>
+                <span class="nav-link-title">Utilisateurs</span>
+              </a>
+              <div id="navAdminUsers" class="nav-collapse collapse {{ request()->routeIs('admin.users.*') ? 'show' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.users.index') ? 'active' : '' }}" href="{{ route('admin.users.index') }}">Liste des membres</a>
+                <a class="nav-link {{ request()->routeIs('admin.users.create') ? 'active' : '' }}" href="{{ route('admin.users.create') }}">Créer un compte</a>
               </div>
-              <!-- End Collapse -->
-
-              <!-- Collapse -->
-              
-              <!-- End Collapse -->
-
-              <!-- Collapse -->
-              <div class="nav-item">
-                <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesAccountMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesAccountMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesAccountMenu">
-                  <i class="bi-person-badge nav-icon"></i>
-                  <span class="nav-link-title">Cours</span>
-                </a>
-
-                <div id="navbarVerticalMenuPagesAccountMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                  <a class="nav-link " href="{{ route('courses.index') }}">Gestion des cours</a>
-                  <a class="nav-link " href="{{ route('courses.create') }}">Créer un cours</a>
-
-                </div>
-              </div>
-              <!-- End Collapse -->
-
-              <!-- Collapse -->
-              <div class="nav-item">
-                <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesEcommerceMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesEcommerceMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesEcommerceMenu">
-                  <i class="bi-basket nav-icon"></i>
-                  <span class="nav-link-title">Transactions</span>
-                </a>
-
-                <div id="navbarVerticalMenuPagesEcommerceMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                  <a class="nav-link " href="ecommerce.html">Overview</a>
-
-                  
-
-                  <a class="nav-link " href="ecommerce-referrals.html">Referrals</a>
-                  <a class="nav-link " href="ecommerce-manage-reviews.html">Manage Reviews</a>
-                  <a class="nav-link " href="ecommerce-checkout.html">Checkout</a>
-                </div>
-              </div>
-              <!-- End Collapse -->
-
-              <!-- Collapse -->
-              <div class="nav-item">
-                <a class="nav-link dropdown-toggle " href="#navbarVerticalMenuPagesProjectsMenu" role="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalMenuPagesProjectsMenu" aria-expanded="false" aria-controls="navbarVerticalMenuPagesProjectsMenu">
-                  <i class="bi-stickies nav-icon"></i>
-                  <span class="nav-link-title">Programmes</span>
-                </a>
-
-                <div id="navbarVerticalMenuPagesProjectsMenu" class="nav-collapse collapse " data-bs-parent="#navbarVerticalMenuPagesMenu">
-                  <a class="nav-link " href="projects.html">Overview</a>
-                  <a class="nav-link " href="projects-timeline.html">Timeline</a>
-                </div>
-              </div>
-              <!-- End Collapse -->
-
-              
-
-              <!-- Collapse -->
-              
-              <!-- End Collapse -->
-
-              
-
-              
-
-              
             </div>
-            <!-- End Collapse -->
 
-            <span class="dropdown-header mt-4">Apps</span>
+            <!-- KYC -->
+            <div class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.kyc.*') ? 'active' : '' }}" href="{{ route('admin.kyc.index') }}">
+                <i class="bi-person-check nav-icon"></i>
+                <span class="nav-link-title">Vérifications KYC</span>
+                @if($pendingKycCount > 0)
+                  <span class="badge bg-soft-warning text-warning rounded-pill ms-auto">{{ $pendingKycCount }}</span>
+                @endif
+              </a>
+            </div>
+
+            <!-- Opportunités -->
+            <div class="nav-item">
+              <a class="nav-link dropdown-toggle {{ request()->routeIs('opportunities.*') ? 'active' : '' }}" href="#navAdminOpportunities" role="button" data-bs-toggle="collapse" data-bs-target="#navAdminOpportunities" aria-expanded="{{ request()->routeIs('opportunities.*') ? 'true' : 'false' }}">
+                <i class="bi-lightbulb nav-icon"></i>
+                <span class="nav-link-title">Opportunités</span>
+              </a>
+              <div id="navAdminOpportunities" class="nav-collapse collapse {{ request()->routeIs('admin.opportunities.*') || request()->routeIs('opportunities.create') ? 'show' : '' }}">
+                <a class="nav-link {{ request()->routeIs('admin.opportunities.index') ? 'active' : '' }}" href="{{ route('admin.opportunities.index') }}">Toutes les opportunités</a>
+                <a class="nav-link {{ request()->routeIs('opportunities.create') ? 'active' : '' }}" href="{{ route('opportunities.create') }}">Créer une opportunité</a>
+              </div>
+            </div>
+
+            <!-- Actifs du Club -->
+            <div class="nav-item">
+              <a class="nav-link {{ request()->routeIs('admin.assets.*') ? 'active' : '' }}" href="{{ route('admin.assets.index') }}">
+                <i class="bi-briefcase nav-icon"></i>
+                <span class="nav-link-title">Actifs du Club</span>
+              </a>
+            </div>
+
+            <span class="dropdown-header mt-4">FINANCE</span>
             <small class="bi-three-dots nav-subtitle-replacer"></small>
 
+            <!-- Portefeuilles Centraux -->
             <div class="nav-item">
-              <a class="nav-link " href="apps-kanban.html" data-placement="left">
-                <i class="bi-kanban nav-icon"></i>
-                <span class="nav-link-title">Kanban</span>
+              <a class="nav-link {{ request()->routeIs('admin.wallets.*') ? 'active' : '' }}" href="{{ route('admin.wallets.index') }}">
+                <i class="bi-wallet2 nav-icon"></i>
+                <span class="nav-link-title">Portefeuilles Centraux</span>
               </a>
             </div>
 
+            <!-- Adresses Crypto -->
             <div class="nav-item">
-              <a class="nav-link " href="apps-calendar.html" data-placement="left">
-                <i class="bi-calendar-week nav-icon"></i>
-                <span class="nav-link-title">Calendar</span>
+              <a class="nav-link {{ request()->routeIs('admin.crypto.*') ? 'active' : '' }}" href="{{ route('admin.crypto.index') }}">
+                <i class="bi-currency-bitcoin nav-icon"></i>
+                <span class="nav-link-title">Adresses Dépôts</span>
               </a>
             </div>
 
+            <span class="dropdown-header mt-4">SUPPORT</span>
+            <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+            <!-- Support -->
             <div class="nav-item">
-              <a class="nav-link " href="apps-invoice-generator.html" data-placement="left">
-                <i class="bi-receipt nav-icon"></i>
-                <span class="nav-link-title">Invoice Generator</span>
+              <a class="nav-link {{ request()->routeIs('admin.support.*') ? 'active' : '' }}" href="{{ route('admin.support.index') }}">
+                <i class="bi-headset nav-icon"></i>
+                <span class="nav-link-title">Tickets Support</span>
+                @if($openTickets > 0)
+                  <span class="badge bg-soft-info text-info rounded-pill ms-auto">{{ $openTickets }}</span>
+                @endif
               </a>
             </div>
 
+            <span class="dropdown-header mt-4">FORMATION</span>
+            <small class="bi-three-dots nav-subtitle-replacer"></small>
+
+            <!-- Cours -->
             <div class="nav-item">
-              <a class="nav-link " href="apps-file-manager.html" data-placement="left">
-                <i class="bi-folder2-open nav-icon"></i>
-                <span class="nav-link-title">File Manager</span>
+              <a class="nav-link dropdown-toggle {{ request()->routeIs('admin.courses.*') ? 'active' : '' }}" href="#navAdminCourses" role="button" data-bs-toggle="collapse" data-bs-target="#navAdminCourses" aria-expanded="{{ request()->routeIs('admin.courses.*') ? 'true' : 'false' }}">
+                <i class="bi-book nav-icon"></i>
+                <span class="nav-link-title">Cours</span>
               </a>
+              <div id="navAdminCourses" class="nav-collapse collapse {{ request()->routeIs('admin.courses.*') ? 'show' : '' }}">
+                <a class="nav-link" href="{{ route('admin.courses.index') }}">Gestion des cours</a>
+                <a class="nav-link" href="{{ route('admin.courses.create') }}">Créer un cours</a>
+              </div>
             </div>
 
-            
           </div>
-
         </div>
         <!-- End Content -->
 
@@ -167,104 +145,26 @@
         <div class="navbar-vertical-footer">
           <ul class="navbar-vertical-footer-list">
             <li class="navbar-vertical-footer-list-item">
-              <!-- Style Switcher -->
+              <a class="btn btn-ghost-secondary btn-icon rounded-circle" href="{{ route('investment.dashboard') }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Espace Membre">
+                <i class="bi-box-arrow-up-right"></i>
+              </a>
+            </li>
+            <li class="navbar-vertical-footer-list-item">
               <div class="dropdown dropup">
                 <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle" id="selectThemeDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
-
+                  <i class="bi-moon-stars"></i>
                 </button>
-
                 <div class="dropdown-menu navbar-dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="selectThemeDropdown">
-                  <a class="dropdown-item" href="#" data-icon="bi-moon-stars" data-value="auto">
-                    <i class="bi-moon-stars me-2"></i>
-                    <span class="text-truncate" title="Auto (system default)">Auto (system default)</span>
-                  </a>
                   <a class="dropdown-item" href="#" data-icon="bi-brightness-high" data-value="default">
                     <i class="bi-brightness-high me-2"></i>
-                    <span class="text-truncate" title="Default (light mode)">Default (light mode)</span>
+                    <span class="text-truncate">Mode clair</span>
                   </a>
                   <a class="dropdown-item active" href="#" data-icon="bi-moon" data-value="dark">
                     <i class="bi-moon me-2"></i>
-                    <span class="text-truncate" title="Dark">Dark</span>
+                    <span class="text-truncate">Mode sombre</span>
                   </a>
                 </div>
               </div>
-
-              <!-- End Style Switcher -->
-            </li>
-
-            <li class="navbar-vertical-footer-list-item">
-              <!-- Other Links -->
-              <div class="dropdown dropup">
-                <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle" id="otherLinksDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
-                  <i class="bi-info-circle"></i>
-                </button>
-
-                <div class="dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="otherLinksDropdown">
-                  <span class="dropdown-header">Help</span>
-                  <a class="dropdown-item" href="#">
-                    <i class="bi-journals dropdown-item-icon"></i>
-                    <span class="text-truncate" title="Resources &amp; tutorials">Resources &amp; tutorials</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="bi-command dropdown-item-icon"></i>
-                    <span class="text-truncate" title="Keyboard shortcuts">Keyboard shortcuts</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="bi-alt dropdown-item-icon"></i>
-                    <span class="text-truncate" title="Connect other apps">Connect other apps</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <i class="bi-gift dropdown-item-icon"></i>
-                    <span class="text-truncate" title="What's new?">What's new?</span>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <span class="dropdown-header">Contacts</span>
-                  <a class="dropdown-item" href="#">
-                    <i class="bi-chat-left-dots dropdown-item-icon"></i>
-                    <span class="text-truncate" title="Contact support">Contact support</span>
-                  </a>
-                </div>
-              </div>
-              <!-- End Other Links -->
-            </li>
-
-            <li class="navbar-vertical-footer-list-item">
-              <!-- Language -->
-              <div class="dropdown dropup">
-                <button type="button" class="btn btn-ghost-secondary btn-icon rounded-circle" id="selectLanguageDropdown" data-bs-toggle="dropdown" aria-expanded="false" data-bs-dropdown-animation>
-                  <img class="avatar avatar-xss avatar-circle" src="assets/vendor/flag-icon-css/flags/1x1/us.svg" alt="United States Flag">
-                </button>
-
-                <div class="dropdown-menu navbar-dropdown-menu-borderless" aria-labelledby="selectLanguageDropdown">
-                  <span class="dropdown-header">Select language</span>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/us.svg" alt="Flag">
-                    <span class="text-truncate" title="English">English (US)</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/gb.svg" alt="Flag">
-                    <span class="text-truncate" title="English">English (UK)</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/de.svg" alt="Flag">
-                    <span class="text-truncate" title="Deutsch">Deutsch</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/dk.svg" alt="Flag">
-                    <span class="text-truncate" title="Dansk">Dansk</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/it.svg" alt="Flag">
-                    <span class="text-truncate" title="Italiano">Italiano</span>
-                  </a>
-                  <a class="dropdown-item" href="#">
-                    <img class="avatar avatar-xss avatar-circle me-2" src="assets/vendor/flag-icon-css/flags/1x1/cn.svg" alt="Flag">
-                    <span class="text-truncate" title="中文 (繁體)">中文 (繁體)</span>
-                  </a>
-                </div>
-              </div>
-
-              <!-- End Language -->
             </li>
           </ul>
         </div>

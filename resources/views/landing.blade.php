@@ -340,7 +340,7 @@
         </div>
         <div class="hero-right">
             <!-- Zone dynamique pour insérer une image ultérieurement -->
-            <img src="{{ asset('media/img/hero.jpg') }}" alt="Hero Image" style="width: 100%; height: auto;">
+            <img src="{{ asset('media/img/bg1.jpg') }}" alt="Hero Image" style="width: 100%; height: auto;">
         </div>
     </section>
 
@@ -444,7 +444,7 @@
                     <div class="bg-white p-5 h-100 text-center" style="border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
                         <div style="font-size: 14px; font-weight: 800; text-transform: uppercase; color: #64748b; margin-bottom: 12px;">Starter</div>
                         <div style="font-size: 40px; font-weight: 900; color: var(--possible-dark);">$20<span style="font-size: 14px; color: #94a3b8;">/an</span></div>
-                        <div style="margin: 20px 0; padding: 10px; background: #f8fafc; border-radius: 8px; font-size: 13px; font-weight: 600;">$500 — $2,500 de capital</div>
+                        <div style="margin: 20px 0; padding: 10px; background: #f8fafc; border-radius: 8px; font-size: 13px; font-weight: 600;">$100 — $2,500 de capital</div>
                         <p style="font-size: 13px; color: #666; margin-bottom: 30px;">Parfait pour débuter en douceur dans l'investissement collectif avec la protection NAV.</p>
                         <a href="{{ route('register') }}" class="btn-outline-dark-custom w-100">Rejoindre</a>
                     </div>
@@ -478,7 +478,7 @@
             <div class="row align-items-center">
                 <div class="col-lg-6">
                     <h2 style="font-size: clamp(32px, 5vw, 56px); line-height: 1.1; letter-spacing: -2px;">{!! nl2br(e(__("Commencez à bâtir votre patrimoine avec 5PSL."))) !!}</h2>
-                    <p style="font-size: 20px; opacity: 0.8; margin-bottom: 40px; line-height: 1.6;">{{ __('Rejoignez des investisseurs intelligents qui mutualisent leurs forces pour faire fructifier leur capital, protégés par la transparence de la blockchain et du backend Laravel.') }}</p>
+                    <p style="font-size: 20px; opacity: 0.8; margin-bottom: 40px; line-height: 1.6;">{{ __('Rejoignez des investisseurs intelligents qui mutualisent leurs forces pour faire fructifier leur capital, protégés par la transparence de la blockchain.') }}</p>
                     
                     @auth
                         <a href="{{ route('investment.dashboard') }}" class="btn-possible bg-white px-5 py-3 fs-5" style="color: var(--possible-dark);">{{ __('Aller au Dashboard') }}</a>
@@ -505,7 +505,7 @@
                         <span class="text-blue">5</span>PSL
                     </a>
                     <p style="opacity: 0.7; font-size: 15px; max-width: 350px; line-height: 1.6;">
-                        {{ __('Le club d\'investissement collectif conçu pour être transparent, démocratique et performant. Mutualisons nos forces pour atteindre la liberté financière.') }}
+                        {{ __('Le club d\'investissement collectif conçu pour être transparent, démocratique et performant.') }}
                     </p>
                     <div style="display: flex; gap: 16px; margin-top: 24px;">
                         <a href="#" style="width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; transition: all 0.2s;" onmouseover="this.style.background='var(--possible-blue)'" onmouseout="this.style.background='rgba(255,255,255,0.1)'"><i class="fab fa-twitter"></i></a>
@@ -536,7 +536,7 @@
                     &copy; {{ date('Y') }} 5PSL {{ __('Club d\'Investissement') }}. {{ __('Tous droits réservés.') }}
                 </div>
                 <div style="font-size: 14px; opacity: 0.6;">
-                    {{ __('Fait avec') }} <i class="fas fa-heart" style="color: #ff3333;"></i> {{ __('pour la liberté financière.') }}
+                    {{ __('Propulsé') }} <i class="fas fa-heart" style="color: #ff3333;"></i> {{ __('par CRACLABS.') }}
                 </div>
             </div>
         </div>

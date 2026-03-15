@@ -27,11 +27,14 @@ class Asset extends Model
         'type',
         'categorie',
         'description',
+        'valeur_initiale',
         'valeur_actuelle',
         'is_active',
+        'opportunity_id',
     ];
 
     protected $casts = [
+        'valeur_initiale' => 'decimal:4',
         'valeur_actuelle' => 'decimal:4',
         'is_active' => 'boolean',
     ];
@@ -39,5 +42,28 @@ class Asset extends Model
     public function investments()
     {
         return $this->hasMany(Investment::class);
+    }
+
+    public function opportunity()
+    {
+        return $this->belongsTo(InvestmentOpportunity::class, 'opportunity_id');
+    }
+
+    public function performances()
+    {
+        return $this->hasMany(AssetPerformance::class)->orderByDesc('date');
+    }
+
+    public function latestPerformance()
+    {
+        return $this->hasOne(AssetPerformance::class)->latestOfMany('date');
+    }
+
+    public function roiPct(): float
+    {
+        if ($this->valeur_initiale <= 0) {
+            return 0;
+        }
+        return (($this->valeur_actuelle - $this->valeur_initiale) / $this->valeur_initiale) * 100;
     }
 }

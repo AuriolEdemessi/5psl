@@ -57,9 +57,9 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     
 
     Route::resource('courses', CourseController::class);
@@ -68,10 +68,6 @@ Route::middleware(['auth'])->group(function () {
 
     // Dashboard investissement
     Route::get('/investment/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('investment.dashboard');
-
-    // Investir
-    Route::get('/investment/invest', [App\Http\Controllers\DashboardController::class, 'investForm'])->name('investment.invest.form');
-    Route::post('/investment/invest', [App\Http\Controllers\DashboardController::class, 'invest'])->name('investment.invest');
 
     // Transactions (dépôt / retrait)
     Route::get('/investment/transaction', [App\Http\Controllers\DashboardController::class, 'transactionForm'])->name('investment.transaction.form');
@@ -101,10 +97,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/support/{ticket}/close', [App\Http\Controllers\SupportController::class, 'close'])->name('support.close');
 
     // ===== Support / Admin =====
-    Route::get('/admin/support', [App\Http\Controllers\Admin\AdminSupportController::class, 'index'])->name('admin.support.index');
-    Route::get('/admin/support/{ticket}', [App\Http\Controllers\Admin\AdminSupportController::class, 'show'])->name('admin.support.show');
-    Route::post('/admin/support/{ticket}/reply', [App\Http\Controllers\Admin\AdminSupportController::class, 'reply'])->name('admin.support.reply');
-    Route::post('/admin/support/{ticket}/assign', [App\Http\Controllers\Admin\AdminSupportController::class, 'assign'])->name('admin.support.assign');
+    Route::get('/admin/support', [App\Http\Controllers\AdminSupportController::class, 'index'])->name('admin.support.index');
+    Route::get('/admin/support/{ticket}', [App\Http\Controllers\AdminSupportController::class, 'show'])->name('admin.support.show');
+    Route::post('/admin/support/{ticket}/reply', [App\Http\Controllers\AdminSupportController::class, 'reply'])->name('admin.support.reply');
+    Route::post('/admin/support/{ticket}/assign', [App\Http\Controllers\AdminSupportController::class, 'assign'])->name('admin.support.assign');
 
     // ===== KYC / Admin =====
     Route::get('/admin/kyc', [App\Http\Controllers\Admin\AdminKycController::class, 'index'])->name('admin.kyc.index');
@@ -115,6 +111,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Création d'opportunités (admin uniquement)
     Route::middleware(['isAdmin'])->group(function () {
+        Route::get('/admin/opportunities', [App\Http\Controllers\InvestmentOpportunityController::class, 'adminIndex'])->name('admin.opportunities.index');
         Route::get('/opportunities/create/new', [App\Http\Controllers\InvestmentOpportunityController::class, 'create'])->name('opportunities.create');
         Route::post('/opportunities', [App\Http\Controllers\InvestmentOpportunityController::class, 'store'])->name('opportunities.store');
         
@@ -131,6 +128,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/users', [App\Http\Controllers\Admin\AdminUserController::class, 'store'])->name('admin.users.store');
         Route::get('/admin/users/{user}/edit', [App\Http\Controllers\Admin\AdminUserController::class, 'edit'])->name('admin.users.edit');
         Route::put('/admin/users/{user}', [App\Http\Controllers\Admin\AdminUserController::class, 'update'])->name('admin.users.update');
+        Route::post('/admin/users/{user}/deposit', [App\Http\Controllers\AdminInvestmentController::class, 'manualDeposit'])->name('admin.users.deposit');
 
         // Admin : Gestion Portefeuilles Centraux (12 words)
         Route::get('/admin/wallets', [App\Http\Controllers\Admin\ClubWalletController::class, 'index'])->name('admin.wallets.index');
@@ -151,6 +149,12 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/investment/admin/support', [App\Http\Controllers\AdminSupportController::class, 'index'])->name('admin.support.index');
         Route::post('/investment/admin/support/{ticket}/assign', [App\Http\Controllers\AdminSupportController::class, 'assign'])->name('admin.support.assign');
         Route::post('/investment/admin/support/{ticket}/status', [App\Http\Controllers\AdminSupportController::class, 'updateStatus'])->name('admin.support.status');
+
+        // Admin : Gestion des Actifs (Assets)
+        Route::get('/admin/assets', [App\Http\Controllers\AdminAssetController::class, 'index'])->name('admin.assets.index');
+        Route::get('/admin/assets/{asset}', [App\Http\Controllers\AdminAssetController::class, 'show'])->name('admin.assets.show');
+        Route::post('/admin/opportunities/{opportunity}/convert', [App\Http\Controllers\AdminAssetController::class, 'convertToAsset'])->name('admin.opportunities.convert');
+        Route::post('/admin/assets/{asset}/performance', [App\Http\Controllers\AdminAssetController::class, 'logPerformance'])->name('admin.assets.performance');
     });
 
 });

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from htmlstream.com/preview/front-dashboard-v2.0/dashboard-default-dark.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 29 May 2022 15:24:21 GMT -->
 <head>
   <!-- Required Meta Tags Always Come First -->
   <meta charset="utf-8">

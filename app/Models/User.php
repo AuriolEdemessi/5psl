@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -20,7 +20,7 @@ class User extends Authenticatable
     public const TIER_ELITE   = 'ELITE';
 
     public const TIER_THRESHOLDS = [
-        self::TIER_STARTER => ['min' => 500,   'max' => 2500,  'fee' => 20],
+        self::TIER_STARTER => ['min' => 100,   'max' => 2500,  'fee' => 20],
         self::TIER_PRO     => ['min' => 2500,  'max' => 10000, 'fee' => 50],
         self::TIER_ELITE   => ['min' => 10000, 'max' => PHP_FLOAT_MAX, 'fee' => 100],
     ];

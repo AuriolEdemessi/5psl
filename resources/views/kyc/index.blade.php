@@ -15,6 +15,7 @@
         <div class="card-5psl">
             <h4 style="font-size: 16px; font-weight: 800; margin-bottom: 20px;"><i class="fas fa-shield-alt text-blue me-2"></i>Statut de votre KYC</h4>
             
+            {{-- Status banner --}}
             @if($user->kyc_status === 'verified')
                 <div class="alert alert-success d-flex align-items-center" style="background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 12px; padding: 20px;">
                     <i class="fas fa-check-circle fs-2 text-success me-3"></i>
@@ -24,27 +25,42 @@
                     </div>
                 </div>
             @elseif($user->kyc_status === 'pending')
-                <div class="alert alert-warning d-flex align-items-center" style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 20px;">
+                <div class="alert alert-warning d-flex align-items-center mb-4" style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 12px; padding: 20px;">
                     <i class="fas fa-clock fs-2 text-warning me-3"></i>
                     <div>
                         <h5 class="mb-1 fw-bold text-warning">En cours de vérification</h5>
                         <p class="mb-0 text-warning" style="font-size: 13px;">Votre document a été soumis et est en cours d'examen par notre équipe. Cela prend généralement entre 24h et 48h.</p>
                     </div>
                 </div>
-            @else
-                @if($user->kyc_status === 'rejected')
-                    <div class="alert alert-danger d-flex align-items-center mb-4" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 20px;">
-                        <i class="fas fa-times-circle fs-2 text-danger me-3"></i>
-                        <div>
-                            <h5 class="mb-1 fw-bold text-danger">Votre KYC a été rejeté</h5>
-                            <p class="mb-0 text-danger" style="font-size: 13px;">
-                                Raison : {{ $documents->first()->rejection_reason ?? 'Document illisible ou non valide.' }}
-                            </p>
-                        </div>
+            @elseif($user->kyc_status === 'rejected')
+                <div class="alert alert-danger d-flex align-items-center mb-4" style="background: #fef2f2; border: 1px solid #fecaca; border-radius: 12px; padding: 20px;">
+                    <i class="fas fa-times-circle fs-2 text-danger me-3"></i>
+                    <div>
+                        <h5 class="mb-1 fw-bold text-danger">Votre KYC a été rejeté</h5>
+                        <p class="mb-0 text-danger" style="font-size: 13px;">
+                            Raison : {{ $documents->first()->rejection_reason ?? 'Document illisible ou non valide.' }}
+                        </p>
                     </div>
-                @endif
-                
+                </div>
+            @else
+                {{-- not_started --}}
+                <div class="alert d-flex align-items-center mb-4" style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px;">
+                    <i class="fas fa-id-card fs-2 me-3" style="color: #64748b;"></i>
+                    <div>
+                        <h5 class="mb-1 fw-bold" style="color: #334155;">Vérification requise</h5>
+                        <p class="mb-0" style="font-size: 13px; color: #64748b;">Soumettez un document d'identité valide pour activer votre compte et accéder aux retraits.</p>
+                    </div>
+                </div>
+            @endif
+
+            {{-- Upload form: visible for not_started, rejected, and pending (to allow re-submission) --}}
+            @if($user->kyc_status !== 'verified')
                 <div style="background: #f8fafc; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                    @if($user->kyc_status === 'pending')
+                        <p style="font-size: 13px; color: #d97706; font-weight: 600; margin-bottom: 16px;">
+                            <i class="fas fa-info-circle me-1"></i> Vous pouvez soumettre un nouveau document si nécessaire. Il remplacera la soumission précédente.
+                        </p>
+                    @endif
                     <form action="{{ route('kyc.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
