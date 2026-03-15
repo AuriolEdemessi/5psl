@@ -23,10 +23,10 @@ class AdminController extends Controller
 
         $pendingTransactions = Transaction::where('statut', 'en_attente')->count();
         $totalDeposits = (float) Transaction::where('type', 'depot')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant');
         $totalWithdrawals = (float) Transaction::where('type', 'retrait')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant');
 
         $openTickets = SupportTicket::where('status', '!=', 'closed')->count();

@@ -288,12 +288,12 @@ class InvestmentService
     {
         $deposits = (float) $user->transactions()
             ->where('type', 'depot')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant_net');
 
         $withdrawals = (float) $user->transactions()
             ->where('type', 'retrait')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant');
 
         return number_format($deposits - $withdrawals, 4, '.', '');

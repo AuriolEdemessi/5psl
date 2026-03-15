@@ -115,7 +115,7 @@ class DashboardController extends Controller
         if ($type === 'depot') {
             $hasApprovedDeposit = Transaction::where('user_id', $user->id)
                 ->where('type', 'depot')
-                ->whereIn('statut', ['approuve', 'valide'])
+                ->whereIn('statut', ['approuve', 'approuve'])
                 ->exists();
 
             if (!$hasApprovedDeposit && $montant < 100) {

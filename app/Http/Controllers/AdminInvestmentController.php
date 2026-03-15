@@ -53,20 +53,20 @@ class AdminInvestmentController extends Controller
 
         // Financial totals
         $totalDeposits = (float) Transaction::where('type', 'depot')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant');
         $totalWithdrawals = (float) Transaction::where('type', 'retrait')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->sum('montant');
-        $totalFees = (float) Transaction::whereIn('statut', ['approuve', 'valide'])
+        $totalFees = (float) Transaction::whereIn('statut', ['approuve', 'approuve'])
             ->sum('frais_entree');
-        $totalCommissions = (float) Transaction::whereIn('statut', ['approuve', 'valide'])
+        $totalCommissions = (float) Transaction::whereIn('statut', ['approuve', 'approuve'])
             ->where('commission_hwm', '>', 0)
             ->sum('commission_hwm');
 
         // Recent approved transactions (for audit trail)
         $recentApproved = Transaction::with('user')
-            ->whereIn('statut', ['approuve', 'valide'])
+            ->whereIn('statut', ['approuve', 'approuve'])
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();
@@ -134,7 +134,7 @@ class AdminInvestmentController extends Controller
                 $transaction->commission_hwm = $result['manager_commission'];
             }
 
-            $transaction->statut = 'valide';
+            $transaction->statut = 'approuve';
             $transaction->save();
 
             // Notification user
@@ -187,7 +187,7 @@ class AdminInvestmentController extends Controller
                 'frais_entree'   => $fees['frais'],
                 'montant_net'    => $fees['montant_net'],
                 'commission_hwm' => 0,
-                'statut'         => 'valide', // Automatically approved
+                'statut'         => 'approuve', // Automatically approved
                 'description'    => $request->description ?? 'Dépôt manuel par l\'administrateur',
             ]);
 
