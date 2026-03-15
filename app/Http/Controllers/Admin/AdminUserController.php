@@ -36,6 +36,7 @@ class AdminUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
             'tier' => 'STARTER',
+            'email_verified_at' => now(),
         ]);
 
         return redirect()->route('admin.users.index')->with('success', 'Utilisateur créé avec succès.');

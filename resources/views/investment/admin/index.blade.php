@@ -11,14 +11,38 @@
       <h1 class="page-header-title">Administration du Club</h1>
       <p class="page-header-text">Vue d'ensemble, gestion des membres, validation des transactions.</p>
     </div>
-    <div class="col-sm-auto">
-      <a class="btn btn-primary" href="{{ route('opportunities.create') }}">
-        <i class="bi-plus me-1"></i> Nouvelle Opportunité
-      </a>
+  </div>
+</div>
+
+<!-- Quick Actions Bar -->
+<div class="row mb-4">
+  <div class="col-12">
+    <div class="card card-body">
+      <div class="row align-items-center">
+        <div class="col">
+          <h5 class="mb-0"><i class="bi-lightning-charge text-warning me-2"></i>Actions rapides</h5>
+        </div>
+        <div class="col-auto d-flex gap-2 flex-wrap">
+          <a class="btn btn-primary btn-sm" href="{{ route('opportunities.create') }}">
+            <i class="bi-plus-circle me-1"></i> Nouvelle Opportunité
+          </a>
+          <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.users.create') }}">
+            <i class="bi-person-plus me-1"></i> Créer un membre
+          </a>
+          <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.assets.index') }}">
+            <i class="bi-briefcase me-1"></i> Gérer les actifs
+          </a>
+          <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.crypto.index') }}">
+            <i class="bi-currency-bitcoin me-1"></i> Adresses dépôts
+          </a>
+          <a class="btn btn-outline-primary btn-sm" href="{{ route('admin.kyc.index') }}">
+            <i class="bi-person-check me-1"></i> KYC détaillé
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-<!-- End Page Header -->
 
 <!-- Stats Banner -->
 <div class="row mb-4">
@@ -49,12 +73,10 @@
     </div>
   </div>
 </div>
-<!-- End Stats Banner -->
 
-<!-- Stats -->
+<!-- Stats Cards -->
 <div class="row mb-4">
   <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-    <!-- Card -->
     <div class="card h-100">
       <div class="card-body">
         <h6 class="card-subtitle mb-2">KYC en attente</h6>
@@ -63,18 +85,13 @@
             <span class="js-counter display-4 {{ ($pendingKycCount ?? 0) > 0 ? 'text-warning' : 'text-success' }}">{{ $pendingKycCount ?? 0 }}</span>
           </div>
           <div class="col-auto">
-            <span class="icon icon-sm icon-soft-primary icon-circle">
-              <i class="bi-person-badge"></i>
-            </span>
+            <span class="icon icon-sm icon-soft-primary icon-circle"><i class="bi-person-badge"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Card -->
   </div>
-
   <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-    <!-- Card -->
     <div class="card h-100">
       <div class="card-body">
         <h6 class="card-subtitle mb-2">Transactions en attente</h6>
@@ -83,18 +100,13 @@
             <span class="js-counter display-4 {{ ($pendingTransactionsCount ?? 0) > 0 ? 'text-warning' : 'text-success' }}">{{ $pendingTransactionsCount ?? 0 }}</span>
           </div>
           <div class="col-auto">
-            <span class="icon icon-sm icon-soft-warning icon-circle">
-              <i class="bi-hourglass-split"></i>
-            </span>
+            <span class="icon icon-sm icon-soft-warning icon-circle"><i class="bi-hourglass-split"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Card -->
   </div>
-
   <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
-    <!-- Card -->
     <div class="card h-100">
       <div class="card-body">
         <h6 class="card-subtitle mb-2">Total Frais perçus</h6>
@@ -103,18 +115,13 @@
             <span class="js-counter display-4 text-dark">{{ number_format($totalFees, 2, ',', ' ') }} <span class="fs-6 text-muted">$</span></span>
           </div>
           <div class="col-auto">
-            <span class="icon icon-sm icon-soft-success icon-circle">
-              <i class="bi-cash-stack"></i>
-            </span>
+            <span class="icon icon-sm icon-soft-success icon-circle"><i class="bi-cash-stack"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Card -->
   </div>
-
   <div class="col-sm-6 col-lg-3">
-    <!-- Card -->
     <div class="card h-100">
       <div class="card-body">
         <h6 class="card-subtitle mb-2">Commissions HWM</h6>
@@ -123,17 +130,102 @@
             <span class="js-counter display-4 text-dark">{{ number_format($totalCommissions, 2, ',', ' ') }} <span class="fs-6 text-muted">$</span></span>
           </div>
           <div class="col-auto">
-            <span class="icon icon-sm icon-soft-info icon-circle">
-              <i class="bi-percent"></i>
-            </span>
+            <span class="icon icon-sm icon-soft-info icon-circle"><i class="bi-percent"></i></span>
           </div>
         </div>
       </div>
     </div>
-    <!-- End Card -->
   </div>
 </div>
-<!-- End Stats -->
+
+<!-- ====== PENDING TRANSACTIONS (Priority Section) ====== -->
+<div class="card mb-4">
+  <div class="card-header card-header-content-between">
+    <h4 class="card-header-title">
+      <i class="bi-hourglass-split text-warning me-2"></i>Transactions en attente
+      @if(($pendingTransactionsCount ?? 0) > 0)
+        <span class="badge bg-soft-warning text-warning ms-2">{{ $pendingTransactionsCount }} à traiter</span>
+      @else
+        <span class="badge bg-soft-success text-success ms-2">Tout est à jour</span>
+      @endif
+    </h4>
+  </div>
+  <div class="card-body p-0">
+    @forelse($pendingTransactions ?? [] as $transaction)
+      <div class="border-bottom p-4 {{ $loop->even ? 'bg-light' : '' }}">
+        <div class="row align-items-center">
+          {{-- User info --}}
+          <div class="col-lg-3 mb-3 mb-lg-0">
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-sm avatar-soft-{{ $transaction->type === 'depot' ? 'success' : 'danger' }} avatar-circle me-3">
+                <span class="avatar-initials">{{ strtoupper(substr($transaction->user->name, 0, 1)) }}</span>
+              </div>
+              <div>
+                <h5 class="mb-0">{{ $transaction->user->name }}</h5>
+                <span class="badge bg-info rounded-pill" style="font-size: 0.6rem;">{{ $transaction->user->tier ?? 'STARTER' }}</span>
+                <span class="d-block text-muted small">{{ $transaction->user->email }}</span>
+              </div>
+            </div>
+          </div>
+          {{-- Transaction details --}}
+          <div class="col-lg-5 mb-3 mb-lg-0">
+            <div class="row text-center">
+              <div class="col-4">
+                <span class="d-block text-muted small text-uppercase">Type</span>
+                @if($transaction->type === 'depot')
+                  <span class="badge bg-success px-3 py-2"><i class="bi-arrow-down-short me-1"></i>Dépôt</span>
+                @else
+                  <span class="badge bg-danger px-3 py-2"><i class="bi-arrow-up-short me-1"></i>Retrait</span>
+                @endif
+              </div>
+              <div class="col-4">
+                <span class="d-block text-muted small text-uppercase">Montant brut</span>
+                <span class="fw-bold fs-5">{{ number_format((float)$transaction->montant, 2, ',', ' ') }} $</span>
+              </div>
+              <div class="col-4">
+                <span class="d-block text-muted small text-uppercase">Montant net</span>
+                <span class="fw-bold fs-5 text-success">{{ number_format((float)($transaction->montant_net ?? $transaction->montant), 2, ',', ' ') }} $</span>
+              </div>
+            </div>
+            @if($transaction->description)
+              <div class="mt-2 p-2 bg-soft-dark rounded small">
+                <i class="bi-info-circle text-muted me-1"></i>{{ $transaction->description }}
+              </div>
+            @endif
+            <div class="mt-1 text-muted small"><i class="bi-clock me-1"></i>{{ $transaction->created_at->format('d/m/Y à H:i') }}
+              @if($transaction->frais_entree > 0)
+                · Frais 2% : {{ number_format((float)$transaction->frais_entree, 2, ',', ' ') }} $
+              @endif
+            </div>
+          </div>
+          {{-- Action Buttons --}}
+          <div class="col-lg-4 text-lg-end">
+            <div class="d-flex gap-2 justify-content-lg-end">
+              <form action="{{ route('admin.transactions.approve', $transaction) }}" method="POST" class="d-inline js-confirm" data-msg="Confirmer la validation de ce {{ $transaction->type === 'depot' ? 'dépôt' : 'retrait' }} de {{ number_format((float)$transaction->montant, 2, ',', ' ') }} $ pour {{ $transaction->user->name }} ?">
+                @csrf
+                <button type="submit" class="btn btn-success">
+                  <i class="bi-check-circle me-1"></i> Valider
+                </button>
+              </form>
+              <form action="{{ route('admin.transactions.reject', $transaction) }}" method="POST" class="d-inline js-confirm" data-msg="Rejeter cette transaction de {{ $transaction->user->name }} ?">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger">
+                  <i class="bi-x-circle me-1"></i> Rejeter
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    @empty
+      <div class="text-center py-5">
+        <div class="mb-3"><i class="bi-check2-all fs-1 text-success"></i></div>
+        <h5>Aucune transaction en attente</h5>
+        <p class="text-muted mb-0">Toutes les transactions ont été traitées.</p>
+      </div>
+    @endforelse
+  </div>
+</div>
 
 <div class="row mb-4">
   <!-- Left Column -->
@@ -152,9 +244,7 @@
         @foreach($tierBreakdown as $tierName => $count)
             @php $tc = $tierColors[$tierName] ?? 'bg-secondary'; @endphp
             <div class="d-flex align-items-center justify-content-between mb-3">
-              <div>
-                <span class="badge {{ $tc }} text-white">{{ $tierName }}</span>
-              </div>
+              <div><span class="badge {{ $tc }} text-white">{{ $tierName }}</span></div>
               <div class="d-flex align-items-center">
                 <div class="progress me-2" style="width: 60px; height: 6px;">
                   <div class="progress-bar {{ $tc }}" role="progressbar" style="width: {{ ($count / $tierTotal) * 100 }}%;"></div>
@@ -165,7 +255,6 @@
         @endforeach
       </div>
     </div>
-    <!-- End Tier Breakdown -->
 
     <!-- Portfolio Allocation -->
     @if(!empty($allocation))
@@ -197,7 +286,6 @@
       </div>
     </div>
     @endif
-    <!-- End Portfolio Allocation -->
 
     <!-- Financial Summary -->
     <div class="card">
@@ -225,163 +313,64 @@
         </ul>
       </div>
     </div>
-    <!-- End Financial Summary -->
 
   </div>
-  <!-- End Left Column -->
 
   <!-- Right Column -->
   <div class="col-lg-8">
     
-    <!-- KYC Table -->
+    <!-- KYC Pending -->
     <div class="card mb-4">
       <div class="card-header card-header-content-between">
         <h4 class="card-header-title">
-          Vérifications KYC
+          <i class="bi-person-badge text-primary me-2"></i>Vérifications KYC
           @if(($pendingKycCount ?? 0) > 0)
-            <span class="badge bg-soft-warning text-warning ms-1">{{ $pendingKycCount }}</span>
+            <span class="badge bg-soft-warning text-warning ms-2">{{ $pendingKycCount }} en attente</span>
           @else
-            <span class="badge bg-soft-success text-success ms-1">OK</span>
+            <span class="badge bg-soft-success text-success ms-2">Tous vérifiés</span>
           @endif
         </h4>
+        <a href="{{ route('admin.kyc.index') }}" class="btn btn-white btn-sm"><i class="bi-arrow-right me-1"></i>Voir tout</a>
       </div>
-      
-      <div class="table-responsive">
-        <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
-          <thead class="thead-light">
-            <tr>
-              <th>Membre</th>
-              <th>Email</th>
-              <th>Inscrit le</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse($pendingUsers ?? [] as $user)
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div class="avatar avatar-sm avatar-soft-primary avatar-circle me-3">
-                      <span class="avatar-initials">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
-                    </div>
-                    <div>
-                      <span class="d-block h5 text-inherit mb-0">{{ $user->name }}</span>
-                      <span class="badge bg-info rounded-pill" style="font-size: 0.6rem;">{{ $user->tier ?? 'STARTER' }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ $user->email }}</td>
-                <td><span class="text-muted small">{{ $user->created_at->format('d/m/Y H:i') }}</span></td>
-                <td class="text-end">
-                  <form action="{{ route('admin.investment.kyc.approve', $user) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-white btn-sm text-success" title="Approuver">
-                      <i class="bi-check-lg"></i>
-                    </button>
-                  </form>
-                  <form action="{{ route('admin.investment.kyc.reject', $user) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-white btn-sm text-danger" title="Rejeter">
-                      <i class="bi-x-lg"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="4" class="text-center py-5">
-                  <div class="mb-3"><i class="bi-person-check fs-1 text-muted"></i></div>
-                  <h5>Aucune vérification en attente</h5>
-                  <p class="text-muted">Tous les membres sont vérifiés.</p>
-                </td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
+      <div class="card-body p-0">
+        @forelse($pendingUsers ?? [] as $user)
+          <div class="d-flex align-items-center justify-content-between p-3 border-bottom">
+            <div class="d-flex align-items-center">
+              <div class="avatar avatar-sm avatar-soft-primary avatar-circle me-3">
+                <span class="avatar-initials">{{ strtoupper(substr($user->name, 0, 1)) }}</span>
+              </div>
+              <div>
+                <h5 class="mb-0">{{ $user->name }}</h5>
+                <span class="text-muted small">{{ $user->email }} · {{ $user->created_at->format('d/m/Y') }}</span>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <a href="{{ route('admin.kyc.show', $user) }}" class="btn btn-white btn-sm">
+                <i class="bi-eye me-1"></i>Voir
+              </a>
+              <form action="{{ route('admin.investment.kyc.approve', $user) }}" method="POST" class="d-inline js-confirm" data-msg="Approuver le KYC de {{ $user->name }} ?">
+                @csrf
+                <button type="submit" class="btn btn-success btn-sm">
+                  <i class="bi-check-lg me-1"></i>Approuver
+                </button>
+              </form>
+              <form action="{{ route('admin.investment.kyc.reject', $user) }}" method="POST" class="d-inline js-confirm" data-msg="Rejeter le KYC de {{ $user->name }} ?">
+                @csrf
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                  <i class="bi-x-lg me-1"></i>Rejeter
+                </button>
+              </form>
+            </div>
+          </div>
+        @empty
+          <div class="text-center py-5">
+            <div class="mb-3"><i class="bi-person-check fs-1 text-success"></i></div>
+            <h5>Aucune vérification en attente</h5>
+            <p class="text-muted mb-0">Tous les membres sont vérifiés.</p>
+          </div>
+        @endforelse
       </div>
     </div>
-    <!-- End KYC Table -->
-
-    <!-- Transactions Table -->
-    <div class="card mb-4">
-      <div class="card-header card-header-content-between">
-        <h4 class="card-header-title">
-          Transactions en attente
-          @if(($pendingTransactionsCount ?? 0) > 0)
-            <span class="badge bg-soft-warning text-warning ms-1">{{ $pendingTransactionsCount }}</span>
-          @else
-            <span class="badge bg-soft-success text-success ms-1">OK</span>
-          @endif
-        </h4>
-      </div>
-      
-      <div class="table-responsive">
-        <table class="table table-borderless table-thead-bordered table-nowrap table-align-middle card-table">
-          <thead class="thead-light">
-            <tr>
-              <th>Membre</th>
-              <th>Type</th>
-              <th>Montant</th>
-              <th>Frais</th>
-              <th>Net</th>
-              <th>Date</th>
-              <th class="text-end">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            @forelse($pendingTransactions ?? [] as $transaction)
-              <tr>
-                <td>
-                  <div class="d-flex align-items-center">
-                    <div class="avatar avatar-sm avatar-soft-primary avatar-circle me-2">
-                      <span class="avatar-initials">{{ strtoupper(substr($transaction->user->name, 0, 1)) }}</span>
-                    </div>
-                    <div>
-                      <span class="d-block fw-bold">{{ $transaction->user->name }}</span>
-                      <span class="badge bg-info rounded-pill" style="font-size: 0.6rem;">{{ $transaction->user->tier ?? 'STARTER' }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  @if($transaction->type === 'depot')
-                    <span class="badge bg-soft-success text-success"><i class="bi-arrow-down-short me-1"></i>Dépôt</span>
-                  @else
-                    <span class="badge bg-soft-danger text-danger"><i class="bi-arrow-up-short me-1"></i>Retrait</span>
-                  @endif
-                </td>
-                <td class="fw-bold">{{ number_format((float)$transaction->montant, 2, ',', ' ') }} $</td>
-                <td class="text-warning small">{{ number_format((float)($transaction->frais_entree ?? 0), 2) }} $</td>
-                <td class="text-success fw-bold">{{ number_format((float)($transaction->montant_net ?? $transaction->montant), 2) }} $</td>
-                <td class="text-muted small">{{ $transaction->created_at->format('d/m H:i') }}</td>
-                <td class="text-end">
-                  <form action="{{ route('admin.transactions.approve', $transaction) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-white btn-sm text-success" title="Approuver">
-                      <i class="bi-check-lg"></i>
-                    </button>
-                  </form>
-                  <form action="{{ route('admin.transactions.reject', $transaction) }}" method="POST" class="d-inline">
-                    @csrf
-                    <button type="submit" class="btn btn-white btn-sm text-danger" title="Rejeter">
-                      <i class="bi-x-lg"></i>
-                    </button>
-                  </form>
-                </td>
-              </tr>
-            @empty
-              <tr>
-                <td colspan="7" class="text-center py-5">
-                  <div class="mb-3"><i class="bi-check2-all fs-1 text-muted"></i></div>
-                  <h5>Aucune transaction en attente</h5>
-                  <p class="text-muted">Toutes les transactions ont été traitées.</p>
-                </td>
-              </tr>
-            @endforelse
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <!-- End Transactions Table -->
 
     <!-- Recent Approved -->
     @if(isset($recentApproved) && $recentApproved->count() > 0)
@@ -399,22 +388,32 @@
                 </div>
                 <div>
                   <span class="fw-bold">{{ $tx->user->name ?? 'N/A' }}</span>
-                  <span class="text-muted small ms-1">— {{ $tx->updated_at->format('d/m H:i') }}</span>
+                  <span class="text-muted small ms-1">{{ $tx->type === 'depot' ? 'Dépôt' : 'Retrait' }} — {{ $tx->updated_at->format('d/m/Y H:i') }}</span>
                 </div>
               </div>
-              <span class="fw-bold">{{ number_format((float)$tx->montant, 2, ',', ' ') }} $</span>
+              <span class="fw-bold {{ $tx->type === 'depot' ? 'text-success' : 'text-danger' }}">{{ $tx->type === 'depot' ? '+' : '-' }}{{ number_format((float)$tx->montant, 2, ',', ' ') }} $</span>
             </li>
           @endforeach
         </ul>
       </div>
     </div>
     @endif
-    <!-- End Recent Approved -->
 
   </div>
-  <!-- End Right Column -->
 </div>
 
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+document.querySelectorAll('.js-confirm').forEach(function(form) {
+    form.addEventListener('submit', function(e) {
+        if (!confirm(this.dataset.msg || 'Confirmer cette action ?')) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+@endpush

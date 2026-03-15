@@ -46,6 +46,49 @@ class AdminSupportController extends Controller
     }
 
     /**
+     * Afficher un ticket (admin).
+     */
+    public function show(SupportTicket $ticket)
+    {
+        $messages = $ticket->messages()->with('user')->orderBy('created_at', 'asc')->get();
+
+        $ticket->messages()
+            ->whereNull('read_at')
+            ->where('user_id', '!=', Auth::id())
+            ->update(['read_at' => now()]);
+
+        return view('support.show', compact('ticket', 'messages'));
+    }
+
+    /**
+     * Répondre à un ticket (admin).
+     */
+    public function reply(Request $request, SupportTicket $ticket)
+    {
+        $request->validate([
+            'body' => 'required|string|max:5000',
+        ]);
+
+        \App\Models\SupportMessage::create([
+            'ticket_id' => $ticket->id,
+            'user_id'   => Auth::id(),
+            'body'      => $request->body,
+            'is_admin'  => true,
+        ]);
+
+        if ($ticket->status === 'open') {
+            $ticket->update([
+                'status'      => 'in_progress',
+                'assigned_to' => Auth::id(),
+            ]);
+        }
+
+        $ticket->touch();
+
+        return back()->with('success', 'Réponse envoyée.');
+    }
+
+    /**
      * Assigner un ticket à soi-même.
      */
     public function assign(SupportTicket $ticket)
