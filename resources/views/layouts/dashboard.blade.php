@@ -318,9 +318,10 @@
         @media(max-width:991px){
             .sidebar { transform: translateX(-100%); }
             .sidebar.open { transform: translateX(0); }
-            .topbar { left: 0; padding: 0 16px; }
+            .topbar { left: 0; padding: 0 16px; width: 100%; z-index: 95; }
             .main-content { margin-left: 0; padding: calc(var(--topbar-h) + 20px) 16px 32px; }
             .mobile-toggle { display: block; }
+            .topbar-left { gap: 12px; }
             .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
             .overlay.active { display: block; }
             .section-header { flex-direction: column; align-items: flex-start; }

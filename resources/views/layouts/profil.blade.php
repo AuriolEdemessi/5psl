@@ -30,11 +30,27 @@
         margin-left: 0 !important;
       }
       .navbar-vertical-aside {
-        margin-left: -16.875rem;
-        transition: margin-left 0.3s ease;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        width: 16.875rem;
       }
       .navbar-vertical-aside.show {
-        margin-left: 0;
+        transform: translateX(0);
+      }
+      .navbar-aside-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+      }
+      .navbar-vertical-aside.show + .navbar-aside-overlay {
+        display: block;
       }
     }
     @media (min-width: 1200px) {
@@ -105,6 +121,7 @@
 
   <!-- SIDEBAR -->
   @include('layouts.aside')
+  <div class="navbar-aside-overlay"></div>
 
   <!-- MAIN CONTENT -->
   <main id="content" role="main" class="main">
@@ -208,14 +225,24 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Navbar vertical aside initialization
-      new HSSideNav('.js-navbar-vertical-aside').init();
+      if (typeof HSSideNav !== 'undefined') {
+        new HSSideNav('.js-navbar-vertical-aside').init();
+      }
 
       // Mobile sidebar toggle
       var toggler = document.querySelector('.js-navbar-vertical-aside-toggle-invoker');
       var sidebar = document.querySelector('.js-navbar-vertical-aside');
+      var overlay = document.querySelector('.navbar-aside-overlay');
+      
       if (toggler && sidebar) {
         toggler.addEventListener('click', function() {
           sidebar.classList.toggle('show');
+        });
+      }
+      
+      if (overlay && sidebar) {
+        overlay.addEventListener('click', function() {
+          sidebar.classList.remove('show');
         });
       }
     });

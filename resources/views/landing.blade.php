@@ -258,8 +258,45 @@
             .hero-split, .split-cards { flex-direction: column; }
             .card-half { min-width: 100%; padding: 60px 5%; }
             .nav-links { display: none; }
+            .navbar-main .d-none.d-md-block { display: none !important; }
             .hero-right { min-height: 400px; }
+            
+            /* Mobile Navbar Toggle */
+            .mobile-nav-toggle {
+                display: block !important;
+                background: none;
+                border: none;
+                font-size: 24px;
+                color: var(--possible-dark);
+                cursor: pointer;
+            }
+            .nav-links.mobile-active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+                border-top: 1px solid #eee;
+                gap: 15px;
+            }
+            .nav-links.mobile-active a {
+                margin: 0;
+                padding: 10px 0;
+                border-bottom: 1px solid #f5f5f5;
+            }
+            .mobile-nav-actions {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                margin-top: 15px;
+            }
         }
+        
+        .mobile-nav-toggle { display: none; }
     </style>
 </head>
 <body>
@@ -292,7 +329,7 @@
             
             @auth
                 <div style="display: flex; align-items: center; gap: 12px; font-size: 13px;">
-                    <a href="{{ route('investment.dashboard') }}" class="text-white" style="transition: color 0.2s;" onmouseover="this.style.color='var(--possible-green)'" onmouseout="this.style.color='white'">
+                    <a href="{{ route('investment.dashboard') }}" class="text-white d-none d-md-block" style="transition: color 0.2s;" onmouseover="this.style.color='var(--possible-green)'" onmouseout="this.style.color='white'">
                         <i class="fas fa-chart-pie me-1"></i> {{ __('Mon Portefeuille') }}
                     </a>
                     <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
@@ -305,7 +342,7 @@
             @else
                 <div>
                     <a href="{{ route('login') }}" class="text-white me-3" style="transition: color 0.2s;" onmouseover="this.style.color='var(--possible-green)'" onmouseout="this.style.color='white'">{{ __('Connexion') }}</a>
-                    <a href="{{ route('register') }}" class="text-green" style="transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">{{ __('Inscription') }}</a>
+                    <a href="{{ route('register') }}" class="text-green d-none d-md-inline" style="transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">{{ __('Inscription') }}</a>
                 </div>
             @endauth
         </div>
@@ -316,12 +353,28 @@
         <a href="/" style="font-size: 28px; font-weight: 900; letter-spacing: -1px;">
             <span class="text-blue">5</span>PSL
         </a>
-        <div class="nav-links">
+        
+        <button class="mobile-nav-toggle" id="mobileNavToggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="nav-links" id="navLinks">
             <a href="#club">{{ __('Le Club') }}</a>
-            <a href="#nav">{{ __(' Méthode') }}</a>
+            <a href="#nav">{{ __('Méthode') }}</a>
             <a href="#allocation">{{ __('Stratégie') }}</a>
             <a href="{{ route('whitepaper') }}" class="text-blue"><i class="fas fa-file-alt me-1"></i> {{ __('Whitepaper') }}</a>
+            
+            <div class="mobile-nav-actions d-md-none">
+                @auth
+                    <a href="{{ route('investment.dashboard') }}" class="btn-possible" style="background: var(--possible-blue); color: white; width: 100%; text-align: center;">
+                        {{ __('Mon Compte') }} <i class="fas fa-arrow-right ms-1"></i>
+                    </a>
+                @else
+                    <a href="{{ route('register') }}" class="btn-possible" style="width: 100%; text-align: center;">{{ __('Rejoindre le club') }}</a>
+                @endauth
+            </div>
         </div>
+        
         <div class="d-none d-md-block">
             @auth
                 <a href="{{ route('investment.dashboard') }}" class="btn-possible" style="background: var(--possible-blue); color: white;">
@@ -358,10 +411,19 @@
         <div class="hero-right">
             <div class="hero-carousel" id="heroCarousel">
                 <div class="hero-carousel-slide active">
-                    <img src="{{ asset('media/img/bg1.jpg') }}" alt="5PSL Investissement">
+                    <img src="{{ asset('media/img/bg2.jpg') }}" alt="5PSL Investissement">
                 </div>
                 <div class="hero-carousel-slide">
-                    <img src="{{ asset('media/img/hero.jpg') }}" alt="5PSL Club">
+                    <img src="{{ asset('media/img/bg3.jpg') }}" alt="5PSL Club">
+                </div>
+                <div class="hero-carousel-slide">
+                    <img src="{{ asset('media/img/bg4.jpg') }}" alt="5PSL Club">
+                </div>
+                <div class="hero-carousel-slide">
+                    <img src="{{ asset('media/img/bg5.jpg') }}" alt="5PSL Club">
+                </div>
+                <div class="hero-carousel-slide">
+                    <img src="{{ asset('media/img/bg6.jpg') }}" alt="5PSL Club">
                 </div>
             </div>
             <div class="hero-carousel-overlay"></div>
@@ -560,7 +622,7 @@
                     &copy; {{ date('Y') }} 5PSL {{ __('Club d\'Investissement') }}. {{ __('Tous droits réservés.') }}
                 </div>
                 <div style="font-size: 14px; opacity: 0.6;">
-                    {{ __('Propulsé') }} <i class="fas fa-heart" style="color: #ff3333;"></i> {{ __('par CRACLABS.') }}
+                    {{ __('Propulsé') }} {{ __('par CRACLABS.') }}
                 </div>
             </div>
         </div>
@@ -601,6 +663,29 @@
                 slides[current].classList.add('active');
             }, 5000);
         })();
+
+        // Mobile Nav Toggle
+        document.getElementById('mobileNavToggle').addEventListener('click', function() {
+            document.getElementById('navLinks').classList.toggle('mobile-active');
+            const icon = this.querySelector('i');
+            if (document.getElementById('navLinks').classList.contains('mobile-active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile nav when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('mobile-active');
+                const icon = document.getElementById('mobileNavToggle').querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
 
         // Scroll animations (Intersection Observer)
         function initAnimations() {
