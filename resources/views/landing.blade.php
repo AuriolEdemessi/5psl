@@ -167,19 +167,36 @@
             flex: 1;
             background: var(--possible-dark);
             position: relative;
-            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            overflow: hidden;
         }
-        .hero-image-placeholder {
-            width: 80%;
-            height: 80%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-            border: 1px dashed rgba(255,255,255,0.2);
-            border-radius: 24px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: rgba(255,255,255,0.5);
-            transition: all 0.3s;
+        .hero-carousel {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
         }
-        .hero-image-placeholder:hover { border-color: var(--possible-blue); color: white; background: rgba(0,102,255,0.1); cursor: pointer; }
+        .hero-carousel-slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-carousel-slide.active {
+            opacity: 1;
+        }
+        .hero-carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-carousel-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3), rgba(0,102,255,0.15));
+            z-index: 1;
+        }
 
         /* Feature Large Text Centered */
         .large-text-section {
@@ -339,8 +356,15 @@
             </div>
         </div>
         <div class="hero-right">
-            <!-- Zone dynamique pour insérer une image ultérieurement -->
-            <img src="{{ asset('media/img/bg1.jpg') }}" alt="Hero Image" style="width: 100%; height: auto;">
+            <div class="hero-carousel" id="heroCarousel">
+                <div class="hero-carousel-slide active">
+                    <img src="{{ asset('media/img/bg1.jpg') }}" alt="5PSL Investissement">
+                </div>
+                <div class="hero-carousel-slide">
+                    <img src="{{ asset('media/img/hero.jpg') }}" alt="5PSL Club">
+                </div>
+            </div>
+            <div class="hero-carousel-overlay"></div>
         </div>
     </section>
 
@@ -565,6 +589,18 @@
                 nav.classList.remove('scrolled');
             }
         });
+
+        // Hero Carousel — fade rotation
+        (function() {
+            const slides = document.querySelectorAll('#heroCarousel .hero-carousel-slide');
+            if (slides.length < 2) return;
+            let current = 0;
+            setInterval(function() {
+                slides[current].classList.remove('active');
+                current = (current + 1) % slides.length;
+                slides[current].classList.add('active');
+            }, 5000);
+        })();
 
         // Scroll animations (Intersection Observer)
         function initAnimations() {

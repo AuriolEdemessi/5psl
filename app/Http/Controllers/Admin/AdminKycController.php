@@ -27,6 +27,12 @@ class AdminKycController extends Controller
         $user->kyc_status = 'verified';
         $user->save();
 
+        try {
+            $user->notify(new \App\Notifications\KycApprovedNotification());
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('KYC approval mail failed: ' . $e->getMessage());
+        }
+
         return redirect()->route('admin.kyc.index')->with('success', 'Le KYC de l\'utilisateur a été vérifié.');
     }
 
@@ -44,6 +50,12 @@ class AdminKycController extends Controller
         if ($latestDoc) {
             $latestDoc->rejection_reason = $request->reason;
             $latestDoc->save();
+        }
+
+        try {
+            $user->notify(new \App\Notifications\KycRejectedNotification($request->reason));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('KYC rejection mail failed: ' . $e->getMessage());
         }
 
         return redirect()->route('admin.kyc.index')->with('success', 'Le KYC de l\'utilisateur a été rejeté.');

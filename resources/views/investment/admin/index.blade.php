@@ -273,13 +273,13 @@
                 <td>{{ $user->email }}</td>
                 <td><span class="text-muted small">{{ $user->created_at->format('d/m/Y H:i') }}</span></td>
                 <td class="text-end">
-                  <form action="{{ route('admin.kyc.approve', $user) }}" method="POST" class="d-inline">
+                  <form action="{{ route('admin.investment.kyc.approve', $user) }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-white btn-sm text-success" title="Approuver">
                       <i class="bi-check-lg"></i>
                     </button>
                   </form>
-                  <form action="{{ route('admin.kyc.reject', $user) }}" method="POST" class="d-inline">
+                  <form action="{{ route('admin.investment.kyc.reject', $user) }}" method="POST" class="d-inline">
                     @csrf
                     <button type="submit" class="btn btn-white btn-sm text-danger" title="Rejeter">
                       <i class="bi-x-lg"></i>

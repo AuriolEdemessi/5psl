@@ -1,42 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\{
-    CourseController,
-    SectionController,
-    ChapterController,
-    MediaController,
-    QuizController,
-    QuestionController,
-    AdminController,
-    AnswerController
-};
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\AdminController;
 
-// Group routes for admin
+// Group routes for admin (course system — legacy, controllers pending)
 Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(function () {
     // Admin Dashboard
     Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
 
     // Course Management
     Route::resource('courses', CourseController::class);
-
-    // Section Management
-    Route::resource('sections', SectionController::class);
-
-    // Chapter Management
-    Route::resource('chapters', ChapterController::class);
-
-    // Media Management
-    Route::resource('medias', MediaController::class);
-
-    // Quiz Management
-    Route::resource('quizzes', QuizController::class);
-
-    // Question Management
-    Route::resource('questions', QuestionController::class);
-
-    // Answer Management
-    Route::resource('answers', AnswerController::class);
 });
 
 
@@ -96,12 +70,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/support/{ticket}/reply', [App\Http\Controllers\SupportController::class, 'reply'])->name('support.reply');
     Route::post('/support/{ticket}/close', [App\Http\Controllers\SupportController::class, 'close'])->name('support.close');
 
-    // ===== Support / Admin =====
-    Route::get('/admin/support', [App\Http\Controllers\AdminSupportController::class, 'index'])->name('admin.support.index');
-    Route::get('/admin/support/{ticket}', [App\Http\Controllers\AdminSupportController::class, 'show'])->name('admin.support.show');
-    Route::post('/admin/support/{ticket}/reply', [App\Http\Controllers\AdminSupportController::class, 'reply'])->name('admin.support.reply');
-    Route::post('/admin/support/{ticket}/assign', [App\Http\Controllers\AdminSupportController::class, 'assign'])->name('admin.support.assign');
-
     // ===== KYC / Admin =====
     Route::get('/admin/kyc', [App\Http\Controllers\Admin\AdminKycController::class, 'index'])->name('admin.kyc.index');
     Route::get('/admin/kyc/{user}', [App\Http\Controllers\Admin\AdminKycController::class, 'show'])->name('admin.kyc.show');
@@ -117,8 +85,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         
         // Administration Investissement (KYC, Transactions)
         Route::get('/investment/admin', [App\Http\Controllers\AdminInvestmentController::class, 'index'])->name('investment.admin.index');
-        Route::post('/investment/admin/kyc/{user}/approve', [App\Http\Controllers\AdminInvestmentController::class, 'approveKyc'])->name('admin.kyc.approve');
-        Route::post('/investment/admin/kyc/{user}/reject', [App\Http\Controllers\AdminInvestmentController::class, 'rejectKyc'])->name('admin.kyc.reject');
+        Route::post('/investment/admin/kyc/{user}/approve', [App\Http\Controllers\AdminInvestmentController::class, 'approveKyc'])->name('admin.investment.kyc.approve');
+        Route::post('/investment/admin/kyc/{user}/reject', [App\Http\Controllers\AdminInvestmentController::class, 'rejectKyc'])->name('admin.investment.kyc.reject');
         Route::post('/investment/admin/transactions/{transaction}/approve', [App\Http\Controllers\AdminInvestmentController::class, 'approveTransaction'])->name('admin.transactions.approve');
         Route::post('/investment/admin/transactions/{transaction}/reject', [App\Http\Controllers\AdminInvestmentController::class, 'rejectTransaction'])->name('admin.transactions.reject');
 
@@ -147,6 +115,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         // Admin : Support / Assistance
         Route::get('/investment/admin/support', [App\Http\Controllers\AdminSupportController::class, 'index'])->name('admin.support.index');
+        Route::get('/investment/admin/support/{ticket}', [App\Http\Controllers\AdminSupportController::class, 'show'])->name('admin.support.show');
+        Route::post('/investment/admin/support/{ticket}/reply', [App\Http\Controllers\AdminSupportController::class, 'reply'])->name('admin.support.reply');
         Route::post('/investment/admin/support/{ticket}/assign', [App\Http\Controllers\AdminSupportController::class, 'assign'])->name('admin.support.assign');
         Route::post('/investment/admin/support/{ticket}/status', [App\Http\Controllers\AdminSupportController::class, 'updateStatus'])->name('admin.support.status');
 

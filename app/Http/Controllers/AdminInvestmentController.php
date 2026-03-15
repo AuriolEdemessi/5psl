@@ -94,12 +94,26 @@ class AdminInvestmentController extends Controller
     public function approveKyc(User $user)
     {
         $user->update(['kyc_status' => 'verified']);
+
+        try {
+            $user->notify(new \App\Notifications\KycApprovedNotification());
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('KYC approval mail failed: ' . $e->getMessage());
+        }
+
         return back()->with('success', "Le compte de {$user->name} a été validé avec succès.");
     }
 
     public function rejectKyc(User $user)
     {
         $user->update(['kyc_status' => 'rejected']);
+
+        try {
+            $user->notify(new \App\Notifications\KycRejectedNotification());
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('KYC rejection mail failed: ' . $e->getMessage());
+        }
+
         return back()->with('success', "La vérification de {$user->name} a été rejetée.");
     }
 
@@ -143,9 +157,12 @@ class AdminInvestmentController extends Controller
         }
 
         $transaction->update(['statut' => 'rejete']);
-        
-        // Notify user (Optional: you can create a TransactionRejectedNotification later)
-        // $transaction->user->notify(new \App\Notifications\TransactionRejectedNotification($transaction));
+
+        try {
+            $transaction->user->notify(new \App\Notifications\TransactionRejectedNotification($transaction));
+        } catch (\Throwable $e) {
+            \Illuminate\Support\Facades\Log::warning('Transaction rejection mail failed: ' . $e->getMessage());
+        }
 
         return back()->with('success', "La transaction de {$transaction->user->name} a été rejetée.");
     }
