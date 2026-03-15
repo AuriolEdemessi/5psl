@@ -558,7 +558,7 @@ class FinanceEngineService
         $asset = \App\Models\Asset::firstOrCreate(
             ['nom' => '5PSL Global Fund'],
             [
-                'type'            => 'fond',
+                'type'            => 'fonds',
                 'description'     => 'Fonds commun du club 5PSL — NAV-based',
                 'valeur_actuelle' => self::INITIAL_NAV,
                 'is_active'       => true,
