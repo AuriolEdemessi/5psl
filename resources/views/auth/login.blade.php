@@ -1,153 +1,61 @@
-@extends('layouts.access')
+@extends('layouts.auth')
+@section('title', 'Connexion')
 
 @section('content')
+<div class="auth-split">
+    {{-- Left panel: presentation --}}
+    <div class="auth-left">
+        <h1>Connect to<br>your portfolio.</h1>
+    </div>
 
-<!-- Start Main -->
-<main>
+    {{-- Right panel: form --}}
+    <div class="auth-right">
+        <div class="auth-right-content">
+            <h2 class="auth-heading">Log in</h2>
+            <p class="auth-subheading">Enter your details to access your account.</p>
 
-
-
-<!-- start contact-section-layout-1 -->
-<div class="contact-section-layout-1 section-padding-2">
-   <div class="container">
-      <div class="row gutter-30 justify-content-between align-items-center">
-         <div class="col-xl-6 col-lg-6 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="800ms">
-            <div class="contact-wrap-area-1">
-
-               <div class="rt-section-heading-style-2">
-                  <span class="sub-title">How may we help you</span>
-                  <h2 class="heading-tilte">
-                     Office Information
-                  </h2>
-                  <p>
-                     Mhen an unknown printer took a galley of type and scrambled it to make a type
-                     specimen book. It has survived not only five centuries, but also the leap into
-                     remaining essentially unchanged.
-                  </p>
-               </div>
-
-               <div class="contact-list-area-1 ">
-                  <ul class="contact-list-style-1 clearfix">
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>Theodore Lowe, Ap #867-859</span>
-                           <span>Sit Rd, Azusa New York</span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-
-                           <i class="far fa-envelope"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>
-                              <a href="mailto:infonouka@gmail.com">infonouka@gmail.com</a>
-                           </span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="list-content">
-                           <span><a href="tel:+1238895600">+123 88 956 00</a></span>
-                           <span><a href="tel:+1238895600">+123 88 956 00</a></span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>
-                              <a href="https://www.radiustheme.com/" rel="nofollow">www.radiustheme.com</a>
-                           </span>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <!-- end col -->
-
-         <div class="col-xl-5 col-lg-6 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
-            <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Login') }}
-                                </button>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-                    </form>
+            @if($errors->any())
+                <div class="alert-box">
+                    @foreach($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
                 </div>
-         </div>
-         <!-- end col -->
-      </div>
-      <!-- end row -->
-   </div>
-   <!-- end container -->
+            @endif
+
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label-custom">Email Address</label>
+                    <input type="email" name="email" class="form-input @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}" required autocomplete="email" autofocus>
+                </div>
+
+                <div style="margin-bottom: 24px;">
+                    <label class="form-label-custom">Password</label>
+                    <input type="password" name="password" class="form-input @error('password') is-invalid @enderror"
+                        required autocomplete="current-password">
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px;">
+                    <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; cursor: pointer;">
+                        <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}
+                            style="width: 18px; height: 18px; accent-color: var(--possible-blue);">
+                        Remember me
+                    </label>
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="auth-link" style="font-size: 13px;">Forgot password?</a>
+                    @endif
+                </div>
+
+                <button type="submit" class="btn-possible">Log in</button>
+            </form>
+
+            <div style="margin-top: 32px; font-size: 14px; font-weight: 500;">
+                Don't have an account? 
+                <a href="{{ route('register') }}" class="auth-link">Sign up</a>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- end contact-section-layout-1 -->
-
-<!-- start  Map Section -->
-
-<!-- End  Map Section -->
-
-</main>
-<!-- End Main -->
-
-
 @endsection

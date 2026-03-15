@@ -12,7 +12,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // Envoi du rapport mensuel le 1er de chaque mois à 8h00
+        $schedule->command('report:monthly')->monthlyOn(1, '08:00');
+
+        // Calcul mensuel des profits, commission HWM 30%, et mise à jour des tiers
+        $schedule->command('investment:monthly-profits')
+            ->monthlyOn(1, '00:00')
+            ->withoutOverlapping()
+            ->appendOutputTo(storage_path('logs/monthly-profits.log'));
     }
 
     /**

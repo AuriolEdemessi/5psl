@@ -1,643 +1,486 @@
 <!DOCTYPE html>
-<html lang="en">
-
-
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:46:49 GMT -->
+<html lang="fr">
 <head>
-   <!-- Meta Data -->
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1">
-   <title> 5psl | Dashboard </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>5PSL | @yield('title', 'Dashboard')</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('media/favicon.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --possible-blue: #0066ff;
+            --possible-dark: #121212;
+            --possible-green: #00ff00;
+            --possible-light-blue: #e6f0ff;
+            --possible-pink: #ffd1dc;
+            --sidebar-w: 272px;
+            --topbar-h: 72px;
+            --color-text: #334155;
+            --color-muted: #94a3b8;
+            --color-border: #e2e8f0;
+            --color-success: #059669;
+            --color-danger: #dc2626;
+            --color-warning: #d97706;
+            --radius: 10px;
+            --radius-lg: 14px;
+        }
 
-   <!-- Favicon -->
-   <link rel="shortcut icon" type="image/x-icon" href="media/favicon.png">
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: var(--possible-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; }
 
-   <!-- Dependency Stylesheet -->
-   <link rel="stylesheet" type="text/css" href="dependencies/bootstrap/css/bootstrap.min.css">
-   <link rel="stylesheet" type="text/css" href="dependencies/fontawesome/css/all.min.css">
-   <link rel="stylesheet" type="text/css" href="dependencies/animate/animate.min.css">
-   <link rel="stylesheet" type="text/css" href="dependencies/swiper/css/swiper.min.css">
-   <link rel="stylesheet" type="text/css" href="dependencies/magnific-popup/css/magnific-popup.css">
+        /* ── Sidebar ── */
+        .sidebar {
+            position: fixed; top: 0; left: 0; width: var(--sidebar-w); height: 100vh;
+            background: var(--possible-dark); color: white;
+            z-index: 100; display: flex; flex-direction: column; transition: transform 0.3s;
+            overflow: hidden;
+        }
+        .sidebar-logo {
+            padding: 28px 24px; display: flex; align-items: center; gap: 12px;
+            font-size: 26px; font-weight: 900; letter-spacing: -1px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .sidebar-logo span { color: var(--possible-blue); }
+        .sidebar-nav { flex: 1; padding: 20px 14px; overflow-y: auto; }
+        .sidebar-nav::-webkit-scrollbar { width: 0; }
+        .nav-section { font-size: 10px; font-weight: 800; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.2px; padding: 18px 18px 8px; }
+        .nav-item {
+            display: flex; align-items: center; gap: 14px;
+            padding: 12px 18px; border-radius: 8px;
+            font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.55);
+            transition: all 0.2s; margin-bottom: 2px; position: relative;
+        }
+        .nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+        .nav-item.active { background: var(--possible-blue); color: white; box-shadow: 0 4px 12px rgba(0,102,255,0.3); }
+        .nav-item i { width: 20px; text-align: center; font-size: 16px; opacity: 0.8; }
+        .nav-item.active i { opacity: 1; }
+        .nav-badge { background: var(--possible-green); color: var(--possible-dark); font-size: 10px; font-weight: 800; padding: 2px 7px; border-radius: 10px; margin-left: auto; }
+        
+        .sidebar-footer { padding: 20px; border-top: 1px solid rgba(255,255,255,0.08); }
+        .sidebar-user { display: flex; align-items: center; gap: 12px; }
+        .sidebar-avatar {
+            width: 38px; height: 38px; border-radius: 10px;
+            background: var(--possible-blue); color: white;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 15px; flex-shrink: 0;
+        }
+        .sidebar-user-info { overflow: hidden; }
+        .sidebar-user-info .user-name { font-size: 13px; font-weight: 700; color: white; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sidebar-user-info .user-role { font-size: 11px; color: rgba(255,255,255,0.4); text-transform: capitalize; }
 
-   <!-- Site Stylesheet -->
-   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+        /* ── Topbar ── */
+        .topbar {
+            position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: var(--topbar-h);
+            background: white; border-bottom: 1px solid var(--color-border);
+            z-index: 90; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 32px;
+        }
+        .topbar-left { display: flex; align-items: center; gap: 16px; }
+        .topbar-title { font-size: 20px; font-weight: 800; color: var(--possible-dark); letter-spacing: -0.3px; }
+        .topbar-right { display: flex; align-items: center; gap: 16px; }
+        
+        .btn-topbar {
+            padding: 8px 20px; border-radius: 6px;
+            font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+            border: none; display: inline-flex; align-items: center; gap: 8px;
+        }
+        .btn-topbar-outline { background: transparent; color: var(--possible-dark); border: 1.5px solid var(--color-border); }
+        .btn-topbar-outline:hover { border-color: var(--possible-dark); }
+        
+        .mobile-toggle { display: none; background: none; border: none; font-size: 22px; color: var(--possible-dark); cursor: pointer; }
 
+        /* ── Main ── */
+        .main-content { margin-left: var(--sidebar-w); padding: calc(var(--topbar-h) + 32px) 32px 48px; min-height: 100vh; }
+
+        /* ── Cards ── */
+        .card-5psl {
+            background: white; border-radius: var(--radius-lg); border: 1px solid var(--color-border);
+            padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            transition: box-shadow 0.3s;
+        }
+        .card-5psl:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
+        .card-5psl-flat { box-shadow: none; }
+        .card-5psl-flat:hover { box-shadow: none; }
+        
+        .kpi-card { text-align: left; position: relative; overflow: hidden; }
+        .kpi-card::after {
+            content: ''; position: absolute; top: -30px; right: -30px;
+            width: 100px; height: 100px; border-radius: 50%;
+            background: rgba(0,0,0,0.02);
+        }
+        .kpi-icon {
+            width: 48px; height: 48px; border-radius: var(--radius);
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: 20px; margin-bottom: 16px;
+        }
+        .kpi-value { font-size: 28px; font-weight: 900; color: var(--possible-dark); margin-bottom: 4px; letter-spacing: -0.5px; line-height: 1.1; }
+        .kpi-label { font-size: 12px; color: var(--color-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── Tables ── */
+        .table-5psl { width: 100%; border-collapse: collapse; }
+        .table-5psl thead th { font-size: 11px; font-weight: 700; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; padding: 14px 20px; border-bottom: 1px solid var(--color-border); background: #f8fafc; }
+        .table-5psl thead th:first-child { border-radius: var(--radius) 0 0 0; }
+        .table-5psl thead th:last-child { border-radius: 0 var(--radius) 0 0; }
+        .table-5psl tbody td { padding: 16px 20px; font-size: 14px; font-weight: 500; color: var(--color-text); border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        .table-5psl tbody tr:hover { background: #f8fafc; }
+        .table-5psl tbody tr:last-child td { border-bottom: none; }
+
+        /* ── Badges ── */
+        .badge-5psl { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; display: inline-flex; align-items: center; gap: 4px; }
+        .badge-success { background: #ecfdf5; color: var(--color-success); }
+        .badge-warning { background: #fffbeb; color: var(--color-warning); }
+        .badge-danger { background: #fef2f2; color: var(--color-danger); }
+        .badge-info { background: var(--possible-light-blue); color: var(--possible-blue); }
+        .badge-dark { background: rgba(0,0,0,0.06); color: var(--possible-dark); }
+
+        /* ── Buttons ── */
+        .btn-possible {
+            padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; border: none;
+            cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px;
+            letter-spacing: 0.2px;
+        }
+        .btn-possible:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-possible-primary { background: var(--possible-blue); color: white; }
+        .btn-possible-success { background: var(--possible-green); color: var(--possible-dark); }
+        .btn-possible-dark { background: var(--possible-dark); color: white; }
+        .btn-possible-outline { background: white; color: var(--possible-dark); border: 1.5px solid var(--color-border); }
+        .btn-possible-outline:hover { border-color: var(--possible-dark); }
+        .btn-possible-sm { padding: 7px 14px; font-size: 12px; border-radius: 6px; }
+        .btn-possible-xs { padding: 4px 10px; font-size: 11px; border-radius: 5px; font-weight: 700; }
+
+        /* ── Forms ── */
+        .input-5psl {
+            width: 100%; padding: 12px 16px; border: 1.5px solid var(--color-border); border-radius: 8px;
+            font-size: 15px; font-weight: 500; font-family: 'Inter', sans-serif;
+            color: var(--possible-dark); background: white; outline: none; transition: border-color 0.2s;
+        }
+        .input-5psl:focus { border-color: var(--possible-blue); box-shadow: 0 0 0 3px rgba(0,102,255,0.08); }
+        .input-5psl::placeholder { color: var(--color-muted); }
+        .form-label-custom { font-size: 12px; font-weight: 700; color: var(--color-text); margin-bottom: 6px; display: block; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* ── Sections ── */
+        .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; flex-wrap: wrap; gap: 16px; }
+        .section-title-sm { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--possible-dark); }
+        .section-subtitle { font-size: 14px; color: var(--color-muted); margin-top: 2px; }
+
+        /* ── Alerts ── */
+        .alert-5psl { padding: 14px 20px; border-radius: var(--radius); font-size: 14px; font-weight: 600; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .alert-5psl-success { background: #ecfdf5; color: var(--color-success); border: 1px solid #a7f3d0; }
+        .alert-5psl-danger { background: #fef2f2; color: var(--color-danger); border: 1px solid #fecaca; }
+        .alert-5psl-warning { background: #fffbeb; color: var(--color-warning); border: 1px solid #fde68a; }
+        .alert-5psl-info { background: var(--possible-light-blue); color: var(--possible-blue); border: 1px solid #bfdbfe; }
+
+        /* ── Empty States ── */
+        .empty-state { text-align: center; padding: 48px 20px; }
+        .empty-state-icon { width: 64px; height: 64px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; color: var(--color-muted); font-size: 24px; }
+        .empty-state h4 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .empty-state p { font-size: 14px; color: var(--color-muted); max-width: 320px; margin: 0 auto; }
+
+        /* ── Utility ── */
+        .text-mono { font-variant-numeric: tabular-nums; }
+        .fw-900 { font-weight: 900 !important; }
+        .text-success-custom { color: var(--color-success); }
+        .text-danger-custom { color: var(--color-danger); }
+        .text-muted-custom { color: var(--color-muted); }
+        .gap-3 { gap: 12px; }
+
+        /* ── Animations ── */
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        @keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+        @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes countUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .animate-fade-in-up { animation: fadeInUp 0.5s ease-out both; }
+        .animate-fade-in { animation: fadeIn 0.4s ease-out both; }
+        .animate-slide-right { animation: slideInRight 0.4s ease-out both; }
+        .animate-scale-in { animation: scaleIn 0.3s ease-out both; }
+        .animate-count { animation: countUp 0.6s ease-out both; }
+        .delay-1 { animation-delay: 0.05s; }
+        .delay-2 { animation-delay: 0.1s; }
+        .delay-3 { animation-delay: 0.15s; }
+        .delay-4 { animation-delay: 0.2s; }
+        .delay-5 { animation-delay: 0.25s; }
+        .delay-6 { animation-delay: 0.3s; }
+
+        /* ── Loading Skeleton ── */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 37%, #f1f5f9 63%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s ease-in-out infinite;
+            border-radius: 6px;
+        }
+        .skeleton-text { height: 14px; margin-bottom: 8px; width: 80%; }
+        .skeleton-title { height: 28px; margin-bottom: 12px; width: 60%; }
+        .skeleton-circle { border-radius: 50%; }
+
+        /* ── Page Loader ── */
+        .page-loader {
+            position: fixed; inset: 0; background: white; z-index: 9999;
+            display: flex; align-items: center; justify-content: center;
+            transition: opacity 0.4s, visibility 0.4s;
+        }
+        .page-loader.loaded { opacity: 0; visibility: hidden; pointer-events: none; }
+        .loader-spinner {
+            width: 40px; height: 40px; border: 3px solid #e2e8f0;
+            border-top-color: var(--possible-blue); border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Tier Badges ── */
+        .tier-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 5px 12px; border-radius: 20px; font-size: 11px;
+            font-weight: 800; text-transform: uppercase; letter-spacing: 0.6px;
+        }
+        .tier-starter { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); color: #0284c7; border: 1px solid #bae6fd; }
+        .tier-pro { background: linear-gradient(135deg, #fefce8, #fef9c3); color: #a16207; border: 1px solid #fde047; }
+        .tier-elite { background: linear-gradient(135deg, #fdf4ff, #f5d0fe); color: #9333ea; border: 1px solid #d8b4fe; }
+
+        /* ── Glass Card ── */
+        .card-glass {
+            background: rgba(255,255,255,0.7); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-lg);
+        }
+
+        /* ── Gradient Cards ── */
+        .card-gradient-blue { background: linear-gradient(135deg, #0066ff, #0047b3); color: white; border: none; }
+        .card-gradient-dark { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border: none; }
+        .card-gradient-green { background: linear-gradient(135deg, #059669, #047857); color: white; border: none; }
+
+        /* ── Progress Bar ── */
+        .progress-5psl { width: 100%; height: 6px; border-radius: 3px; background: #e2e8f0; overflow: hidden; }
+        .progress-5psl-bar { height: 100%; border-radius: 3px; transition: width 1s ease-out; }
+        .progress-5psl-blue { background: var(--possible-blue); }
+        .progress-5psl-green { background: var(--color-success); }
+        .progress-5psl-warning { background: var(--color-warning); }
+
+        /* ── Crypto Styles ── */
+        .crypto-address-box {
+            background: #f8fafc; border: 1.5px dashed var(--color-border); border-radius: 8px;
+            padding: 12px 16px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px;
+            word-break: break-all; color: var(--possible-dark); position: relative;
+            transition: border-color 0.2s;
+        }
+        .crypto-address-box:hover { border-color: var(--possible-blue); }
+        .crypto-copy-btn {
+            position: absolute; top: 8px; right: 8px; background: var(--possible-blue);
+            color: white; border: none; border-radius: 5px; padding: 4px 10px;
+            font-size: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .crypto-copy-btn:hover { transform: scale(1.05); }
+        .crypto-copy-btn.copied { background: var(--color-success); }
+
+        .network-pill {
+            display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+            border-radius: 20px; border: 1.5px solid var(--color-border); background: white;
+            font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s;
+        }
+        .network-pill:hover, .network-pill.active { border-color: var(--possible-blue); background: var(--possible-light-blue); color: var(--possible-blue); }
+
+        /* ── Info Grid ── */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+        .info-item { padding: 14px 16px; background: #f8fafc; border-radius: 8px; }
+        .info-item-label { font-size: 10px; font-weight: 700; color: var(--color-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+        .info-item-value { font-size: 15px; font-weight: 800; color: var(--possible-dark); }
+
+        /* ── Tab Nav ── */
+        .tab-nav-5psl { display: flex; gap: 4px; background: #f1f5f9; padding: 4px; border-radius: 8px; margin-bottom: 20px; }
+        .tab-5psl {
+            flex: 1; text-align: center; padding: 10px 16px; border-radius: 6px;
+            font-size: 13px; font-weight: 700; color: var(--color-muted);
+            cursor: pointer; transition: all 0.2s; border: none; background: transparent;
+        }
+        .tab-5psl.active { background: white; color: var(--possible-dark); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+
+        /* ── Responsive ── */
+        @media(max-width:991px){
+            .sidebar { transform: translateX(-100%); }
+            .sidebar.open { transform: translateX(0); }
+            .topbar { left: 0; padding: 0 16px; }
+            .main-content { margin-left: 0; padding: calc(var(--topbar-h) + 20px) 16px 32px; }
+            .mobile-toggle { display: block; }
+            .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 99; }
+            .overlay.active { display: block; }
+            .section-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+    @yield('styles')
 </head>
-
 <body>
 
-   <!-- Start wrapper -->
-   <div id="wrapper" class="wrapper">
+    <!-- Page Loader -->
+    <div class="page-loader" id="pageLoader">
+        <div class="loader-spinner"></div>
+    </div>
 
-      <!-- start perloader -->
-      <div class="pre-loader" id="preloader">
-         <div class="loader"></div>
-      </div>
-      <!-- end perloader -->
+    <div class="overlay" id="sidebarOverlay"></div>
 
-      <!-- Start main-content -->
-      <div id="main_content" class="footer-fixed">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <a href="/" style="text-decoration: none; color: white;"><span>5</span>PSL</a>
+        </div>
 
-         <!-- Header style-7 -->
-         <header class="rt-header rt-header-style-7 sticky-on">
+        <nav class="sidebar-nav">
+            <div class="nav-section">Menu</div>
+            <a href="{{ route('home') }}" class="nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> Accueil
+            </a>
 
-            <!-- sticky-placeholder -->
-            <div id="sticky-placeholder"></div>
+            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'superadmin')
+                <div class="nav-section">Administration</div>
+                <a href="{{ route('investment.admin.index') }}" class="nav-item {{ request()->routeIs('investment.admin.*') ? 'active' : '' }}">
+                    <i class="fas fa-cogs"></i> Gestion Club
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="nav-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                    <i class="fas fa-users"></i> Utilisateurs
+                </a>
+                <a href="{{ route('admin.wallets.index') }}" class="nav-item {{ request()->routeIs('admin.wallets.*') ? 'active' : '' }}">
+                    <i class="fas fa-wallet"></i> Portefeuilles Centraux
+                </a>
+                <a href="{{ route('admin.crypto.index') }}" class="nav-item {{ request()->routeIs('admin.crypto.*') ? 'active' : '' }}">
+                    <i class="fab fa-bitcoin"></i> Adresses Dépôts
+                </a>
+                <a href="{{ route('opportunities.create') }}" class="nav-item {{ request()->routeIs('opportunities.create') ? 'active' : '' }}">
+                    <i class="fas fa-plus-circle"></i> Créer Opportunité
+                </a>
+                <a href="{{ route('admin.kyc.index') }}" class="nav-item {{ request()->routeIs('admin.kyc.*') ? 'active' : '' }}">
+                    <i class="fas fa-id-card"></i> Vérifications KYC
+                    @php $pendingKyc = \App\Models\User::where('kyc_status', 'pending')->count(); @endphp
+                    @if($pendingKyc > 0)
+                        <span style="background: var(--color-warning); color: var(--possible-dark); font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto;">{{ $pendingKyc }}</span>
+                    @endif
+                </a>
+                <a href="{{ route('admin.support.index') }}" class="nav-item {{ request()->routeIs('admin.support.*') ? 'active' : '' }}">
+                    <i class="fas fa-headset"></i> Support Admin
+                    @php $openTickets = \App\Models\SupportTicket::where('status', '!=', 'closed')->count(); @endphp
+                    @if($openTickets > 0)
+                        <span style="background: var(--possible-blue); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto;">{{ $openTickets }}</span>
+                    @endif
+                </a>
+            @endif
 
-            <!-- start  topbar -->
-            <div class="topbar topbar-style-1" id="topbar-wrap">
-               <div class="container">
-                  <div class="row align-items-center">
+            <div class="nav-section">Mon Espace</div>
+            <a href="{{ route('investment.dashboard') }}" class="nav-item {{ request()->routeIs('investment.dashboard') ? 'active' : '' }}">
+                <i class="fas fa-home"></i> Vue d'ensemble
+            </a>
+            <a href="{{ route('kyc.index') }}" class="nav-item {{ request()->routeIs('kyc.*') ? 'active' : '' }}">
+                <i class="fas fa-user-check"></i> Mon KYC
+                @if(Auth::user()->kyc_status === 'verified')
+                    <span style="color: var(--color-success); margin-left: auto;"><i class="fas fa-check-circle"></i></span>
+                @elseif(Auth::user()->kyc_status === 'pending')
+                    <span style="color: var(--color-warning); margin-left: auto;"><i class="fas fa-clock"></i></span>
+                @elseif(Auth::user()->kyc_status === 'rejected')
+                    <span style="color: var(--color-danger); margin-left: auto;"><i class="fas fa-times-circle"></i></span>
+                @endif
+            </a>
+            <a href="{{ route('opportunities.index') }}" class="nav-item {{ request()->routeIs('opportunities.index') || request()->routeIs('opportunities.show') ? 'active' : '' }}">
+                <i class="fas fa-lightbulb"></i> Opportunités
+            </a>
+            <a href="{{ route('investment.transaction.form') }}" class="nav-item {{ request()->routeIs('investment.transaction.*') ? 'active' : '' }}">
+                <i class="fas fa-arrow-right-arrow-left"></i> Dépôts & Retraits
+            </a>
+            <a href="{{ route('investment.invest.form') }}" class="nav-item {{ request()->routeIs('investment.invest.*') ? 'active' : '' }}">
+                <i class="fas fa-coins"></i> Investir
+            </a>
+            <a href="{{ route('affiliate.index') }}" class="nav-item {{ request()->routeIs('affiliate.*') ? 'active' : '' }}">
+                <i class="fas fa-user-plus"></i> Affiliation
+            </a>
 
-                     <div class="col-lg-7">
-                        <div class="rt-trending rt-trending-style-1">
-                           <p class="trending-title">
-                              <i class="fas fa-bolt icon"></i>
-                              Trending
-                           </p>
-                           <div class="rt-treding-slider1 swiper-container">
-                              <div class="swiper-wrapper">
-                                 <div class="swiper-slide">
-                                    <div class="item">
-                                       <p class="trending-slide-title">
-                                          newsan unknown printer took a galley of
-                                          type andscrambled.
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="item">
-                                       <p class="trending-slide-title">
-                                          newsan unknown printer took a galley of
-                                          type andscrambled.
-                                       </p>
-                                    </div>
-                                 </div>
-                                 <div class="swiper-slide">
-                                    <div class="item">
-                                       <p class="trending-slide-title">
-                                          newsan unknown printer took a galley of
-                                          type andscrambled.
-                                       </p>
-                                    </div>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end col -->
+            <div class="nav-section">Aide</div>
+            <a href="{{ route('whitepaper') }}" class="nav-item {{ request()->routeIs('whitepaper') ? 'active' : '' }}">
+                <i class="fas fa-file-alt"></i> Whitepaper
+            </a>
+            <a href="{{ route('support.index') }}" class="nav-item {{ request()->routeIs('support.*') ? 'active' : '' }}">
+                <i class="fas fa-life-ring"></i> Assistance
+                @php $myUnread = auth()->check() ? \App\Models\SupportTicket::where('user_id', auth()->id())->get()->sum(fn($t) => $t->unreadCountFor(auth()->user())) : 0; @endphp
+                @if($myUnread > 0)
+                    <span style="background: var(--possible-blue); color: white; font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 10px; margin-left: auto;">{{ $myUnread }}</span>
+                @endif
+            </a>
+        </nav>
 
-                     <div class="col-lg-5">
-                        <div class="rt-topbar-right">
-                           <div class="meta-wrap">
-                              <span class="rt-meta">
-                                 <i class="far fa-calendar-alt icon"></i>
-                                 <span class="currentDate">
-                                    DECEMBER 9, 2022
-                                 </span>
-                              </span>
-                           </div>
-                        </div>
-                     </div>
-                     <!-- end col -->
-
-                  </div>
-                  <!-- end row -->
-               </div>
-               <!-- end container -->
+        <div class="sidebar-footer">
+            <div class="sidebar-user">
+                <div class="sidebar-avatar">
+                    {{ strtoupper(substr(Auth::user()->name ?? 'U', 0, 1)) }}
+                </div>
+                <div class="sidebar-user-info">
+                    <div class="user-name">{{ Auth::user()->name ?? 'Utilisateur' }}</div>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
+                        <span class="user-role">{{ Auth::user()->role === 'admin' ? 'Admin' : 'Membre' }}</span>
+                        @php $userTier = Auth::user()->tier ?? 'STARTER'; @endphp
+                        <span class="tier-badge tier-{{ strtolower($userTier) }}" style="padding: 2px 8px; font-size: 9px;">{{ $userTier }}</span>
+                    </div>
+                </div>
             </div>
-            <!-- end topbar -->
+        </div>
+    </aside>
 
-            <!-- Header Main -->
-            <div class="header-main header-main-style-7 navbar-wrap" id="navbar-wrap">
-               <div class="container">
-                  <div class="header-main-inner d-flex align-items-center justify-content-between">
+    <!-- Topbar -->
+    <header class="topbar">
+        <div class="topbar-left">
+            <button class="mobile-toggle" id="mobileToggle"><i class="fas fa-bars"></i></button>
+            <h1 class="topbar-title">@yield('title')</h1>
+        </div>
+        
+        <div class="topbar-right">
+            <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                @csrf
+                <button type="submit" class="btn-topbar btn-topbar-outline">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </button>
+            </form>
+        </div>
+    </header>
 
-                     <div class="logo-wrapper">
-                        <div class="humburger-area">
-                           <div class="item humburger offcanvas-menu-btn menu-status-open">
-                              <span></span>
-                           </div>
-                        </div>
-                        <div class="logo-area">
-                           <a href="index-2.html">
-                              <img width="162" height="52" src="media/logo/logoweb.svg" alt="neeon">
-                           </a>
-                        </div>
-
-                     </div>
-                     <!-- end logo-wrapper -->
-
-                     <div class="menu-wrapper">
-                        <div class="main-menu">
-                           <nav class="main-menu__nav">
-                              <ul>
-                                 <li class="main-menu active">
-                                    <a class="animation" href="/">Accueil</a>
-                                    
-                                 </li>
-                                 <li class="main-menu__nav_sub list">
-                                    <a class="animation" href="javascript:void(0)">Formations</a>
-                                    <ul class="main-menu__dropdown">
-                                       <li class="main-menu__nav_sub">
-                                          <a href="javascript:void(0)">
-                                             Initiation au Trading
-                                          </a>
-                                          <ul>
-                                             <li><a href="single-post1.html">Analyse Fondamentale</a></li>
-                                             <li><a href="single-post2.html">Analyse Technique</a></li>
-                                             <li><a href="single-post3.html">Gestion des risques</a></li>
-                                          </ul>
-                                       </li>
-                                       <li><a href="author.html">Approfondir le Trading</a></li>
-                                       <li><a href="author.html">Blockchain & Cryptomonnaies</a></li>
-                                    </ul>
-                                 </li>
-                                 <li class="main-menu active">
-                                    <a class="animation" href="/">Actualités</a>
-                                    
-                                 </li>
-                                 <li class="main-menu__nav_sub list">
-                                    <a class="animation" href="javascript:void(0)">Offres </a>
-                                    <ul class="main-menu__dropdown">
-                                       <li><a href="life-style.html">Traders Hub</a></li>
-                                       <li><a href="technology.html">Traders Programs</a></li>
-                                       <li><a href="gaming.html">Investment Club</a></li>
-                                       <li><a href="graphics.html">Social Trading</a></li>
-                                    </ul>
-                                 </li>
-                                 
-                                 <li class="main-menu__nav_sub list">
-                                    <a class="animation" href="javascript:void(0)">Recommandations</a>
-                                    <ul class="main-menu__dropdown">
-                                       <li><a href="shop.html">Brokers</a></li>
-                                       <li><a href="single-shop.html">Portefeuilles</a></li>
-                                    </ul>
-                                 </li>
-
-                                 @if(auth()->check() && auth()->user()->role === 'admin')
-                                 <a href="/admin">Admin Dashboard</a>
-                             @endif
-                             
-                              </ul>
-                           </nav>
-                        </div>
-                     </div>
-                     <!-- end menu-wrapper -->
-
-                     <div class="search-wrapper search-wrapper-style-1">
-                        <form action="#" class="form search-form-box">
-                           <div class="form-group">
-                              <input type="text" name="sarch" id="search" placeholder="Search . . . "
-                                 class="form-control rt-search-control">
-                              <button type="submit" class="search-submit">
-                                 <i class="fas fa-search"></i>
-                              </button>
-                           </div>
-                        </form>
-                     </div>
-                     <!-- end search-wrapper -->
-                  </div>
-                  <!-- end row -->
-               </div>
-               <!-- end container -->
+    <!-- Main Content -->
+    <main class="main-content">
+        @if(session('success'))
+            <div class="alert-5psl alert-5psl-success">
+                <i class="fas fa-check-circle"></i>{{ session('success') }}
             </div>
-            <!-- End Header Main -->
-
-         </header>
-         <!-- end header style-7 -->
-
-         <!-- start rt-mobile-header -->
-         <div class="rt-mobile-header mobile-sticky-on">
-
-            <div id="mobile-sticky-placeholder"></div>
-            <!-- end mobile-sticky-placeholder -->
-
-            <div class="mobile-top-bar" id="mobile-top-bar">
-               <ul class="mobile-top-list">
-                  <li>
-                     <span class="rt-meta">
-                        <i class="far fa-calendar-alt icon"></i>
-                        <span class="currentDate">DECEMBER 9, 2022</span>
-                     </span>
-                  </li>
-                  <li>
-                     <span class="rt-meta">
-                        <i class="fas fa-map-marker-alt icon"></i>
-                        Chicago 12, Melborne City, USA
-                     </span>
-                  </li>
-               </ul>
+        @endif
+        @if(session('error'))
+            <div class="alert-5psl alert-5psl-danger">
+                <i class="fas fa-exclamation-circle"></i>{{ session('error') }}
             </div>
-            <!-- end mobile-top-bar -->
+        @endif
 
-            <div class="mobile-menu-bar-wrap" id="mobile-menu-bar-wrap">
-               <div class="mobile-menu-bar">
-                  <div class="logo">
-                     <a href="/">
-                        <img src="media/logo/logovertical.svg" alt="neeon" width="80" height="20">
-                     </a>
-                  </div>
-                  <span class="sidebarBtn">
-                     <span class="bar"></span>
-                     <span class="bar"></span>
-                     <span class="bar"></span>
-                     <span class="bar"></span>
-                  </span>
-               </div>
-               <div class="rt-slide-nav">
-                  <div class="offscreen-navigation">
-                     <nav class="menu-main-primary-container">
-                        <ul class="menu">
-                           <li class="list menu-item">
-                              <a class="animation" href="/">Home</a>
-                              
-                           </li>
-                           <li class="list menu-item-has-children">
-                              <a class="animation" href="javascript:void(0)">Formations</a>
-                                    
-                              <ul class="main-menu__dropdown sub-menu">
-                                 <li class="list menu-item-has-children">
-                                    <a href="javascript:void(0)">
-                                       Initiation au trading
-                                    </a>
-                                    <ul class="main-menu__dropdown sub-menu">
-                                       <li><a href="single-post1.html">Analyse Fondamentale</a></li>
-                                       <li><a href="single-post2.html">Analyse Technique</a></li>
-                                       <li><a href="single-post3.html">Gestion des risques</a></li>
-                                    </ul>
-                                 </li>
-                                 <li><a href="author.html">Approfondir le Trading</a></li>
-                                       <li><a href="author.html">Blockchain & Cryptomonnaies</a></li>
-                              </ul>
+        @yield('content')
+    </main>
 
-                           </li>
-                           <li class="list menu-item">
-                              <a class="animation" href="/">Actualités</a>
-                              
-                           </li>
-                           <li class="list menu-item-has-children">
-                              <a class="animation" href="javascript:void(0)">Offres</a>
-                              <ul class="main-menu__dropdown sub-menu">
-                                 <li><a href="life-style.html">Traders Hub</a></li>
-                                       <li><a href="technology.html">Traders Programs</a></li>
-                                       <li><a href="gaming.html">Investment Club</a></li>
-                                       <li><a href="graphics.html">Social Trading</a></li>
-                              </ul>
-                           </li>
-                           <li class="list menu-item-has-children">
-                              <a class="animation" href="javascript:void(0)">Recommandations</a>
-                              <ul class="main-menu__dropdown sub-menu">
-                                <li><a href="shop.html">Brokers</a></li>
-                                       <li><a href="single-shop.html">Portefeuilles</a></li>
-
-                              </ul>
-                           </li>
-                           
-                        </ul>
-                     </nav>
-                  </div>
-               </div>
-            </div>
-
-
-
-         </div>
-         <!-- end rt-mobile-header -->
-
-         <!-- Start Main -->
-         @yield('content')
-         <!-- End Main -->
-
-         <!-- Start Footer -->
-         <footer class="footer footer-style-4 layout-2">
-
-            <div class="container">
-               <div
-                  class="footer-widget-style-2 d-flex align-items-center justify-content-center text-center flex-column">
-
-                  <div class="logo wow fadeInDown" data-wow-delay="200ms" data-wow-duration="800ms">
-                     <a href="index-2.html">
-                        <img src="media/logo/logo-classic.png" alt="logo-classic" width="170" height="50">
-                     </a>
-                  </div>
-
-                  <ul class="footer-menu-style-2 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="800ms">
-                     <li>
-                        <a href="index-2.html">Home</a>
-                     </li>
-                     <li>
-                        <a href="about.html">About</a>
-                     </li>
-                     <li>
-                        <a href="technology.html">Categories</a>
-                     </li>
-                     <li>
-                        <a href="about.html">Privacy</a>
-                     </li>
-                     <li>
-                        <a href="about.html">Terms</a>
-                     </li>
-                     <li>
-                        <a href="contact.html">Contact</a>
-                     </li>
-                  </ul>
-
-                  <div class="social-wrapper-line-style">
-                     <span class="wrapper-line wow zoomIn" data-wow-delay="400ms" data-wow-duration="800ms"></span>
-                     <ul class="footer-social mb-0 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
-                        <li class="social-item">
-                           <a href="https://www.facebook.com/" class="social-link fb" target="_blank">
-                              <i class="fab fa-facebook-f"></i>
-                           </a>
-                        </li>
-                        <li class="social-item">
-                           <a href="https://twitter.com/" class="social-link tw" target="_blank">
-                              <i class="fab fa-twitter"></i>
-                           </a>
-                        </li>
-                        <li class="social-item">
-                           <a href="https://vimeo.com/" class="social-link vm" target="_blank">
-                              <i class="fab fa-vimeo-v"></i>
-                           </a>
-                        </li>
-                        <li class="social-item">
-                           <a href="https://www.pinterest.com/" class="social-link pn" target="_blank">
-                              <i class="fab fa-pinterest-p"></i>
-                           </a>
-                        </li>
-                        <li class="social-item">
-                           <a href="https://www.whatsapp.com/" class="social-link wh" target="_blank">
-                              <i class="fab fa-whatsapp"></i>
-                           </a>
-                        </li>
-                     </ul>
-                     <span class="wrapper-line wow zoomIn" data-wow-delay="700ms" data-wow-duration="800ms"></span>
-                  </div>
-
-                  <p class="copyright-text mb-0 wow fadeInUp" data-wow-delay="800ms" data-wow-duration="800ms">
-                     <span class="currentYear"></span> © neeon all right reserved by
-                     <a href="https://www.radiustheme.com/" rel="nofollow">RadiusTheme</a>
-                  </p>
-
-               </div>
-               <!-- end footer-widget-style-2 -->
-            </div>
-
-         </footer>
-         <!-- End  Footer -->
-
-      </div>
-      <!-- End main-content -->
-
-      <!-- Start  offcanvas menu -->
-      <div class="offcanvas-menu-wrap" id="offcanvas-wrap" data-position="right">
-
-         <div class="offcanvas-content">
-            <div class="offcanvas-header">
-               <div class="offcanvas-logo">
-                  <div class="site-branding">
-                     <a class="dark-logo" href="index-2.html"><img width="162" height="52" src="media/logo/logo-dark.svg"
-                           alt="neeon"></a>
-                     <a class="light-logo" href="index-2.html"><img width="162" height="52"
-                           src="media/logo/logo-light.svg" alt="neeon"></a>
-                  </div>
-               </div>
-               <div class="close-btn offcanvas-close">
-                  <a href="javascript:void(0)">
-                     <i class="fas fa-times"></i>
-                  </a>
-               </div>
-            </div>
-
-            <div class="offcanvas-widget">
-               <h3 class="offcanvas-widget-title">About Us</h3>
-               <p>
-                  The argument in favor of using filler text
-                  goes something like this: If you use arey
-                  real content in the Consulting Process
-                  anytime you reachtent.
-               </p>
-            </div>
-
-            <div class="offcanvas-widget">
-               <h3 class="offcanvas-widget-title">Instagram</h3>
-               <div class="insta-gallery">
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_1.jpg" width="100" height="90" alt="gallery1">
-                     </a>
-                  </div>
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_2.jpg" width="100" height="90" alt="gallery2">
-                     </a>
-                  </div>
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_3.jpg" width="100" height="90" alt="gallery3">
-                     </a>
-                  </div>
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_4.jpg" width="100" height="90" alt="gallery4">
-                     </a>
-                  </div>
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_5.jpg" width="100" height="90" alt="gallery5">
-                     </a>
-                  </div>
-                  <div class="galleryitem">
-                     <a href="https://www.instagram.com/">
-                        <img src="media/gallery/ins-gallery_6.jpg" width="100" height="90" alt="gallery6">
-                     </a>
-                  </div>
-               </div>
-            </div>
-
-            <div class="offcanvas-widget footer-widget">
-               <h3 class="offcanvas-widget-title">Contact Info</h3>
-               <ul class="contact-info-list widget-list">
-                  <li class="widget-list-item">
-                     <i class="fas fa-map-marker-alt list-icon"></i>
-                     Chicago 12, Melborne City, USA
-                  </li>
-                  <li class="widget-list-item">
-                     <i class="fas fa-phone-alt list-icon"></i>
-                     <a href="tel:123333000999" class="widget-list-link">
-                        (123) 333-000-999
-                     </a>
-                  </li>
-                  <li class="widget-list-item">
-                     <i class="fas fa-envelope list-icon"></i>
-                     <a href="mailto:info@example.com" class="widget-list-link">
-                        neeon@gmail.com
-                     </a>
-                  </li>
-               </ul>
-               <ul class="footer-social style-2 gutter-15">
-                  <li class="social-item">
-                     <a href="https://www.facebook.com/" class="social-link fb" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                     </a>
-                  </li>
-                  <li class="social-item">
-                     <a href="https://twitter.com/" class="social-link tw" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                     </a>
-                  </li>
-                  <li class="social-item">
-                     <a href="https://vimeo.com/" class="social-link vm" target="_blank">
-                        <i class="fab fa-vimeo-v"></i>
-                     </a>
-                  </li>
-                  <li class="social-item">
-                     <a href="https://www.pinterest.com/" class="social-link pn" target="_blank">
-                        <i class="fab fa-pinterest-p"></i>
-                     </a>
-                  </li>
-                  <li class="social-item">
-                     <a href="https://www.whatsapp.com/" class="social-link wh" target="_blank">
-                        <i class="fab fa-whatsapp"></i>
-                     </a>
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <!-- End  offcanvas menu -->
-
-      <!-- Start Cart Wrap -->
-      <div class="cart-wrap" id="cart-wrap" data-position="left">
-         <div class="cart-content">
-            <div class="cart-header">
-               <span class="cart-title d-inlie-block">Cart</span>
-               <button type="button" class="cart-menu-btn menu-close-btn">
-                  <span class="menu-btn-icon">
-                     <i class="fas fa-times"></i>
-                  </span>
-               </button>
-            </div>
-            <ul class="cart-items ">
-               <li class="d-flex ">
-                  <div class="item-figure">
-                     <a href="#">
-                        <img src="media/gallery/ins-gallery_1.jpg" alt="Cart" width="100" height="90">
-                     </a>
-                     <div class="item-dismiss">
-                        <a href="#"><i class="fas fa-times"></i></a>
-                     </div>
-                  </div>
-                  <div class="item-description">
-                     <span class="item-main-title"><a href="#">Animal</a></span>
-                     <span class="item-amount d-flex align-items-center"><span class="item-quantity">1</span>X<span
-                           class="item-price">$12.00</span></span>
-                  </div>
-               </li>
-               <li class="d-flex">
-                  <div class="item-figure">
-                     <a href="#">
-                        <img src="media/gallery/ins-gallery_2.jpg" alt="Cart" width="100" height="90">
-                     </a>
-                     <div class="item-dismiss">
-                        <a href="#"><i class="fas fa-times"></i></a>
-                     </div>
-                  </div>
-                  <div class="item-description">
-                     <span class="item-main-title"><a href="#">Sports</a></span>
-                     <span class="item-amount d-flex align-items-center"><span class="item-quantity">1</span>X<span
-                           class="item-price">$18.00</span></span>
-                  </div>
-               </li>
-               <li class="d-flex">
-                  <div class="item-figure">
-                     <a href="#">
-                        <img src="media/gallery/ins-gallery_3.jpg" alt="Cart" width="100" height="90">
-                     </a>
-                     <div class="item-dismiss">
-                        <a href="#"><i class="fas fa-times"></i></a>
-                     </div>
-                  </div>
-                  <div class="item-description">
-                     <span class="item-main-title"><a href="#">Fashion</a></span>
-                     <span class="item-amount d-flex align-items-center"><span class="item-quantity">1</span>X<span
-                           class="item-price">$20.00</span></span>
-                  </div>
-
-               </li>
-            </ul>
-            <div class="cart-footer">
-               <ul class="total-amount">
-                  <li class="title">Subtotal:</li>
-                  <li class="amount">$50.00</li>
-               </ul>
-               <ul class="action-buttons">
-                  <li><a href="#" class="rt-submit-btn">VIEW CART</a></li>
-                  <li><a href="#" class="rt-submit-btn">CHECKOUT</a></li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <!-- End Cart Wrap -->
-
-      <!-- Start Search  -->
-      <div id="template-search" class="template-search">
-         <button type="button" class="close">×</button>
-         <form class="search-form">
-            <input type="search" value="" placeholder="Search" />
-            <button type="submit" class="search-btn btn-ghost style-1">
-               <i class="flaticon-search"></i>
-            </button>
-         </form>
-      </div>
-      <!-- End Search -->
-
-      <!-- theme-switch-box -->
-      <div class="theme-switch-box-wrap">
-         <div class="theme-switch-box">
-            <span class="theme-switch-box__theme-status"><i class="fas fa-cog"></i></span>
-            <label class="theme-switch-box__label" for="themeSwitchCheckbox">
-               <input class="theme-switch-box__input" type="checkbox" name="themeSwitchCheckbox"
-                  id="themeSwitchCheckbox">
-               <span class="theme-switch-box__main"></span>
-            </label>
-            <span class="theme-switch-box__theme-status"><i class="fas fa-moon"></i></span>
-         </div>
-      </div>
-      <!-- end theme-switch-box -->
-
-
-      <!-- start back to top -->
-      <a href="javascript:void(0)" id="back-to-top">
-         <i class="fas fa-angle-double-up"></i>
-      </a>
-      <!-- End back to top -->
-
-   </div>
-   <!-- End wrapper -->
-
-
-   <!-- Dependency Scripts -->
-   <script src="dependencies/jquery/jquery.min.js"></script>
-   <script src="dependencies/popper.js/popper.min.js"></script>
-   <script src="dependencies/bootstrap/js/bootstrap.min.js"></script>
-   <script src="dependencies/appear/appear.min.js"></script>
-   <script src="dependencies/swiper/js/swiper.min.js"></script>
-   <script src="dependencies/masonry/masonry.min.js"></script>
-   <script src="dependencies/magnific-popup/js/magnific-popup.min.js"></script>
-   <script src="dependencies/theia-sticky-sidebar/resize-sensor.min.js"></script>
-   <script src="dependencies/theia-sticky-sidebar/theia-sticky-sidebar.min.js"></script>
-   <script src="dependencies/validator/validator.min.js"></script>
-   <script src="dependencies/tween-max/tween-max.js"></script>
-   <script src="dependencies/wow/js/wow.min.js"></script>
-
-   <!-- custom -->
-   <script src="assets/js/app.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Page loader
+        window.addEventListener('load', function() {
+            document.getElementById('pageLoader').classList.add('loaded');
+        });
+        // Sidebar toggle
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+        const toggleBtn = document.getElementById('mobileToggle');
+        function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('active'); }
+        if(toggleBtn) toggleBtn.addEventListener('click', toggleSidebar);
+        if(overlay) overlay.addEventListener('click', toggleSidebar);
+        // Copy to clipboard helper
+        function copyToClipboard(text, btn) {
+            navigator.clipboard.writeText(text).then(function() {
+                btn.textContent = '✓ Copié';
+                btn.classList.add('copied');
+                setTimeout(function() { btn.textContent = 'Copier'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+    </script>
+    @yield('scripts')
 </body>
-
-
-<!-- Mirrored from radiustheme.com/demo/html/neeon/index7.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 07 Dec 2022 11:47:39 GMT -->
 </html>

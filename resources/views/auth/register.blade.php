@@ -1,158 +1,62 @@
-@extends('layouts.access')
+@extends('layouts.auth')
+@section('title', 'Inscription')
 
 @section('content')
-<!-- Start Main -->
-<main>
+<div class="auth-split">
+    {{-- Left panel: presentation --}}
+    <div class="auth-left">
+        <h1>Start building<br>wealth<br>with 5PSL.</h1>
+    </div>
 
-<!-- Start inner page Banner -->
+    {{-- Right panel: form --}}
+    <div class="auth-right">
+        <div class="auth-right-content">
+            <h2 class="auth-heading">Sign up</h2>
+            <p class="auth-subheading">Create your account to start investing.</p>
 
-<!-- End inner page Banner -->
-
-<!-- start contact-section-layout-1 -->
-<div class="contact-section-layout-1 section-padding-2">
-   <div class="container">
-      <div class="row gutter-30 justify-content-between align-items-center">
-         <div class="col-xl-6 col-lg-6 wow fadeInUp" data-wow-delay="300ms" data-wow-duration="800ms">
-            <div class="contact-wrap-area-1">
-
-               <div class="rt-section-heading-style-2">
-                  <span class="sub-title">How may we help you</span>
-                  <h2 class="heading-tilte">
-                     Office Information
-                  </h2>
-                  <p>
-                     Mhen an unknown printer took a galley of type and scrambled it to make a type
-                     specimen book. It has survived not only five centuries, but also the leap into
-                     remaining essentially unchanged.
-                  </p>
-               </div>
-
-               <div class="contact-list-area-1 ">
-                  <ul class="contact-list-style-1 clearfix">
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>Theodore Lowe, Ap #867-859</span>
-                           <span>Sit Rd, Azusa New York</span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-
-                           <i class="far fa-envelope"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>
-                              <a href="mailto:infonouka@gmail.com">infonouka@gmail.com</a>
-                           </span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="list-content">
-                           <span><a href="tel:+1238895600">+123 88 956 00</a></span>
-                           <span><a href="tel:+1238895600">+123 88 956 00</a></span>
-                        </div>
-                     </li>
-                     <li class="list-item media">
-                        <div class="list-icon">
-                           <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <div class="list-content">
-                           <span>
-                              <a href="https://www.radiustheme.com/" rel="nofollow">www.radiustheme.com</a>
-                           </span>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-         <!-- end col -->
-
-         <div class="col-xl-5 col-lg-6 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="800ms">
-         <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-
-                        <div class="row mb-3">
-                            <label for="name" class="col-md-4 col-form-label text-md-end">{{ __('Name') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+            @if($errors->any())
+                <div class="alert-box">
+                    @foreach($errors->all() as $error)
+                        <div>{{ $error }}</div>
+                    @endforeach
                 </div>
-         </div>
-         <!-- end col -->
-      </div>
-      <!-- end row -->
-   </div>
-   <!-- end container -->
+            @endif
+
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label-custom">Full Name</label>
+                    <input type="text" name="name" class="form-input @error('name') is-invalid @enderror"
+                        value="{{ old('name') }}" required autocomplete="name" autofocus>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label-custom">Email Address</label>
+                    <input type="email" name="email" class="form-input @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}" required autocomplete="email">
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <label class="form-label-custom">Password</label>
+                    <input type="password" name="password" class="form-input @error('password') is-invalid @enderror"
+                        required autocomplete="new-password">
+                </div>
+
+                <div style="margin-bottom: 32px;">
+                    <label class="form-label-custom">Confirm Password</label>
+                    <input type="password" name="password_confirmation" class="form-input"
+                        required autocomplete="new-password">
+                </div>
+
+                <button type="submit" class="btn-possible">Create account</button>
+            </form>
+
+            <div style="margin-top: 32px; font-size: 14px; font-weight: 500;">
+                Already have an account? 
+                <a href="{{ route('login') }}" class="auth-link">Log in</a>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- end contact-section-layout-1 -->
-
-<!-- start  Map Section -->
-
-<!-- End  Map Section -->
-
-</main>
-<!-- End Main -->
-
-
 @endsection
