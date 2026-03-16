@@ -32,7 +32,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--possible-dark);
-            z-index: 9999;
+            z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,7 +105,7 @@
         /* Navbar */
         .navbar-main {
             position: relative;
-            z-index: 9999;
+            z-index: 999999;
             padding: 20px 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -442,8 +442,6 @@
                 <div class="hero-carousel-slide">
                     <img src="{{ asset('media/img/bg3.jpg') }}" alt="5PSL Club">
                 </div>
-                
-                
                
             </div>
             <div class="hero-carousel-overlay"></div>
