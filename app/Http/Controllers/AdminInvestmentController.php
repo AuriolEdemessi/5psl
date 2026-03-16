@@ -53,20 +53,20 @@ class AdminInvestmentController extends Controller
 
         // Financial totals
         $totalDeposits = (float) Transaction::where('type', 'depot')
-            ->whereIn('statut', ['approuve', 'approuve'])
+            ->where('statut', 'approuve')
             ->sum('montant');
         $totalWithdrawals = (float) Transaction::where('type', 'retrait')
-            ->whereIn('statut', ['approuve', 'approuve'])
+            ->where('statut', 'approuve')
             ->sum('montant');
-        $totalFees = (float) Transaction::whereIn('statut', ['approuve', 'approuve'])
+        $totalFees = (float) Transaction::where('statut', 'approuve')
             ->sum('frais_entree');
-        $totalCommissions = (float) Transaction::whereIn('statut', ['approuve', 'approuve'])
+        $totalCommissions = (float) Transaction::where('statut', 'approuve')
             ->where('commission_hwm', '>', 0)
             ->sum('commission_hwm');
 
         // Recent approved transactions (for audit trail)
         $recentApproved = Transaction::with('user')
-            ->whereIn('statut', ['approuve', 'approuve'])
+            ->where('statut', 'approuve')
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();

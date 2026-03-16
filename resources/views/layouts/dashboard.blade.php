@@ -402,7 +402,7 @@
                 <div class="sidebar-user-info">
                     <div class="user-name">{{ Auth::user()->name ?? 'Utilisateur' }}</div>
                     <div style="display: flex; align-items: center; gap: 6px; margin-top: 2px;">
-                        <span class="user-role">{{ Auth::user()->role === 'admin' ? 'Admin' : 'Membre' }}</span>
+                        <span class="user-role">{{ in_array(Auth::user()->role, ['admin', 'superadmin']) ? ucfirst(Auth::user()->role) : 'Membre' }}</span>
                         @php $userTier = Auth::user()->tier ?? 'STARTER'; @endphp
                         <span class="tier-badge tier-{{ strtolower($userTier) }}" style="padding: 2px 8px; font-size: 9px;">{{ $userTier }}</span>
                     </div>
