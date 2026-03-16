@@ -31,13 +31,18 @@
         #page-loader {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--possible-dark);
-            z-index: 2147483647; /* absolute maximum z-index */
             background: #121212;
+            z-index: 2147483647;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: opacity 0.5s ease;
+        }
+        #page-content {
+            visibility: hidden;
+        }
+        #page-content.loaded {
+            visibility: visible;
         }
         .loader-brand {
             font-size: 40px; font-weight: 900; color: white; letter-spacing: -2px;
@@ -308,6 +313,7 @@
         <div class="loader-brand"><span>5</span>PSL</div>
     </div>
 
+    <div id="page-content">
     <!-- Top Banner (Dynamic) -->
     <div class="top-banner px-4 px-md-5">
         <div class="d-none d-md-block">
@@ -647,18 +653,22 @@
         </div>
     </footer>
 
+    </div><!-- /page-content -->
+
     <!-- Scripts -->
     <script>
         // Loader logic
         window.addEventListener('load', function() {
             const loader = document.getElementById('page-loader');
+            const content = document.getElementById('page-content');
             setTimeout(() => {
+                content.classList.add('loaded');
                 loader.style.opacity = '0';
                 setTimeout(() => {
                     loader.style.display = 'none';
                     initAnimations();
                 }, 500);
-            }, 500); // Minimum display time
+            }, 500);
         });
 
         // Navbar scroll effect
