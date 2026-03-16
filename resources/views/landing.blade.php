@@ -33,9 +33,7 @@
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--possible-dark);
             z-index: 9999999;
-            background: #121212 !important;
-            margin: 0;
-            padding: 0;
+            background: #121212;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -125,7 +123,7 @@
             font-weight: 600;
             font-size: 15px;
         }
-        .nav-links a { position: relative; padding-bottom: 4px; }
+        .nav-links a { color: var(--possible-dark); position: relative; padding-bottom: 4px; text-decoration: none; }
         .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--possible-blue); transition: width 0.3s; }
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover { color: var(--possible-blue); }
