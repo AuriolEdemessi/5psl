@@ -32,7 +32,7 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--possible-dark);
-            z-index: 9999999;
+            z-index: 2147483647; /* absolute maximum z-index */
             background: #121212;
             display: flex;
             align-items: center;
@@ -124,7 +124,7 @@
             font-size: 15px;
         }
         .nav-links a { position: relative; padding-bottom: 4px; color: var(--possible-dark); text-decoration: none; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--possible-dark); transition: width 0.3s; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--possible-blue); transition: width 0.3s; }
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover { color: var(--possible-blue); }
 
