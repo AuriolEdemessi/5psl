@@ -32,7 +32,10 @@
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--possible-dark);
-            z-index: 999999;
+            z-index: 9999999;
+            background: #121212 !important;
+            margin: 0;
+            padding: 0;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -105,7 +108,10 @@
         /* Navbar */
         .navbar-main {
             position: relative;
-            z-index: 999999;
+            z-index: 9999999;
+            background: #121212 !important;
+            margin: 0;
+            padding: 0;
             padding: 20px 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
