@@ -19,7 +19,7 @@ class IsAdmin
     public function handle(Request $request, Closure $next)
     {
         // Check if the user is authenticated and has the role "admin"
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && in_array(Auth::user()->role, ['admin', 'superadmin'])) {
             return $next($request);
         }
 

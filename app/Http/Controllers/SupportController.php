@@ -72,7 +72,7 @@ class SupportController extends Controller
     public function show(SupportTicket $ticket)
     {
         // Seul le propriétaire ou un admin peut voir
-        if ($ticket->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        if ($ticket->user_id !== Auth::id() && !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
             abort(403);
         }
 
@@ -92,7 +92,7 @@ class SupportController extends Controller
      */
     public function reply(Request $request, SupportTicket $ticket)
     {
-        if ($ticket->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        if ($ticket->user_id !== Auth::id() && !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
             abort(403);
         }
 
@@ -100,7 +100,7 @@ class SupportController extends Controller
             'body' => 'required|string|max:5000',
         ]);
 
-        $isAdmin = Auth::user()->role === 'admin';
+        $isAdmin = in_array(Auth::user()->role, ['admin', 'superadmin']);
 
         SupportMessage::create([
             'ticket_id' => $ticket->id,
@@ -127,7 +127,7 @@ class SupportController extends Controller
      */
     public function close(SupportTicket $ticket)
     {
-        if ($ticket->user_id !== Auth::id() && Auth::user()->role !== 'admin') {
+        if ($ticket->user_id !== Auth::id() && !in_array(Auth::user()->role, ['admin', 'superadmin'])) {
             abort(403);
         }
 

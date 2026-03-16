@@ -12,7 +12,7 @@ class SubscriptionPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 
     /**
@@ -20,7 +20,7 @@ class SubscriptionPolicy
      */
     public function view(User $user, Subscription $subscription): bool
     {
-        return $user->role === 'admin' || $user->id === $subscription->user_id;
+        return in_array($user->role, ['admin', 'superadmin']) || $user->id === $subscription->user_id;
     }
 
     /**
@@ -28,7 +28,7 @@ class SubscriptionPolicy
      */
     public function create(User $user): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 
     /**
@@ -36,7 +36,7 @@ class SubscriptionPolicy
      */
     public function update(User $user, Subscription $subscription): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 
     /**
@@ -44,6 +44,6 @@ class SubscriptionPolicy
      */
     public function delete(User $user, Subscription $subscription): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 }

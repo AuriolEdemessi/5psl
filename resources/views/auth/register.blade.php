@@ -24,6 +24,9 @@
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
+                @if(request('ref'))
+                    <input type="hidden" name="ref" value="{{ request('ref') }}">
+                @endif
 
                 <div style="margin-bottom: 20px;">
                     <label class="form-label-custom">Full Name</label>

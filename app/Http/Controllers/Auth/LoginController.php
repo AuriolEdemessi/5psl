@@ -44,7 +44,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        if ($user->role === 'admin') {
+        if (in_array($user->role, ['admin', 'superadmin'])) {
             return redirect('/admin');
         }
         return redirect('/investment/dashboard');

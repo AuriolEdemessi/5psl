@@ -131,7 +131,7 @@ class AdminInvestmentController extends Controller
             } elseif ($transaction->type === 'retrait') {
                 $result = $engine->redeemShares($transaction->user, (string) $transaction->montant, $transaction->id);
                 // Mettre à jour la transaction avec la commission calculée
-                $transaction->commission_hwm = $result['manager_commission'];
+                $transaction->commission_hwm = $result['hwm_commission'];
             }
 
             $transaction->statut = 'approuve';

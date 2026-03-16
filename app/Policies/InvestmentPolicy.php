@@ -12,7 +12,7 @@ class InvestmentPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 
     /**
@@ -21,7 +21,7 @@ class InvestmentPolicy
      */
     public function view(User $user, Investment $investment): bool
     {
-        return $user->role === 'admin' || $user->id === $investment->user_id;
+        return in_array($user->role, ['admin', 'superadmin']) || $user->id === $investment->user_id;
     }
 
     /**
@@ -37,7 +37,7 @@ class InvestmentPolicy
      */
     public function update(User $user, Investment $investment): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 
     /**
@@ -45,6 +45,6 @@ class InvestmentPolicy
      */
     public function delete(User $user, Investment $investment): bool
     {
-        return $user->role === 'admin';
+        return in_array($user->role, ['admin', 'superadmin']);
     }
 }

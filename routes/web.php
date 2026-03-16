@@ -31,6 +31,8 @@ Route::get('/', function () {
     return view('landing');
 });
 
+Route::get('/whitepaper', function () { return view('whitepaper'); })->name('whitepaper');
+
 Auth::routes(['verify' => true]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -58,9 +60,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // KYC (Membre)
     Route::get('/kyc', [App\Http\Controllers\KycController::class, 'index'])->name('kyc.index');
     Route::post('/kyc', [App\Http\Controllers\KycController::class, 'store'])->name('kyc.store');
-
-    // Whitepaper
-    Route::get('/whitepaper', function () { return view('whitepaper'); })->name('whitepaper');
 
     // ===== Support / Assistance (membre) =====
     Route::get('/support', [App\Http\Controllers\SupportController::class, 'index'])->name('support.index');
