@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
         public function boot(): void
     {
-        if (config('app.env') === 'production' || config('app.env') === 'railway' || env('FORCE_HTTPS', true)) {
+        if (config('app.env') === 'production' || config('app.env') === 'railway' || env('FORCE_HTTPS', false)) {
             URL::forceScheme('https');
         }
     }
