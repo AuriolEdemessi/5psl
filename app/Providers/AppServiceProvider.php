@@ -18,10 +18,12 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-        public function boot(): void
+            public function boot(): void
     {
-        if (config('app.env') === 'production' || config('app.env') === 'railway' || env('FORCE_HTTPS', false)) {
+        $isLocal = in_array(request()->getHost(), ['localhost', '127.0.0.1', '::1']);
+        if (!$isLocal && (config('app.env') === 'production' || config('app.env') === 'railway' || env('FORCE_HTTPS', false))) {
             URL::forceScheme('https');
         }
+    }
     }
 }
