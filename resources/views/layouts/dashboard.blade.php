@@ -545,5 +545,25 @@
         });
     </script>
     @yield('scripts')
+    <script>
+        // Refresh CSRF token every 30 minutes to prevent 419 on long-open sessions
+        setInterval(function() {
+            fetch('/sanctum/csrf-cookie', { credentials: 'same-origin' }).catch(function() {
+                fetch('/?_csrf_refresh=1', { credentials: 'same-origin' });
+            });
+        }, 30 * 60 * 1000);
+
+        // Also refresh CSRF token in all forms before submit
+        document.addEventListener('submit', function(e) {
+            var form = e.target;
+            var tokenInput = form.querySelector('input[name="_token"]');
+            if (tokenInput) {
+                var metaToken = document.querySelector('meta[name="csrf-token"]');
+                if (metaToken) {
+                    tokenInput.value = metaToken.getAttribute('content');
+                }
+            }
+        });
+    </script>
 </body>
 </html>
