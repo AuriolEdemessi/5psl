@@ -123,8 +123,8 @@
             font-weight: 600;
             font-size: 15px;
         }
-        .nav-links a { color: var(--possible-dark); position: relative; padding-bottom: 4px; text-decoration: none; }
-        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--possible-blue); transition: width 0.3s; }
+        .nav-links a { position: relative; padding-bottom: 4px; color: var(--possible-dark); text-decoration: none; }
+        .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: var(--possible-dark); transition: width 0.3s; }
         .nav-links a:hover::after { width: 100%; }
         .nav-links a:hover { color: var(--possible-blue); }
 
@@ -268,7 +268,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            background: var(--possible-blue);
+            background: var(--possible-dark);
             z-index: 99999;
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out;
@@ -363,7 +363,7 @@
         </div>
         <div class="d-none d-lg-block">
             @auth
-                <a href="{{ route('investment.dashboard') }}" class="btn-possible" style="background: var(--possible-blue); color: white;">
+                <a href="{{ route('investment.dashboard') }}" class="btn-possible" style="background: var(--possible-dark); color: white;">
                     {{ __('Mon Compte') }} <i class="fas fa-arrow-right ms-1"></i>
                 </a>
             @else
@@ -500,7 +500,7 @@
             <p>{{ __('Nous sécurisons 50% du capital sur des actifs sans risque pour garantir la liquidité des retraits. 30% sont alloués à la croissance stable, et seuls 20% visent la haute performance (crypto, opportunités).') }}</p>
             
             <div style="height: 16px; display: flex; border-radius: 8px; overflow: hidden; margin-top: 30px;">
-                <div style="width: 50%; background: var(--possible-blue);" title="50% Sécurité"></div>
+                <div style="width: 50%; background: var(--possible-dark);" title="50% Sécurité"></div>
                 <div style="width: 30%; background: #059669;" title="30% Croissance"></div>
                 <div style="width: 20%; background: #f59e0b;" title="20% Opportunité"></div>
             </div>
@@ -556,7 +556,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="bg-white p-5 h-100 text-center" style="border-radius: 16px; border: 2px solid var(--possible-blue); box-shadow: 0 20px 40px rgba(0,102,255,0.1); position: relative;">
-                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--possible-blue); color: white; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase;">Populaire</div>
+                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--possible-dark); color: white; padding: 4px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; text-transform: uppercase;">Populaire</div>
                         <div style="font-size: 14px; font-weight: 800; text-transform: uppercase; color: var(--possible-blue); margin-bottom: 12px;">Pro</div>
                         <div style="font-size: 40px; font-weight: 900; color: var(--possible-dark);">$50<span style="font-size: 14px; color: #94a3b8;">/an</span></div>
                         <div style="margin: 20px 0; padding: 10px; background: rgba(0,102,255,0.05); border-radius: 8px; font-size: 13px; font-weight: 600; color: var(--possible-blue);">$2,500 — $10,000 de capital</div>
