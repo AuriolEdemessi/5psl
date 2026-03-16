@@ -298,11 +298,6 @@
             .hero-left .btn-possible { display: block; width: 100%; text-align: center; }
             .navbar-main { padding: 15px 20px !important; }
         }
-            .card-half { min-width: 100%; padding: 60px 5%; }
-            .nav-links { display: none; }
-            .hero-right { min-height: 400px; }
-            .navbar-main .d-none.d-lg-block { display: none !important; }
-        }
     </style>
 </head>
 <body>
