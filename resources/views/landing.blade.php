@@ -104,6 +104,8 @@
 
         /* Navbar */
         .navbar-main {
+            position: relative;
+            z-index: 9999;
             padding: 20px 0;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -131,6 +133,7 @@
             min-height: 85vh;
         }
         .hero-left {
+            z-index: 1;
             flex: 1;
             background-color: var(--possible-blue);
             color: white;
@@ -149,6 +152,7 @@
         @keyframes rotateBg { 100% { transform: rotate(360deg); } }
 
         .hero-left h1 {
+            position: relative; z-index: 10;
             font-size: clamp(40px, 5vw, 64px);
             font-weight: 900;
             line-height: 1.1;
@@ -157,6 +161,7 @@
             position: relative; z-index: 2;
         }
         .hero-left p {
+            position: relative; z-index: 10;
             font-size: clamp(16px, 2vw, 20px);
             font-weight: 500;
             opacity: 0.9;
@@ -263,7 +268,7 @@
             width: 100%;
             height: 100vh;
             background: var(--possible-blue);
-            z-index: 1050;
+            z-index: 99999;
             transform: translateX(100%);
             transition: transform 0.3s ease-in-out;
             display: flex;
@@ -286,6 +291,13 @@
         }
         @media (max-width: 992px) {
             .hero-split, .split-cards { flex-direction: column; }
+            .card-half { min-width: 100%; padding: 60px 5%; }
+            .nav-links { display: none; }
+            .hero-right { min-height: 400px; }
+            .navbar-main .d-none.d-lg-block { display: none !important; }
+            .hero-left .btn-possible { display: block; width: 100%; text-align: center; }
+            .navbar-main { padding: 15px 20px !important; }
+        }
             .card-half { min-width: 100%; padding: 60px 5%; }
             .nav-links { display: none; }
             .hero-right { min-height: 400px; }
@@ -406,7 +418,7 @@
             <h1 class="fade-up">{!! nl2br(e(__("L'investissement intelligent, transparent et collectif."))) !!}</h1>
             <p class="fade-up" style="transition-delay: 0.1s;">{{ __('Rejoignez le premier club d\'investissement basé sur la méthode NAV. Sanctuarisez votre capital, votez pour les opportunités et gagnez avec la force du groupe.') }}</p>
             
-            <div class="mt-5 fade-up" style="transition-delay: 0.2s;">
+            <div class="mt-5 fade-up" style="position: relative; z-index: 10; transition-delay: 0.2s;" style="transition-delay: 0.2s;">
                 @auth
                     <a href="{{ route('investment.dashboard') }}" class="btn-possible mb-3" style="background: white; color: var(--possible-dark); font-size: 16px; padding: 16px 32px;">
                         <i class="fas fa-chart-line text-blue"></i> {{ __('Mon Portefeuille') }}
