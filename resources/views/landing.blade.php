@@ -254,11 +254,42 @@
         .footer-logo { font-size: 40px; font-weight: 900; letter-spacing: -2px; margin-bottom: 20px; display: block; }
         .footer-logo span { color: var(--possible-blue); }
         
+        
+        /* Mobile Menu */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: var(--possible-blue);
+            z-index: 1050;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: column;
+        }
+        .mobile-menu-overlay.active {
+            transform: translateX(0);
+        }
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 40px;
+            gap: 20px;
+        }
+        .mobile-nav-links a {
+            color: white;
+            font-size: 24px;
+            font-weight: 600;
+            text-decoration: none;
+        }
         @media (max-width: 992px) {
             .hero-split, .split-cards { flex-direction: column; }
             .card-half { min-width: 100%; padding: 60px 5%; }
             .nav-links { display: none; }
             .hero-right { min-height: 400px; }
+            .navbar-main .d-none.d-lg-block { display: none !important; }
         }
     </style>
 </head>
@@ -313,7 +344,7 @@
 
     <!-- Navbar -->
     <nav class="navbar-main px-4 px-md-5" id="mainNav">
-        <a href="/" style="font-size: 28px; font-weight: 900; letter-spacing: -1px;">
+        <a href="/" style="font-size: 28px; font-weight: 900; letter-spacing: -1px; text-decoration: none; color: var(--possible-dark);">
             <span class="text-blue">5</span>PSL
         </a>
         <div class="nav-links">
@@ -322,7 +353,7 @@
             <a href="#allocation">{{ __('Stratégie') }}</a>
             <a href="{{ route('whitepaper') }}" class="text-blue"><i class="fas fa-file-alt me-1"></i> {{ __('Whitepaper') }}</a>
         </div>
-        <div class="d-none d-md-block">
+        <div class="d-none d-lg-block">
             @auth
                 <a href="{{ route('investment.dashboard') }}" class="btn-possible" style="background: var(--possible-blue); color: white;">
                     {{ __('Mon Compte') }} <i class="fas fa-arrow-right ms-1"></i>
@@ -331,7 +362,43 @@
                 <a href="{{ route('register') }}" class="btn-possible">{{ __('Rejoindre le club') }}</a>
             @endauth
         </div>
+        <div class="d-block d-lg-none">
+            <button class="btn btn-link text-dark p-0" id="mobileMenuBtn" style="font-size: 24px; text-decoration: none;">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
     </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenu">
+        <div class="d-flex justify-content-between align-items-center p-4">
+            <a href="/" style="font-size: 28px; font-weight: 900; letter-spacing: -1px; color: white; text-decoration: none;">
+                <span class="text-green">5</span>PSL
+            </a>
+            <button class="btn btn-link text-white p-0" id="closeMenuBtn" style="font-size: 28px; text-decoration: none;">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="mobile-nav-links">
+            <a href="#club" class="mobile-link">{{ __('Le Club') }}</a>
+            <a href="#nav" class="mobile-link">{{ __('Méthode') }}</a>
+            <a href="#allocation" class="mobile-link">{{ __('Stratégie') }}</a>
+            <a href="{{ route('whitepaper') }}" class="mobile-link text-green"><i class="fas fa-file-alt me-2"></i>{{ __('Whitepaper') }}</a>
+            
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 20px 0;">
+            
+            @auth
+                <a href="{{ route('investment.dashboard') }}" class="btn-possible d-flex align-items-center justify-content-center" style="background: white; color: var(--possible-blue);">
+                    {{ __('Mon Compte') }} <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="mobile-link mb-2" style="font-size: 20px;">{{ __('Connexion') }}</a>
+                <a href="{{ route('register') }}" class="btn-possible d-flex align-items-center justify-content-center" style="background: var(--possible-green); color: var(--possible-dark); border: none;">
+                    {{ __('Rejoindre le club') }}
+                </a>
+            @endauth
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero-split">
@@ -623,6 +690,32 @@
 
             elements.forEach(el => observer.observe(el));
         }
+    
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        if(mobileMenuBtn && closeMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+
     </script>
 </body>
 </html>
