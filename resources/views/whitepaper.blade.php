@@ -1,33 +1,77 @@
-@extends('layouts.dashboard')
-@section('title', 'Whitepaper')
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5PSL | Whitepaper</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('media/favicon.png') }}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --possible-blue: #0066ff;
+            --possible-dark: #121212;
+        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: #f1f5f9; color: var(--possible-dark); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        a { text-decoration: none; color: inherit; }
 
-@section('content')
+        .public-topbar {
+            background: white; border-bottom: 1px solid #e2e8f0;
+            padding: 0 32px; height: 64px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .public-topbar-logo { font-size: 22px; font-weight: 900; letter-spacing: -0.5px; }
+        .public-topbar-logo span { color: var(--possible-blue); }
+        .public-topbar-actions { display: flex; gap: 10px; }
+        .btn-tp { padding: 8px 18px; border-radius: 7px; font-size: 13px; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-tp-outline { background: transparent; color: var(--possible-dark); border: 1.5px solid #e2e8f0; }
+        .btn-tp-outline:hover { border-color: var(--possible-dark); }
+        .btn-tp-primary { background: var(--possible-blue); color: white; }
+        .btn-tp-primary:hover { background: #0052cc; }
 
-<style>
-    .wp-container { max-width: 860px; margin: 0 auto; }
-    .wp-hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0066ff 100%); border-radius: 16px; padding: 48px 40px; color: white; margin-bottom: 32px; position: relative; overflow: hidden; }
-    .wp-hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,102,255,0.2), transparent 70%); border-radius: 50%; }
-    .wp-hero h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; position: relative; }
-    .wp-hero p { font-size: 15px; opacity: 0.7; max-width: 600px; line-height: 1.6; position: relative; }
-    .wp-section { margin-bottom: 36px; }
-    .wp-section-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,102,255,0.08); color: var(--possible-blue); font-weight: 900; font-size: 14px; margin-right: 12px; flex-shrink: 0; }
-    .wp-section h2 { font-size: 20px; font-weight: 900; color: var(--possible-dark); display: flex; align-items: center; margin-bottom: 16px; }
-    .wp-section p { font-size: 14px; line-height: 1.9; color: #475569; margin-bottom: 12px; }
-    .wp-highlight { background: #f8fafc; border-left: 4px solid var(--possible-blue); padding: 20px 24px; border-radius: 0 10px 10px 0; margin: 16px 0; }
-    .wp-highlight p { margin: 0; font-weight: 600; font-size: 13px; color: var(--possible-dark); }
-    .wp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
-    .wp-grid-item { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
-    .wp-grid-item .wp-gi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 20px; }
-    .wp-grid-item h4 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
-    .wp-grid-item p { font-size: 12px; color: #64748b; margin: 0; line-height: 1.5; }
-    .wp-alloc-bar { display: flex; border-radius: 8px; overflow: hidden; height: 14px; margin: 12px 0; }
-    .wp-toc { list-style: none; padding: 0; margin: 0; }
-    .wp-toc li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
-    .wp-toc li a { text-decoration: none; color: var(--possible-dark); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
-    .wp-toc li a:hover { color: var(--possible-blue); }
-    @media (max-width: 768px) { .wp-grid { grid-template-columns: 1fr; } .wp-hero { padding: 32px 24px; } }
-</style>
+        .page-wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
 
+        .card-wp { background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 24px; }
+        .wp-container { max-width: 860px; margin: 0 auto; }
+        .wp-hero { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0066ff 100%); border-radius: 16px; padding: 48px 40px; color: white; margin-bottom: 32px; position: relative; overflow: hidden; }
+        .wp-hero::before { content: ''; position: absolute; top: -50%; right: -30%; width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,102,255,0.2), transparent 70%); border-radius: 50%; }
+        .wp-hero h1 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; position: relative; }
+        .wp-hero p { font-size: 15px; opacity: 0.7; max-width: 600px; line-height: 1.6; position: relative; }
+        .wp-section { margin-bottom: 0; }
+        .wp-section-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; background: rgba(0,102,255,0.08); color: var(--possible-blue); font-weight: 900; font-size: 14px; margin-right: 12px; flex-shrink: 0; }
+        .wp-section h2 { font-size: 20px; font-weight: 900; color: var(--possible-dark); display: flex; align-items: center; margin-bottom: 16px; }
+        .wp-section p { font-size: 14px; line-height: 1.9; color: #475569; margin-bottom: 12px; }
+        .wp-highlight { background: #f8fafc; border-left: 4px solid var(--possible-blue); padding: 20px 24px; border-radius: 0 10px 10px 0; margin: 16px 0; }
+        .wp-highlight p { margin: 0; font-weight: 600; font-size: 13px; color: var(--possible-dark); }
+        .wp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 16px 0; }
+        .wp-grid-item { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; text-align: center; }
+        .wp-grid-item .wp-gi-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; font-size: 20px; }
+        .wp-grid-item h4 { font-size: 14px; font-weight: 800; margin-bottom: 4px; }
+        .wp-grid-item p { font-size: 12px; color: #64748b; margin: 0; line-height: 1.5; }
+        .wp-alloc-bar { display: flex; border-radius: 8px; overflow: hidden; height: 14px; margin: 12px 0; }
+        .wp-toc { list-style: none; padding: 0; margin: 0; }
+        .wp-toc li { padding: 8px 0; border-bottom: 1px solid #f1f5f9; }
+        .wp-toc li a { text-decoration: none; color: var(--possible-dark); font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; }
+        .wp-toc li a:hover { color: var(--possible-blue); }
+        .card-5psl { background: white; border-radius: 14px; border: 1px solid #e2e8f0; padding: 28px; box-shadow: 0 1px 3px rgba(0,0,0,0.04); margin-bottom: 24px; }
+        .card-gradient-dark { background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border: none; }
+        @media (max-width: 768px) { .wp-grid { grid-template-columns: 1fr; } .wp-hero { padding: 32px 24px; } .public-topbar { padding: 0 16px; } }
+    </style>
+</head>
+<body>
+
+<nav class="public-topbar">
+    <a href="{{ url('/') }}" class="public-topbar-logo"><span>5</span>PSL</a>
+    <div class="public-topbar-actions">
+        <a href="{{ route('login') }}" class="btn-tp btn-tp-outline"><i class="fas fa-sign-in-alt"></i> Connexion</a>
+        <a href="{{ route('register') }}" class="btn-tp btn-tp-primary"><i class="fas fa-user-plus"></i> Rejoindre</a>
+    </div>
+</nav>
+
+<div class="page-wrap">
 <div class="wp-container">
 
     {{-- Hero --}}
@@ -220,7 +264,7 @@
     </div>
 
     {{-- Footer --}}
-    <div class="card-5psl card-gradient-dark animate-fade-in-up" style="text-align: center; padding: 32px;">
+    <div style="background: linear-gradient(135deg, #1e293b, #0f172a); color: white; border-radius: 14px; text-align: center; padding: 32px;">
         <div style="font-size: 24px; font-weight: 900; margin-bottom: 8px;">5PSL</div>
         <p style="font-size: 13px; opacity: 0.6; max-width: 500px; margin: 0 auto;">Investir ensemble, grandir ensemble. La technologie au service de la transparence financière.</p>
         <div style="margin-top: 16px; font-size: 11px; opacity: 0.3;">Whitepaper v1.0 — Mars 2026</div>
@@ -228,4 +272,9 @@
 
 </div>
 
-@endsection
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
