@@ -6,6 +6,7 @@ use App\Models\Asset;
 use App\Models\CryptoAddress;
 use App\Models\InvestmentOpportunity;
 use App\Models\Transaction;
+use App\Services\FinanceEngineService;
 use App\Services\InvestmentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,11 +14,13 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     protected InvestmentService $investmentService;
+    protected FinanceEngineService $financeEngine;
 
-    public function __construct(InvestmentService $investmentService)
+    public function __construct(InvestmentService $investmentService, FinanceEngineService $financeEngine)
     {
         $this->middleware('auth');
         $this->investmentService = $investmentService;
+        $this->financeEngine = $financeEngine;
     }
 
     /**
@@ -27,9 +30,10 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $portfolioValue = $this->investmentService->getUserPortfolioValue($user);
-        $roi            = $this->investmentService->getUserROI($user);
-        $nav            = $this->investmentService->calculateNAV();
+        // Utilisation du nouveau moteur financier pour les valeurs précises
+        $portfolioValue = $this->financeEngine->getUserPortfolioValue($user);
+        $roi            = $this->financeEngine->getUserROI($user);
+        $nav            = $this->financeEngine->getLatestNAV();
         $balance        = $this->investmentService->getUserBalance($user);
 
         // Données tier & retrait

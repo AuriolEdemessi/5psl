@@ -3,21 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asset;
+use App\Models\GlobalStat;
 use App\Models\Investment;
 use App\Models\User;
 use App\Models\Transaction;
 use App\Models\InvestmentOpportunity;
+use App\Services\FinanceEngineService;
 use App\Services\InvestmentService;
 use Illuminate\Http\Request;
 
 class AdminInvestmentController extends Controller
 {
     protected InvestmentService $investmentService;
+    protected FinanceEngineService $financeEngine;
 
-    public function __construct(InvestmentService $investmentService)
+    public function __construct(InvestmentService $investmentService, FinanceEngineService $financeEngine)
     {
         $this->middleware(['auth', 'isAdmin']);
         $this->investmentService = $investmentService;
+        $this->financeEngine = $financeEngine;
     }
 
     public function index()
@@ -37,11 +41,13 @@ class AdminInvestmentController extends Controller
         $pendingKycCount = $pendingUsers->count();
         $pendingTransactionsCount = $pendingTransactions->count();
 
-        // Global stats
-        $nav = $this->investmentService->calculateNAV();
-        $totalAUM = (float) Asset::where('is_active', true)->sum('valeur_actuelle');
+        // Global stats via FinanceEngine & GlobalStat
+        $stats = GlobalStat::current();
+        $nav = $this->financeEngine->getLatestNAV();
+        $totalAUM = (float) $stats->total_aum;
+        $totalShares = (float) $stats->total_shares;
+        
         $totalMembers = User::where('role', 'member')->count();
-        $totalShares = (float) Investment::sum('nombre_de_parts');
         $allocation = $this->investmentService->getPortfolioAllocation();
 
         // Tier breakdown

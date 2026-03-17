@@ -463,20 +463,18 @@ class FinanceEngineService
     // ══════════════════════════════════════════════
 
     /**
-     * Valeur du portefeuille d'un utilisateur = parts * NAV courante.
+     * Valeur du portefeuille d'un utilisateur = Σ parts * NAV courante.
      */
     public function getUserPortfolioValue(User $user): string
     {
-        $investment = Investment::where('user_id', $user->id)
-            ->where('asset_id', $this->getPoolAssetId())
-            ->first();
+        $totalShares = (string) Investment::where('user_id', $user->id)->sum('nombre_de_parts');
 
-        if (!$investment) {
+        if (bccomp($totalShares, '0', self::SCALE) <= 0) {
             return '0';
         }
 
         $nav = $this->getLatestNAV();
-        return bcmul($investment->nombre_de_parts, $nav, self::SCALE);
+        return bcmul($totalShares, $nav, self::SCALE);
     }
 
     /**
@@ -484,11 +482,8 @@ class FinanceEngineService
      */
     public function getUserShares(User $user): string
     {
-        $investment = Investment::where('user_id', $user->id)
-            ->where('asset_id', $this->getPoolAssetId())
-            ->first();
-
-        return $investment ? $investment->nombre_de_parts : '0';
+        $totalShares = (string) Investment::where('user_id', $user->id)->sum('nombre_de_parts');
+        return $totalShares ?: '0';
     }
 
     /**
@@ -496,17 +491,16 @@ class FinanceEngineService
      */
     public function getUserROI(User $user): string
     {
-        $investment = Investment::where('user_id', $user->id)
-            ->where('asset_id', $this->getPoolAssetId())
-            ->first();
+        $totalInvested = (string) Investment::where('user_id', $user->id)->sum('montant');
+        $totalShares = (string) Investment::where('user_id', $user->id)->sum('nombre_de_parts');
 
-        if (!$investment || bccomp($investment->montant, '0', self::SCALE) <= 0) {
+        if (bccomp($totalInvested, '0', self::SCALE) <= 0 || bccomp($totalShares, '0', self::SCALE) <= 0) {
             return '0';
         }
 
-        $currentValue = bcmul($investment->nombre_de_parts, $this->getLatestNAV(), self::SCALE);
-        $gain = bcsub($currentValue, $investment->montant, self::SCALE);
-        $roi = bcdiv($gain, $investment->montant, self::SCALE);
+        $currentValue = bcmul($totalShares, $this->getLatestNAV(), self::SCALE);
+        $gain = bcsub($currentValue, $totalInvested, self::SCALE);
+        $roi = bcdiv($gain, $totalInvested, self::SCALE);
 
         return bcmul($roi, '100', 2);
     }
