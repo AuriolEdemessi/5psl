@@ -48,7 +48,7 @@
             <div class="kpi-icon" style="background: rgba(0,102,255,0.08); color: var(--possible-blue);">
                 <i class="fas fa-wallet"></i>
             </div>
-            <div class="kpi-label">Valeur du Portefeuille</div>
+            <div class="kpi-label">Valeur du portefeuille </div>
             <div class="kpi-value animate-count">{{ number_format((float)$portfolioValue, 2, ',', ' ') }} <span style="font-size: 12px; font-weight: 600; color: var(--color-muted);">$</span></div>
         </div>
     </div>
