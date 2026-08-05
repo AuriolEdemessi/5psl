@@ -538,7 +538,11 @@
     <section class="stats-section fade-up" id="stats">
         <div style="font-weight: 800; text-transform: uppercase; color: var(--possible-blue); font-size: 14px; letter-spacing: 1px;">{{ __('NAV Actuelle (USD)') }}</div>
         @php
-            $currentNav = \App\Models\GlobalStat::current()->current_nav ?? '10.00000000';
+            try {
+                $currentNav = \App\Models\GlobalStat::current()->current_nav ?? '10.00000000';
+            } catch (\Throwable $e) {
+                $currentNav = '10.00000000';
+            }
         @endphp
         <div class="stats-counter" style="font-weight: 900;">${{ number_format((float)$currentNav, 2, '.', ' ') }}</div>
         <div style="font-weight: 600; font-size: 18px; color: #666;">{{ __('Le prix en temps réel d\'une part du club') }}</div>

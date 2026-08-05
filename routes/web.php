@@ -27,11 +27,8 @@ Route::middleware(['auth', 'isAdmin'])->prefix('admin')->name('admin.')->group(f
 
 Route::get('lang/{lang}', [App\Http\Controllers\LanguageController::class, 'switchLang'])->name('lang.switch');
 
-Route::get('/', function () {
-    return view('landing');
-});
-
-Route::get('/whitepaper', function () { return view('whitepaper'); })->name('whitepaper');
+Route::view('/', 'landing');
+Route::view('/whitepaper', 'whitepaper')->name('whitepaper');
 
 Auth::routes(['verify' => true]);
 

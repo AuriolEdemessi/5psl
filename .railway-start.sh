@@ -5,6 +5,7 @@ echo "1. Creating caching directories..."
 mkdir -p storage/framework/cache/data
 mkdir -p storage/framework/views
 mkdir -p storage/framework/sessions
+mkdir -p storage/logs
 mkdir -p bootstrap/cache
 
 echo "2. Applying permissions..."

@@ -20,10 +20,13 @@ nixLibs = []
 [phases.build]
 dependsOn = ["install"]
 cmds = [
+  "npm run build",
   "php artisan storage:link || true",
   "mkdir -p storage/framework/{sessions,views,cache/data}",
+  "mkdir -p storage/logs",
   "chmod -R 777 storage bootstrap/cache"
 ]
 
 [start]
 cmd = "bash .railway-start.sh"
+

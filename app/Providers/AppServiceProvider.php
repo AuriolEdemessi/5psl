@@ -21,10 +21,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $isLocal = in_array(request()->getHost(), ['localhost', '127.0.0.1', '::1']);
-        if (!$isLocal && (config('app.env') === 'production' || config('app.env') === 'railway' || env('FORCE_HTTPS', false))) {
+        if (!$isLocal && (config('app.env') === 'production' || config('app.env') === 'railway' || config('app.force_https', false))) {
             URL::forceScheme('https');
-            if (env('APP_URL')) {
-                URL::forceRootUrl(env('APP_URL'));
+            if (config('app.url')) {
+                URL::forceRootUrl(config('app.url'));
             }
         }
     }
